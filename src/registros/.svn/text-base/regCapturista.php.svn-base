@@ -1,0 +1,168 @@
+<?php
+
+if(isset($_POST['posted'])) {
+	require_once('../funciones.php');
+	conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+	$mensaje = "Registro no exitoso, se encontraron los siguientes<br />
+errores en el formulario:";
+	
+	//code to take action as user submitted the data
+	//recibe info
+	$user = strip_tags($_POST['user']);
+	$pass = strip_tags($_POST['pass']);
+	$pass2 = strip_tags($_POST['pass2']);
+	$name = strip_tags($_POST['name']);
+	$apellido = strip_tags($_POST['apellido']);
+	
+	
+	//Para la validacion
+	$fail = validate_user($user);
+	$fail .= validate_pass($pass);
+	$fail .= validate_name(trim($name));
+	$fail .= validate_apellido($apellido);
+	$fail .= validate_equal_pass($pass,$pass2);
+	
+	echo "<html><head><title>Registro Capturista</title>";
+	
+	if($fail == "") {
+		echo "</head><body>	Datos registrados con exito!</body></html>";
+		//Encriptamos contrasenia
+		$pass_enc = sha1($pass);
+	
+		$query = @mysql_query("SELECT * FROM Capturista WHERE Usuario='".mysql_real_escape_string($user)."' AND Password= '".mysql_real_escape_string($pass)."'");
+		if($existe = @mysql_fetch_object($query)){
+			echo 'este usuario '.$user.' ya existe';
+		}else{
+			$meter=@mysql_query('INSERT INTO Capturista (Usuario, Password,Nombre,ApellidoPaterno) values ("'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($pass_enc).'","'.mysql_real_escape_string($name).'","'.mysql_real_escape_string($apellido).'")');
+	
+			if($meter){
+				echo 'Capturista registrado con exito';
+			}else{
+				echo 'Hubo un error';
+			}
+		}
+		exit;
+	}
+	
+}
+
+//Output HTML y JavaScript
+
+echo <<<_END
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Seccion HTML -->
+<style>.signup { border: 1px solid #999999;
+font: normal 14px helvetica; color:#444444; }</style>
+<script type="text/javascript">
+function validate(form){
+		fail = validateUser(form.name.value,1);
+		fail += validatePassword(form.pass.value);
+		fail += validateUser(form.nombre.value,2);
+		fail += validateUser(form.apellido.value,3);		
+		fail += validatePasswordEqual(form.pass.value,form.pass2.value);
+		if (fail =="") return true;
+		else {
+			alert(fail);
+			return false;
+		}
+	}
+	
+	function validateUser(field,tipo) {
+		if (field=="") { 
+			switch(tipo) {
+			case 1:
+				return "El campo Usuario esta vacio.\n";
+				break;
+				
+			case 2:
+				return "El campo Nombre esta vacio.\n";
+				break;
+				
+			case 3:
+				return "El campo Apellido esta vacio.\n";
+				break;
+				
+				default:
+					return "Un campo esta vacio.\n";
+				break;
+			}	
+			
+		}
+		return "";
+	}
+	
+	function validatePassword(field){
+		if(field == "") return "Introduce una contraseña.\n";
+		else
+			if (field.length < 5)
+				return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+			else 
+				if (! /[a-z]/.test(field) || ! /[0-9]/.test(field))
+					return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";					
+		return "";		
+	}
+		
+	function validatePasswordEqual(field,field2) {
+		if(field !=field2) return "Las contraseñas no son iguales.\n";
+		return "";
+	}
+</script></head><body>
+<table class="signup" border="0" cellpadding="2"
+	cellspacing="5" bgcolor="#eeeeee">
+<th colspan="2" align="center">Formulario de inscripción</th> 
+<tr><td colspan="2">$mensaje <p><font color=red size=1><i>$fail</i></font></p>
+</td></tr>	
+<form action="regCapturista.php" method="post" onSubmit="return validate(this)">		
+			<tr><td>Nombre: </td><td><input type="text" name="name" size="20" id="nombre" value="$name" />
+				
+			<tr><td>Apellido Paterno: </td><td><input type="text" name="apellido" size="20" id="apellido" value="$apellido" />			
+		
+			<tr><td>Usuario: </td><td><input type="text" name="user" size="20" id="name" value="$user" />
+
+			<tr><td>Contraseña:</td><td><input type="password" name="pass" size="20" id="pass" value="$pass" />
+
+			<tr><td>Repite la Contraseña:</td><td><input type="password" name="pass2" size="20" id="pass2" value="$pass2" />
+			
+			<tr><td><input type="submit" value="Registrar" /></td><td>
+			<input type="hidden" name="posted" value="yes" />
+			
+	</form>
+_END;
+	
+//PHP FUNCIONES
+function validate_user($field) {
+	if (field=="") return "El campo Usuario esta vacio.\n";
+	return "";				 			
+}
+
+function validate_name($field) {
+	if (field=="") return "El campo Nombre esta vacio.\n";
+	return "";
+}
+
+function validate_apellido($field) {
+	if (field=="") return "El campo Apellido esta vacio.\n";
+	return "";
+}
+
+function validate_equal_pass($field,$field2) {
+	if($field !=$field2) return "Las contraseñas no son iguales.\n";
+	return "";
+}
+
+function validate_pass($field) {
+	
+	if(field == "") return "Introduce una contraseña.\n";
+	else{ 
+		
+		if (strlen($field) < 5)
+			return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+	
+		else
+			if (! preg_match("/[a-z]/",$field) || ! preg_match("/[0-9]/",$field))
+				return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";
+	}
+	return "";
+}
+
+?>

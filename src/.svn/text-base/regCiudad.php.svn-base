@@ -1,0 +1,25 @@
+<?php
+require_once('funciones.php');
+conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+
+//recibe info
+$clave = strip_tags($_POST['clave']);
+$nombre = strip_tags($_POST['nombre']);
+$estado = strip_tags($_POST['estado']);
+
+$query = @mysql_query("SELECT * FROM Ciudad WHERE idCiudad='".mysql_real_escape_string($clave).'")');
+
+if($existe = @mysql_fetch_object($query)){
+	echo 'La ciudad '.$clave.' ya existe';
+}else{
+	
+	$meter=@mysql_query('INSERT INTO Ciudad (idCiudad, Nombre, Estado_idEstado) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($estado).'")');
+
+	if($meter){
+		echo 'Estado registrado con exito';
+	}else{
+		echo 'Hubo un error';
+	}
+}
+
+?>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Registro</title>
+
+<style type='text/css'>
+form {
+	width: 400px;
+}
+
+form ul {
+	list-style-type: none;
+}
+
+form ul li {
+	margin: 15px 0;
+}
+
+form label {
+	display: block;
+	font-size: 1em;
+}
+
+form input {
+	font-size: 1em;
+	padding: 5px;
+	border: #ccc 3px solid;
+	width: 100%;
+}
+</style>
+
+</head>
+
+<body>
+
+	Página de registro de Clínicas
+	<br />
+	<!-- Registro -->
+	<form action="regClinica.php" method="post">
+
+		<ul>
+			<li><label for="clave"> Clave de clínica (Numerica): </label> <input
+				type="text" name="clave" size="20" id="clave" /></li>
+
+			<li><label for="name"> Nombre de la clínica: </label> <input
+				type="text" name="nombre" size="20" id="nombre" /></li>
+
+			<li><label for="instituion"> Institución: </label> <input
+				type="text" name="institucion" size="20" id="institucion" /></li>
+
+			<li><input type="submit" value="Registrar" /></li>
+
+		</ul>
+
+	</form>
+	<!-- END OF Registro -->
+</body>
+</html>
