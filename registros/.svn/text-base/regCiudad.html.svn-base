@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Registro</title>
+<style type='text/css'>
+form {
+	width: 400px;
+}
+
+form ul {
+	list-style-type: none;
+}
+
+form ul li {
+	margin: 15px 0;
+}
+
+form label {
+	display: block;
+	font-size: 1em;
+}
+
+form input {
+	font-size: 1em;
+	padding: 5px;
+	border: #ccc 3px solid;
+	width: 100%;
+}
+</style>
+<script>
+	function validate(form){
+		fail = validateClave(form.clave.value);
+		fail += validateNombre(form.nombre.value);
+		fail += validateEstado(form.estado.value);
+		if (fail =="") return true;
+		else {
+			alert(fail);
+			return false;
+		}
+	}
+	
+	function validateClave(field) {
+		if (! /^[0-9]+$/.test(field))
+			return "La clave requiere digitos.\n";					
+		return "";
+	}
+	
+	function validateNombre(field) {
+		if (field =="") return "Favor de llenar el campo Nombre.\n";
+		else
+			if (! /^[a-zA-Z]+$/.test(field) )
+				return "El campo Nombre solo contiene letras.\n";
+		return "";
+	}
+	
+	function validateEstado(field) {
+		if (! /^[0-9]+$/.test(field))
+			return "El campo Estado requiere digitos.\n";					
+		return "";
+	}
+</script>
+
+</head>
+<body>
+	Página de registro para Ciudad
+	<br />
+	<!-- Registro -->
+	<form action="regCiudad.php" method="post" onsubmit="return validate(this)">
+		<ul>
+			<li><label for="clave"> Clave: </label> <input
+				type="text" name="clave" size="20" id="clave" /></li>
+
+			<li><label for="nombre"> Nombre: </label> <input
+				type="text" name="nombre" size="20" id="nombre" /></li>
+		
+			<li><label for="estado"> Estado (Clave): </label> <input
+				type="text" name="estado" size="20" id="estado" /></li>
+
+			<li><input type="submit" value="Registrar" /></li>
+
+		</ul>
+
+	</form>
+	<!-- END OF Registro -->
+
+</body>
+</html>

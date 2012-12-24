@@ -1,0 +1,143 @@
+<?php 
+
+include '../accesoDentista.php';
+//Checamos si hay una session vacia o si ya hay una sesion
+if ($_SESSION['type'] != 3) {
+	echo("Contenido Restringido");
+	switch($_SESSION['type']) {
+
+		case 1:
+			header("refresh:3, url=loggeado.php");
+			break;
+				
+		case 2:
+			header( "refresh:3;url=padrePrincipal.php" ); //Redireccionar a pagina
+			break;
+
+	}
+
+}
+
+
+?>
+
+ <!--
+PAGINA PRINCIPAL DEL DENTISTA
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../images/estiloN.css" />
+<title>Cartilla de Salud Bucal Digital</title>
+
+<style type='text/css'>
+form {
+	width: 400px;
+}
+
+form ul {
+	list-style-type: none;
+}
+
+form ul li {
+	margin: 15px 0;
+}
+
+form label {
+	display: block;
+	font-size: 15px;  
+}
+
+form input {
+	font-size: 1em;
+	padding: 5px;
+	border: #ccc 3px solid;
+	width: 100%;
+}
+</style>
+
+</head>
+
+<body>
+
+    
+    <div id="page">
+      <div class="topNaviagationLink"><a href="login2.html">Inicio</a></div>
+        <div class="topNaviagationLink"><a href="registrarse.html">Registro</a></div>
+        <div class="topNaviagationLink"><a href="acerca.html">Acerca de</a></div>
+        <div class="topNaviagationLink"><a href="contacto">Contacto</a></div>
+        
+          	 <div class="topNaviagationLink" id="logbox">
+             	<form action="accesoDentista.php" method="post">
+      				Usuario: <input type="text" name="user" />
+      				Pass: <input type="password" name="pass" />
+      				<input type="submit" value="Login" />
+                </form>
+    		</div>
+   
+	</div>
+    
+    <div id="mainPicture">
+    
+    
+    <p><p><p>
+  <div id="page">
+
+        <div class="leftNaviagationLink">
+          <div id="page2">
+            <div class="leftNaviagationLink"><a href="regNinio3.php">Registrar paciente</a></div>
+            <p></p>
+            <div class="leftNaviagationLink"><a href="contruccion.html">Revisión trimestral</a></div>
+          </div>
+        <a href="registrarse.html"></a></div>
+        
+         <div class="contentBox">
+                            
+	<br />
+	<form action="regNinio.php" method="post">
+ <br >
+	Página de registro para Niños
+		<ul>
+			<li><label for="nombre">Primer Nombre: </label> <input
+				type="text" name="nombre" size="20" id="nombre" /></li>
+
+			<li><label for="segnombre">Segundo nombre: </label> <input
+				type="text" name="segnombre" size="20" id="segnombre" /></li>
+
+			<li><label for="apaterno"> Apellido paterno: </label> <input
+				type="text" name="apaterno" size="20" id="apaterno" /></li>
+
+			<li><label for="amaterno"> Apellido materno: </label> <input
+				type="text" name="amaterno" size="20" id="amaterno" /></li>
+
+			<li><label for="fechanac"> Fecha de nacimiento: </label> <input
+				type="text" name="fechanac" size="20" id="fechanac" /></li>
+
+
+			<li><label for="grupo"> Grupo: </label> <input type="text"
+				name="grupo" size="20" id="grupo" /></li>
+
+			<li><input type="submit" value="Registrar" /></li>
+
+		</ul>
+	</form></div>
+      </div>
+    
+    
+<!--<div class="picture">
+   	    <div id="headerTitle">Cartilla de Salud Bucal Digital</div>
+            <div id="headerSubtext">Perfil epidemiológico de enfermedades bucodentales.</div>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p>
+              <p>&nbsp;</p> 
+      </div>--></div>
+    <div id="footer">Este sitio se ve mejor en <a href="http://www.mozilla.org/en-US/firefox/fx/">Firefox</a></div>
+</body>
+</html>

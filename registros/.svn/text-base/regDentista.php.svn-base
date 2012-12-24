@@ -1,0 +1,291 @@
+<?php
+if(isset($_POST['posted'])) {
+
+	require_once('../funciones.php');
+	conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+	$mensaje = "Registro no exitoso, se encontraron los siguientes<br />
+	errores en el formulario:";
+	
+	//recibe info
+	$nombre = strip_tags($_POST['nombre']);
+	$nombre2 = strip_tags($_POST['nombre2']);
+	$apaterno = strip_tags($_POST['apaterno']);
+	$amaterno = strip_tags($_POST['amaterno']);
+	$cedula = strip_tags($_POST['cedula']);
+	$user = strip_tags($_POST['user']);
+	$pass = strip_tags($_POST['pass']);
+	$pass2 = strip_tags($_POST['pass2']);
+	$correo = strip_tags($_POST['correo']);
+	$correo2 = strip_tags($_POST['correo2']);
+	$consultorio = strip_tags($_POST['consultorio']);
+	
+	//Mail
+	$name = "Code Assist"; //Nombre del remitente
+	$mail_from = "baseDentista@gmail.com"; //Correo del remitente
+	$mail_to = $correo; //Correo receptor
+	$mail_body = "Tu registro ha sido capturado. Dentro de poco recibiras un correo de confirmacion, para que puedas 
+	comenzar a utilizar el servicio";
+	$mail_subject = "Mail from: ".$name;
+	$mail_header = "From: ".$name." <".$mail_from.">\r\n";
+	
+	//Para la validacion
+	$fail = validaNombre(trim($nombre));
+	$fail .= validaNombre2(trim($nombre2));
+	$fail .= validaPaterno($apaterno,1);
+	$fail .= validaPaterno($amaterno,2);
+	$fail .= validaCedula($cedula);
+	$fail .=validaPass($pass);
+	$fail .= validaEqualPass($pass,$pass2);
+	$fail .= validaCorreo($correo);
+	$fail .= validaEqualCorreo($correo,$correo2);
+	$fail .= validaConsultorio($consultorio);
+	
+	echo "<html><head><title>Registro Clinica</title>";
+	if($fail == "") {
+		
+		$query = @mysql_query('SELECT * FROM Dentista WHERE user="'.mysql_real_escape_string($user).'"');
+		if($existe = @mysql_fetch_object($query)){
+			echo 'Este usuario '.$user.' ya existe';
+		}else{
+			$queryDir = @mysql_query('SELECT Direccion_idDireccion FROM Consultorio WHERE idConsultorio ="'.$consultorio.'"');
+			$idDir = @mysql_fetch_object($queryDir);
+		
+			//Encriptamos contrasenia
+			$pass_enc = sha1($pass);
+		
+			$meter=@mysql_query('INSERT INTO Dentista (Nombre, ApellidoPaterno, ApellidoMaterno, Cedula, Password, Usuario, CorreoElectronico, Consultorio_idConsultorio, Consultorio_Direccion_idDireccion, 2d0_Nombre) values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($apaterno).'", "'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($cedula).'","'.$pass_enc.'","'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($correo).'","'.mysql_real_escape_string($consultorio).'","'.mysql_real_escape_string($idDir).'","'.mysql_real_escape_string($nombre2).'")');
+			echo 'INSERT INTO Dentista (Nombre, ApellidoPaterno, ApellidoMaterno, Cedula, Password, Usuario, CorreoElectronico, Consultorio_idConsultorio, Consultorio_Direccion_idDireccion, 2d0_Nombre) values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($apaterno).'", "'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($cedula).'","'.$pass_enc.'","'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($correo).'","'.mysql_real_escape_string($consultorio).'","'.mysql_real_escape_string($idDir).'","'.mysql_real_escape_string($nombre2).'")';		
+			if($meter){
+				echo 'Usuario registrado con exito';
+				//Enviar correo
+				
+				//Optional si tengo SMTP.
+		
+				//ini_set("SMTP",smtp.rdslink.ro) //El proovedor de internet
+		
+				//Send Message
+		
+				$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
+		
+				if($sendmail == true) {
+					echo 'Mail sent!';
+				}
+				else {
+					echo 'Mail not sent';
+				}
+		
+		
+			}else{
+				echo 'Hubo un error';
+			}
+		}
+		exit;
+	}
+}
+//Output y HTML
+
+echo <<<_END
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Seccion HTML -->
+<style>.signup { border: 1px solid #999999;
+font: normal 14px helvetica; color:#444444; }</style>
+<script type="text/javascript">
+	function validate(form){
+		fail = validateNombre(form.nombre.value);
+		fail += validateNombre2(form.nombre2.value);
+		fail += validatePaterno(form.apaterno.value,1);
+		fail += validatePaterno(form.amaterno.value,2);
+		fail += validateCedula(form.cedula.value);
+		fail += validatePass(form.pass.value);
+		fail += validatePass(form.pass2.value);
+		fail += validateEqualPass(form.pass2.value,form.pass.value);
+		fail += validateCorreo(form.correo.value);
+		fail += validateCorreo(form.correo2.vaue);
+		fail += validateEqualCorreo(form.correo.value,form.correo2.value);
+		fail += validateConsultorio(form.consultorio.value);
+		
+		if (fail =="") return true;
+		else {
+			alert(fail);
+			return false;
+		}
+	}
+	
+	function validateNombre(field) {
+		if (field =="") return "Favor de llenar el campo Nombre.\n";
+		else
+			if (! /^[a-zA-Z]+$/.test(field) )
+				return "El campo Nombre solo contiene letras.\n";
+		return "";
+	}
+	
+	function validateNombre2(field) {
+		if (! /^[a-zA-Z]+$/.test(field) )
+				return "El campo Nombre solo contiene letras.\n";
+		return "";
+	}
+	
+	function validatePaterno(field,tipo) {
+		if (field =="") {
+			if(tipo == 1)
+				return "Favor de llenar el campo apellido paterno.\n";
+			else
+				return "Favor de llenar el campo apellido materno.\n";
+		}
+		else
+			if (! /^[a-zA-Z]+$/.test(field) )
+				return "Los apellidos contienen solo letras.\n";
+		return "";
+	}
+	
+	function validateCedula(field) {
+		if (field =="") return "Favor de llenar el campo cedula.\n";
+	}
+	
+	function validatePassword(field){
+		if(field == "") return "Introduce una contraseña.\n";
+		else
+			if (field.length < 5)
+				return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+			else 
+				if (! /[a-z]/.test(field) || ! /[0-9]/.test(field))
+					return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";					
+		return "";		
+	}
+		
+	function validatePasswordEqual(field,field2) {
+		if(field !=field2) return "Las contraseñas no son iguales.\n";
+		return "";
+	}
+	
+	function validateCorreo(field) {
+		if(field == "") return "Introduce una contraseña.\n";
+		else if (!((field.indexOf(".") > 0) && (field.indexOf("@") > 0)) || /[^a-zA-Z0-9.@_-]/.test(field))
+			return "La dirección de correo electrónico es inválida.\n"
+		return "";
+	}
+	
+	function validateEqualsCorreo(field,field2){
+		if(field !=field2) return "Los correos no son iguales.\n";
+		return "";
+	}
+	
+	function validateConsultorio(field) {
+		if (! /^[0-9]+$/.test(field))
+			return "El campo Consultorio requiere digitos.\n";					
+		return "";
+	}
+	
+</script></head><body>
+<table class="signup" border="0" cellpadding="2"
+	cellspacing="5" bgcolor="#eeeeee">
+<th colspan="2" align="center">Formulario de inscripción</th> 
+<tr><td colspan="2">$mensaje <p><font color=red size=1><i>$fail</i></font></p>
+</td></tr>	
+	<form action="regDentista.php" method="post" onSubmit="return validate(this)">
+			<tr><td>Primer Nombre:</td><td> <input type="text" name="nombre" size="20" id="nombre" value="$nombre" />
+
+			<tr><td>Segundo Nombre:</td><td> <input type="text" name="nombre2" size="20" id="nombre2" value="$nombre2" />
+
+			<tr><td>Apellido paterno:</td><td> <input type="text" name="apaterno" size="20" id="apaterno" value="$apaterno" />
+
+			<tr><td>Apellido materno:</td><td> <input type="text" name="amaterno" size="20" id="amaterno" value="$amaterno"/>
+
+			<tr><td>Cédula:</td><td> <input type="text" name="cedula" size="20" id="cedula" value="$cedula" />
+
+			<tr><td>Usuario:</td><td> <input type="text" name="user" size="20" id="user" value="$user" />
+
+			<tr><td>Contraseña:</td><td> <input type="password" name="pass" size="20" id="pass" />
+
+			<tr><td>Confirmar Contraseña:</td><td> <input type="password" name="pass2" size="20" id="pass2" />
+
+			<tr><td>Correo electronico:</td><td> <input type="text" name="correo" size="20" id="correo" value="$correo" />
+
+			<tr><td>Confirmar Correo electronico:</td><td> <input type="text" name="correo2" size="20" id="correo2" value="$correo2" />
+
+			<tr><td>Consultorio:</td><td> <input type="text" name="consultorio" size="20" id="consultorio" value="$consultorio" />
+
+			</td><td><input type="submit" value="Registrar" />
+			
+			<input type="hidden" name="posted" value="yes" />
+			
+	</form>
+_END;
+
+//Funciones php
+function validaNombre($nombre) {
+	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
+	else
+		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
+		return "El campo Nombre solo contiene letras.\n";
+	return "";
+}
+
+function validaNombre2($nombre2) {
+	if ($nombre !=""){
+		if (! preg_match("/^[a-zA-Z]+$/",$nombre2 ))
+			return "El campo Nombre solo contiene letras Nombre.\n";
+	}
+	return "";
+}
+
+function validaPaterno($nombre,$tipo) {
+	if (field =="") {
+		if($tipo == 1)
+			return "Favor de llenar el campo apellido paterno.\n";
+			else
+			return "Favor de llenar el campo apellido materno.\n";
+	}
+	else
+		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
+		return "Los apellidos solo contienen letras.\n";
+	return "";
+}
+
+function validaCedula($field) {
+	if ($field =="") return "Favor de llenar el campo cedula.\n";
+}
+
+function validaPass($field) {
+
+	if(field == "") return "Introduce una contraseña.\n";
+	else{
+
+		if (strlen($field) < 5)
+			return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+
+		else
+			if (! preg_match("/[a-z]/",$field) || ! preg_match("/[0-9]/",$field))
+			return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";
+	}
+	return "";
+}
+
+function validaEqualPass($field,$field2) {
+	if($field !=$field2) return "Las contraseñas no son iguales.\n";
+	return "";
+}
+
+
+function validaCorreo($field) {
+	if ($field == "") return "Introduce una contraseña.\n";
+	else if (!((strpos($field, ".") > 0) && 
+			(strpos($field, "@") > 0))  || 
+			preg_match("/[^a-zA-Z0-9.@_-]/",$field))
+		return "La dirección de correo electrónico es inválida".$field."\n";
+	return "";
+}
+
+function validaEqualCorreo($field,$field2){
+	if($field !=$field2) return "Los correos no son iguales.\n";
+	return "";
+}
+
+function validaConsultorio($consultorio) {
+	if (! preg_match("/^[0-9]+$/",$consultorio))
+		return "El consultorio requiere digitos.\n";
+	return "";
+}
+
+?>
+

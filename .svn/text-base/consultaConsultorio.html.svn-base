@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Consulta</title>
+</head>
+
+<body>
+
+	Página de consulta de Consultorios.
+	<br />
+	<!-- Consulta por nombre -->
+	<form action="consultaConsultorio.php" method="post">
+		<br />Nombre: <input type="text" name="name" /><br /> <br /> <input
+			type="submit" value="Buscar" />
+	</form>
+	<!-- END OF Consulta por usuario -->
+	<br />
+	<!--Consulta general  -->
+	<form action="consultaConsultorioGeneral.php" method="post">
+		<br />Consulta general.<br /> <br /> <input type="submit"
+			value="Buscar" />
+	</form>
+	<!-- END OF Consulta general -->
+</body>
+</html>

@@ -1,0 +1,207 @@
+<?php
+if(isset($_POST['posted'])) {
+
+	require_once('../funciones.php');
+	conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+	
+	//recibe info
+	$user = strip_tags($_POST['user']);
+	$pass = strip_tags($_POST['pass']);
+	$pass2 = strip_tags($_POST['pass2']);
+	$name = strip_tags($_POST['name']);
+	$apellidoPat = strip_tags($_POST['apellidoP']);
+	$apellidoMat = strip_tags($_POST['apellidoM']);
+	$correo = strip_tags($_POST['correo']);
+	$correo2 = strip_tags($_POST['correo2']);
+
+	//Validacion
+	$fail = validaUser($user);
+	$fail .= validaPass($pass);
+	$fail .= validaEqualPass($pass,$pass2);
+	$fail .= validaNombre(trim($name));
+	$fail .= validaPaterno(trim($apellidoPat),1);
+	$fail .= validaPaterno(trim($apellidoMat),2);
+	$fail .= validaCorreo($correo);
+	$fail .= validaEqualCorreo($correo,$correo2);
+	
+	echo "<html><head><title>Registro Padre</title>";
+	if($fail == "") {
+	
+		$query = @mysql_query("SELECT * FROM Padre WHERE idPadre='".mysql_real_escape_string($user)."' AND Password= '".mysql_real_escape_string($pass)."'");
+		if($existe = @mysql_fetch_object($query)){
+			echo 'este usuario '.$user.' ya existe';
+		}else{
+			$pass_enc = sha1($pass);
+			$meter=@mysql_query('INSERT INTO Padre values ("'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($name).'","'.mysql_real_escape_string($apellidoPat).'","'.mysql_real_escape_string($apellidoMat).'","'.mysql_real_escape_string($correo).'","'.mysql_real_escape_string($pass_enc).'")');
+		
+			if($meter){
+				echo 'Padre registrado con exito';
+			}else{
+				echo 'Hubo un error';
+			}
+		}
+	}
+}
+//Output y HTML
+
+echo <<<_END
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- Seccion HTML -->
+<style>.signup { border: 1px solid #999999;
+font: normal 14px helvetica; color:#444444; }</style>
+<script type="text/javascript">
+	function validate(form){
+		fail = validateNombre(form.name.value);
+		fail += validatePaterno(form.apellidoP.value,1);
+		fail += validatePaterno(form.apellidoM.value,2);		
+		fail += validatePass(form.pass.value);
+		fail += validateEqualPass(form.pass2.value,form.pass.value);
+		fail += validateCorreo(form.correo.value);
+		fail += validateEqualCorreo(form.correo.value,form.correo2.value);
+		if (fail =="") return true;
+		else {
+			alert(fail);
+			return false;
+		}
+	}
+
+	function validateNombre(field) {
+		if (field =="") return "Favor de llenar el campo Nombre.\n";
+		else
+			if (! /^[a-zA-Z]+$/.test(field) )
+				return "El campo Nombre solo contiene letras.\n";
+		return "";
+	}
+	
+	function validatePaterno(field,tipo) {
+		if (field =="") {
+			if (tipo == 1)
+				return "Favor de llenar el campo apellido paterno.\n";
+			else
+				return "Favor de llenar el campo apellido materno.\n";
+		else
+			if (! /^[a-zA-Z]+$/.test(field) )
+				return "Los apellidos contienen solo letras.\n";
+		return "";
+	}
+	
+	function validatePassword(field){
+		if(field == "") return "Introduce una contraseña.\n";
+		else
+			if (field.length < 5)
+				return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+			else 
+				if (! /[a-z]/.test(field) || ! /[0-9]/.test(field))
+					return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";					
+		return "";		
+	}
+		
+	function validatePasswordEqual(field,field2) {
+		if(field !=field2) return "Las contraseñas no son iguales.\n";
+		return "";
+	}
+	
+	function validateCorreo(field) {
+		if(field == "") return "Introduce una contraseña.\n";
+		else if (!((field.indexOf(".") > 0) && (field.indexOf("@") > 0)) || /[^a-zA-Z0-9.@_-]/.test(field))
+			return "La dirección de correo electrónico es inválida.\n"
+		return "";
+	}
+	
+	function validateEqualsCorreo(field,field2){
+		if(field !=field2) return "Los correos no son iguales.\n";
+		return "";
+	}
+</script></head><body>
+<table class="signup" border="0" cellpadding="2"
+	cellspacing="5" bgcolor="#eeeeee">
+<th colspan="2" align="center">Formulario de inscripción</th> 
+<tr><td colspan="2">$mensaje <p><font color=red size=1><i>$fail</i></font></p>
+</td></tr>	
+	<form action="regPadre.php" method="post" onSubmit="return validate(this)">
+		<tr><td>Identificador:</td><td> <input type="text" name="user" size="20" id="user" value="$user" />								
+							
+		<tr><td>Nombre:</td><td> <input type="text" name="name" size="20" id="name" value="$name" />
+			
+		<tr><td>Apellido Paterno:</td><td> <input type="text" name="apellidoP" size="20" id="apellidoP" value="$apelllidoP"/>
+			
+		<tr><td>Apellido Materno:</td><td> <input type="text" name="apellidoM" size="20" id="apellidoM" value="$apellidoM"/>
+				
+		<tr><td>Contraseña:</td><td> <input type="password" name="pass" size="20" id="pass" />
+		
+		<tr><td>Confirmar Contraseña:</td><td> <input type="password" name="pass2" size="20" id="pass2" />
+
+		<tr><td>Correo electronico:</td><td> <input type="text" name="correo" size="20" id="correo" value="$correo" />
+
+		<tr><td>Confirmar Correo electronico:</td><td> <input type="text" name="correo2" size="20" id="correo2" value="$correo2" />		
+
+		<tr><td><input type="submit" value="Registrar" />
+		
+		<input type="hidden" name="posted" value="yes" />
+		
+	</form>
+_END;
+
+//Funciones PHP
+function validaUser($user) {
+	if ($user =="") return "Favor de llenar el campo Identificador.\n";
+	return "";
+}
+
+function validaNombre($nombre) {
+	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
+	else
+		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
+		return "El campo Nombre solo contiene letras.\n";
+	return "";
+}
+
+function validaPaterno($nombre,$tipo) {
+	if (field =="") {
+		if(tipo ==1)
+			return "Favor de llenar el campo apellido paterno.\n";
+		else
+			return "Favor de llenar el campo apellido materno.\n";
+	}
+	else
+		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
+		return "Los apellidos solo contienen letras.\n";
+	return "";
+}
+
+function validaPass($field) {
+
+	if(field == "") return "Introduce una contraseña.\n";
+	else{
+
+		if (strlen($field) < 5)
+			return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
+
+		else
+			if (! preg_match("/[a-z]/",$field) || ! preg_match("/[0-9]/",$field))
+			return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";
+	}
+	return "";
+}
+
+function validaEqualPass($field,$field2) {
+	if($field !=$field2) return "Las contraseñas no son iguales.\n";
+	return "";
+}
+
+
+function validaCorreo($field) {
+	if ($field == "") return "Introduce una contraseña.\n";
+	else if (!((strpos($field, ".") > 0) &&
+			(strpos($field, "@") > 0))  ||
+			preg_match("/[^a-zA-Z0-9.@_-]/",$field))
+		return "La dirección de correo electrónico es inválida".$field."\n";
+	return "";
+}
+
+function validaEqualCorreo($field,$field2){
+	if($field !=$field2) return "Los correos no son iguales.\n";
+	return "";
+}
+
+?>
