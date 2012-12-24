@@ -1,0 +1,23 @@
+<?php
+require_once('funciones.php');
+conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+
+//recibe info
+$clave = strip_tags($_POST['clave']);
+$nombre = strip_tags($_POST['nombre']);
+
+$query = @mysql_query("SELECT * FROM Pais WHERE idPais='".mysql_real_escape_string($clave).'")');
+
+if($existe = @mysql_fetch_object($query)){
+	echo 'El pais '.$clave.' ya existe';
+}else{
+	$meter=@mysql_query('INSERT INTO Pais (idPais, Nombre) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'")');
+
+	if($meter){
+		echo 'Pais registrado con exito';
+	}else{
+		echo 'Hubo un error';
+	}
+}
+
+?>

@@ -1,0 +1,145 @@
+<!--
+Pagina principal para mas informacion para los padres de familia
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="anoceanofsky.css" />
+<title>Cartilla de Salud Bucal Digital</title>
+</head>
+
+<body>
+
+	<style type='text/css'>
+form {
+	width: 400px;
+}
+
+form ul {
+	list-style-type: none;
+}
+
+form ul li {
+	margin: 15px 0;
+}
+
+form label {
+	display: block;
+	font-size: 1em;
+}
+
+form input {
+	font-size: 1em;
+	padding: 5px;
+	border: #ccc 3px solid;
+	width: 100%;
+}
+</style>
+
+
+	<div id="page">
+		<div class="topNaviagationLink">
+			<a href="login.html">Inicio</a>
+		</div>
+		<div class="topNaviagationLink">
+			<a href="registrarse.html">Registro</a>
+		</div>
+		<div class="topNaviagationLink">
+			<a href="acerca.html">Acerca de</a>
+		</div>
+		<div class="topNaviagationLink">
+			<a href="contacto.html">Contacto</a>
+		</div>
+
+		<div class="topNaviagationLink" id="logbox">
+			<form action="login.php" method="post"></form>
+		</div>
+
+	</div>
+
+	<div id="mainPicture">
+		<div class="picture">
+			<div id="headerTitle">Cartilla de Salud Bucal Digital</div>
+			<div id="headerSubtext">Información para dentistas</div>
+		</div>
+	</div>
+	<div class="contentBox">
+		<div class="innerBox">
+
+			<div class="contentTitle">
+				<p>Registrarte es muy fácil! Solo llena el siguiente
+					formato correctamente con todos los datos que se piden.</p>
+				<p>&nbsp;</p>
+			</div>
+			<div class="contentText">
+
+				<p>
+					<!-- Registro -->
+				<form action="regDentista.php" method="post">
+					<ul>
+						<li><label for="nombre"> Primer Nombre: </label> <input
+							type="text" name="nombre" size="20" id="nombre" /></li>
+
+						<li><label for="nombre2"> Segundo Nombre: </label> <input
+							type="text" name="nombre2" size="20" id="nombre2" /></li>
+
+						<li><label for="apaterno"> Apellido paterno: </label> <input
+							type="text" name="apaterno" size="20" id="apaterno" /></li>
+
+						<li><label for="amaterno"> Apellido materno: </label> <input
+							type="text" name="amaterno" size="20" id="amaterno" /></li>
+
+						<li><label for="cedula"> Cédula: </label> <input type="text"
+							name="cedula" size="20" id="cedula" /></li>
+
+						<li><label for="user"> Usuario: </label> <input type="text"
+							name="user" size="20" id="user" /></li>
+
+						<li><label for="pass"> Contraseña: </label> <input
+							type="password" name="pass" size="20" id="pass" /></li>
+
+						<li><label for="pass2"> Confirmar Contraseña: </label> <input
+							type="password" name="pass2" size="20" id="pass2" /></li>
+
+						<li><label for="correo"> Correo electronico: </label> <input
+							type="text" name="correo" size="20" id="correo" /></li>
+
+						<li><label for="correo2"> Confirmar Correo
+								electronico: </label> <input type="text" name="correo2" size="20"
+							id="correo2" /></li>
+
+						<li><label for="consultorio"> Consultorio: </label> <input
+							type="text" name="consultorio" size="20" id="consultorio" /></li>
+
+						<li><input type="submit" value="Registrar" /></li>
+
+					</ul>
+
+				</form>
+				<p>
+
+
+					<div id="img1">
+						<div class="picture"></div>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+				</p>
+			</div>
+
+
+			<p>
+				<p>
+					<div id="img2"></div>
+		</div>
+	</div>
+	<p>&nbsp;</p>
+	</div>
+	<div id="footer">
+		<a href="http://www.aszx.net">Este sitio se ve mejor</a> en <a
+			href="http://www.bryantsmith.com">Firefox</a>
+	</div>
+</body>
+</html>

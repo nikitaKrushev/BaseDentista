@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Registro</title>
+<style type='text/css'>
+form {
+	width: 400px;
+}
+
+form ul {
+	list-style-type: none;
+}
+
+form ul li {
+	margin: 15px 0;
+}
+
+form label {
+	display: block;
+	font-size: 1em;
+}
+
+form input {
+	font-size: 1em;
+	padding: 5px;
+	border: #ccc 3px solid;
+	width: 100%;
+}
+</style>
+</head>
+<body>
+	Página de registro para Pais
+	<br />
+	<!-- Registro -->
+	<form action="regPais.php" method="post">
+		<ul>
+			<li><label for="clave"> Clave: </label> <input
+				type="text" name="clave" size="20" id="clave" /></li>
+
+			<li><label for="nombre"> Nombre: </label> <input
+				type="text" name="nombre" size="20" id="nombre" /></li>
+
+			<li><input type="submit" value="Registrar" /></li>
+
+		</ul>
+
+	</form>
+	<!-- END OF Registro -->
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?php
+require_once('funciones.php');
+conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+
+//recibe info
+$clave = strip_tags($_POST['clave']);
+$nombre = strip_tags($_POST['nombre']);
+$institucion = strip_tags($_POST['institucion']);
+
+$query = @mysql_query("SELECT * FROM Clinica WHERE idClinica='".mysql_real_escape_string($clave)."' AND Institucion_idInstitucion= '".mysql_real_escape_string($institucion)."'");
+
+if($existe = @mysql_fetch_object($query)){
+	echo 'La clinica '.$clave.' ya existe';
+}else{
+	$meter=@mysql_query('INSERT INTO Clinica (idClinica, NombreClinica, Institucion_idInstitucion) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($institucion).'")');
+
+	if($meter){
+		echo 'clinica registrada con exito';
+	}else{
+		echo 'Hubo un error';
+	}
+}
+
+?>

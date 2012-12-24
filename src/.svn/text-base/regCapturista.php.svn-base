@@ -1,0 +1,23 @@
+<?php
+require_once('funciones.php');
+conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+
+//recibe info
+$user = strip_tags($_POST['user']);
+$pass = strip_tags($_POST['pass']);
+
+$query = @mysql_query("SELECT * FROM Capturista WHERE Usuario='".mysql_real_escape_string($user)."' AND Password= '".mysql_real_escape_string($pass)."'");
+
+if($existe = @mysql_fetch_object($query)){
+	echo 'este usuario '.$user.' ya existe';
+}else{
+	$meter=@mysql_query('INSERT INTO Capturista (Usuario, Password) values ("'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($pass).'")');
+
+	if($meter){
+		echo 'capturista registrado con exito';
+	}else{
+		echo 'Hubo un error';
+	}
+}
+
+?>

@@ -1,0 +1,23 @@
+<?php
+require_once('funciones.php');
+conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+
+//recibe info
+$nombre = strip_tags($_POST['nombre']);
+$escuela = strip_tags($_POST['escuela']);
+
+$query = @mysql_query("SELECT * FROM grupo WHERE Nombre='".mysql_real_escape_string($nombre)."' AND Escuela_idEscuela= '".mysql_real_escape_string($escuela)."'");
+
+if($existe = @mysql_fetch_object($query)){
+	echo 'el grupo '.$nombre.' ya existe';
+}else{
+	$meter=@mysql_query('INSERT INTO grupo (Nombre, Escuela_idEscuela) values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($escuela).'")');
+
+	if($meter){
+		echo 'grupo registrado con exito';
+	}else{
+		echo 'Hubo un error';
+	}
+}
+
+?>
