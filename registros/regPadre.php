@@ -87,12 +87,13 @@ if(isset($_POST['posted'])) {
 								
 								if($meter){
 									echo 'Usuario registrado con exito';
-									$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
-									
-									if($sendmail == true)
-										echo 'Mail sent!';
-									else
-										echo 'Mail not sent';
+									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
+									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
+									echo 'Mail sent!';
+									//if($sendmail == true)
+									//	echo 'Mail sent!';
+									//else
+									//	echo 'Mail not sent';
 										
 									header("refresh:3;url=../index.php");
 										

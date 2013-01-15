@@ -1,55 +1,84 @@
 <?php 
+include '../accesoDentista.php';
+
+if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay una sesion
+	echo("Contenido Restringido");
+	switch($_SESSION['type']) {
+		case 1: //Dentista
+			header("refresh:3, url=../principales/mainDentista2.php");
+			break;
+
+		case 2: //Padre
+			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
+			break;
+
+		case 3://Maestro
+			header("refresh:3;url=../principales/padrePrincipal.php");
+			break;
+
+		case 4://Director
+			header("refresh:3;url=../principales/directorPrincipal.php");
+			break;
+
+		case 6://Administrador
+			header("refresh:3;url=../principales/adminPage.php");
+			break;
+	}
+	exit;
+}
+
+//Aqui el nombre de los paises
+$query = @mysql_query("SELECT Nombre FROM Pais");
+
+while ($existe = @mysql_fetch_object($query))
+	$paises[] = $existe;
+$size= count($paises);
+
+//Nombre el nombre de los estados Esto esta medio tonto, porque se supone que deberia mostrar los estados del pais que el usuario seleccione
+$query = @mysql_query("SELECT Nombre FROM Estado");
+while ($existe = @mysql_fetch_object($query))
+	$estados[] = $existe;
+$size_estados= count($estados);
+
 if(isset($_POST['posted'])) {
 
 	require_once('../funciones.php');
 	conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
 
 	//recibe info
-	$clave = strip_tags($_POST['clave']);
+	
 	$nombre = strip_tags($_POST['nombre']);
 	$estado = strip_tags($_POST['estado']);
-	$mensaje = "Registro no exitoso, se encontraron los siguientes<br />
-	errores en el formulario:";
-
-	//Para validacion
-	$fail = validaClave($clave);
-	$fail .= validaNombre(trim($nombre));
-	$fail .= validaEstado($estado);
-
-	echo "<html><head><title>Registro Ciudad</title>";
-	if($fail == "") {
-		 
-		$query = @mysql_query("SELECT * FROM Ciudad WHERE idCiudad=".mysql_real_escape_string($clave));
+	$pais = strip_tags($_POST['pais']);
+			 
+		$query = @mysql_query("SELECT * FROM Ciudad WHERE nombre=".mysql_real_escape_string($nombre)." && Estado_Nombre=".mysql_real_escape_string($estado)." && Estado_Nombre=".mysql_real_escape_string($pais) );
 		if( $existe = @mysql_fetch_object($query)){
-			echo 'La ciudad '.$clave.' ya existe';
+			echo 'La ciudad '.$nombre.' ya existe, cuyo estado es:'.$estado.' y pais:'.$pais;
 		}else{
 
-			$meter=@mysql_query('INSERT INTO Ciudad (idCiudad, Nombre, Estado_idEstado) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($estado).'")');
+			$meter=@mysql_query('INSERT INTO Ciudad (Nombre, Estado_Nombre,Estado_Pais_Nombre) values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($estado).'","'.mysql_real_escape_string($pais).'")');
 
 			if($meter){
-				echo "</head><body>	Datos registrados con exito!</body></html>";
+				echo 'Ciudad registrado con exito';
+			header("refresh:3;url=../principales/profesionalPrincipal.php");
 			}else{
 				echo 'Hubo un error';
+			header("refresh:10;url=regEstado.php");		
 			}
 		}
 
-		exit;
-	}
+		exit;	
 }
 
 else {
-	$clave = "Clave";
+	
 	$nombre = "Nombre";
 	$estado = "Estado";
+	$pais = "Pais";
 	
 }
 
 //Funciones PHP
-function validaClave($clave) {
-	if (! preg_match("/^[0-9]+$/",$clave))
-		return "La clave requiere digitos.\n";
-	return "";
-}
 
 function validaNombre($nombre){
 	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
@@ -59,31 +88,6 @@ function validaNombre($nombre){
 	return "";
 }
 
-function validaEstado($estado) {
-	if (! preg_match("/^[0-9]+$/",$estado))
-		return "El estado requiere digitos.\n";
-	return "";
-}
-
-
-
-/*include '../accesoDentista.php';
- //Checamos si hay una session vacia o si ya hay una sesion
-if ($_SESSION['type'] != 3) {
-echo("Contenido Restringido");
-switch($_SESSION['type']) {
-
-case 1:
-header("refresh:3, url=loggeado.php");
-break;
-
-case 2:
-header( "refresh:3;url=padrePrincipal.php" ); //Redireccionar a pagina
-break;
-
-}
-
-} */
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -148,12 +152,7 @@ break;
 									return false;
 								}
 							}
-							function validateClave(field) {
-								if (! /^[0-9]+$/.test(field))
-									return "La clave requiere digitos.\n";					
-								return "";
-							}
-							
+						
 							function validateNombre(field) {
 								if (field =="") return "Favor de llenar el campo Nombre.\n";
 								else
@@ -162,22 +161,35 @@ break;
 								return "";
 							}
 							
-							function validateEstado(field) {
-								if (! /^[0-9]+$/.test(field))
-									return "El campo Estado requiere digitos.\n";					
-								return "";
-							}
 						</script>
 								<form action="#" method="post" onsubmit="return validate(this)">
-									<input type="text" value="<?php echo $clave;?>" alt="Clave:"
-										title="Escribe una clave" name="clave" id="clave" /> <input
-										type="text" value="<?php echo $nombre;?>" alt="Nombre:"
-										title="Escribe un nombre" name="nombre" id="nombre" /> <input
-										type="text" value="<?php echo $estado;?>" name="estado"
-										alt="Estado:" title="Selecciona un estado de la lista"
-										id="estado" /> <input type="submit" value="Estados" alt="Estado:"
-										title="Selecciona un estado de la lista POP UP O ALGO ASI"
-										id="estado"> </input> <input type="submit" value="Registrar" />
+									<input type="text" value="<?php echo $nombre;?>" alt="Nombre:" title="Escribe un nombre" name="nombre" id="nombre" /> 
+									<select name="estado">
+									<?php
+									//<input type="text" value="<?php echo $estado;>" name="estado" alt="Estado:" title="Selecciona un estado de la lista" id="estado" />
+									 
+									echo $size_estados;
+										if(isset($size_estados)) {
+										for($i=0; $i<$size_estados; $i++) {
+									?>
+										<option value="<?php echo $estados[$i]->Nombre; ?>" ><?php echo $estados[$i]->Nombre; ?> </option>
+									<?php }} 
+									?>										
+									</select>
+									
+									<select name="pais">
+									<?php
+									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
+									 
+									echo $size;
+										if(isset($size)) {
+										for($i=0; $i<$size; $i++) {
+									?>
+										<option value="<?php echo $paises[$i]->Nombre; ?>" ><?php echo $paises[$i]->Nombre; ?> </option>
+									<?php }} 
+									?>										
+									</select>
+									<input type="submit" value="Registrar" />
 									<input type="hidden" name="posted" value="yes" />
 								</form>
 							</li>
@@ -199,18 +211,30 @@ break;
 			<!-- Main Naigation (active - .act) -->
 			<div id="main-nav">
 				<ul>
-					<li class="act"><a href="index.html">Inicio</a></li>
-					<li><a href="contruccion.html">Consultorio</a>
-					</li>
-					<li><a href="construccion.html">Dentista </a>
-					</li>
-					<li><a href="construccion.html">Escuela</a>
-					</li>
-					<li><a href="construccion.html">Paciente</a>
-					</li>
-
-					<li><a href="construccion.html">Solicitudes pendientes</a>
-					</li>
+					<li class="act"><a href="../principales/profesionalPrincipal.php">Inicio</a></li>
+					 <li>
+                        <a href="../registros/regAdmin.php">Registrar administrador de sitio</a>
+                        
+                    </li>
+                    <li>
+                        <a href="../registros/regPais.php">Registrar Pais</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="../registros/regEstado.php">Registrar Estado</a>
+                        
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="../registros/regCiudad.php">Registrar Ciudad</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="../construccion.html">Consultar directorio de consultorios</a>                      
+                    </li>                
 
 				</ul>
 			</div>
@@ -240,14 +264,7 @@ break;
 		<div id="footer">
 
 			<!-- Subscribe Form and Copyright Text -->
-			<div id="f-left-col">
-				<div id="sidebar-end">
-					<form action="#" id="subscribe">
-						<input type="text" value="" alt="Recibe las �ltimas noticias!"
-							title="Escribe tu correo" /> <input type="submit" value=""
-							title="Subscribe" />
-					</form>
-				</div>
+			<div id="f-left-col">				
 				<div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC</div>
 			</div>
 
@@ -277,124 +294,3 @@ break;
 
 </body>
 </html>
-
-
-
-
-
-
-
-<?php 
-/*
- if(isset($_POST['posted'])) {
-
-require_once('../funciones.php');
-conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
-
-//recibe info
-$clave = strip_tags($_POST['clave']);
-$nombre = strip_tags($_POST['nombre']);
-$estado = strip_tags($_POST['estado']);
-$mensaje = "Registro no exitoso, se encontraron los siguientes<br />
-errores en el formulario:";
-
-//Para validacion
-$fail = validaClave($clave);
-$fail .= validaNombre(trim($nombre));
-$fail .= validaEstado($estado);
-
-echo "<html><head><title>Registro Ciudad</title>";
-if($fail == "") {
-	
-$query = @mysql_query("SELECT * FROM Ciudad WHERE idCiudad=".mysql_real_escape_string($clave));
-if( $existe = @mysql_fetch_object($query)){
-echo 'La ciudad '.$clave.' ya existe';
-}else{
-	
-$meter=@mysql_query('INSERT INTO Ciudad (idCiudad, Nombre, Estado_idEstado) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($estado).'")');
-
-if($meter){
-echo "</head><body>	Datos registrados con exito!</body></html>";
-}else{
-echo 'Hubo un error';
-}
-}
-
-exit;
-}
-}
-
-//Output HTML y JavaScript
-
-echo <<<_END
-<script type="text/javascript">
-function validate(form){
-fail = validateClave(form.clave.value);
-fail += validateNombre(form.nombre.value);
-fail += validateEstado(form.estado.value);
-if (fail =="") return true;
-else {
-alert(fail);
-return false;
-}
-}
-function validateClave(field) {
-if (! /^[0-9]+$/.test(field))
-	return "La clave requiere digitos.\n";
-return "";
-}
-
-function validateNombre(field) {
-if (field =="") return "Favor de llenar el campo Nombre.\n";
-else
-	if (! /^[a-zA-Z]+$/.test(field) )
-	return "El campo Nombre solo contiene letras.\n";
-return "";
-}
-
-function validateEstado(field) {
-if (! /^[0-9]+$/.test(field))
-	return "El campo Estado requiere digitos.\n";
-return "";
-}
-</script></head><body>
-<table class="signup" border="0" cellpadding="2"
-cellspacing="5" bgcolor="#eeeeee">
-<th colspan="2" align="center">Formulario de inscripción</th>
-<tr><td colspan="2">$mensaje <p><font color=red size=1><i>$fail</i></font></p>
-</td></tr>
-<form action="regCiudad.php" method="post" onsubmit="return validate(this)">
-<tr><td>Clave:</td><td> </label> <input type="text" name="clave" size="20" id="clave" value="$clave" />
-
-<tr><td>Nombre:</td><td> </label> <input type="text" name="nombre" size="20" id="nombre" value="$nombre"/>
-
-<tr><td>Estado (Clave):</td><td> </label> <input type="text" name="estado" size="20" id="estado" value="$estado" />
-
-<tr><td><input type="submit" value="Registrar" /></td><td>
-<input type="hidden" name="posted" value="yes" />
-	
-</form>
-_END;
-
-//Funciones PHP
-function validaClave($clave) {
-if (! preg_match("/^[0-9]+$/",$clave))
-	return "La clave requiere digitos.\n";
-return "";
-}
-
-function validaNombre($nombre){
-if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
-else
-	if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-	return "El campo Nombre solo contiene letras.\n";
-return "";
-}
-
-function validaEstado($estado) {
-if (! preg_match("/^[0-9]+$/",$estado))
-	return "El estado requiere digitos.\n";
-return "";
-}
-*/
-?>

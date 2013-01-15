@@ -1,31 +1,61 @@
 <?php
+include '../accesoDentista.php';
+
+if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay una sesion
+	echo("Contenido Restringido");
+	switch($_SESSION['type']) {
+		case 1: //Dentista
+			header("refresh:3, url=../principales/mainDentista2.php");
+			break;
+				
+		case 2: //Padre
+			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
+			break;
+
+		case 3://Maestro
+			header("refresh:3;url=../principales/padrePrincipal.php");
+			break;
+
+		case 4://Director
+			header("refresh:3;url=../principales/directorPrincipal.php");
+			break;
+
+		case 6://Administrador
+			header("refresh:3;url=../principales/adminPage.php");
+			break;
+	}
+	exit;
+}
+
+
+
 if(isset($_POST['posted'])) {
 
 	require_once('../funciones.php');
-	conectar('localhost', 'monty', 'holygrail', 'BaseDientes');
+	conectar($servidor, $user, $pass, $name);
 	
 	//recibe info
-	$clave = strip_tags($_POST['clave']);
 	$nombre = strip_tags($_POST['nombre']);
 
 	//Validacion
 	$fail = validaNombre(trim($nombre));
-	$fail .= validaClave($clave);
-	
-	echo "<html><head><title>Registro Pais</title>";
 	
 	if($fail == "") {
-		$query = @mysql_query("SELECT * FROM Pais WHERE idPais='".mysql_real_escape_string($clave).'")');
+		$query = @mysql_query("SELECT * FROM Pais WHERE Nombre='".mysql_real_escape_string($nombre).'")');
 		
-		if($existe = @mysql_fetch_object($query)){
-			echo 'El pais '.$clave.' ya existe';
+		if($existe = @mysql_fetch_object($query)){			
+			$fail.= 'El pais '.$clave.' ya existe';
+			header("refresh:2;url=regPais.php");
+			
 		}else{
-			$meter=@mysql_query('INSERT INTO Pais (idPais, Nombre) values ("'.mysql_real_escape_string($clave).'","'.mysql_real_escape_string($nombre).'")');
+			$meter=@mysql_query('INSERT INTO Pais values ("'.mysql_real_escape_string($nombre).'")');			
 		
 			if($meter){
 				echo 'Pais registrado con exito';
+				header("refresh:3;url=../principales/profesionalPrincipal.php");									
 			}else{
 				echo 'Hubo un error';
+				header("refresh:2;url=regPais.php");					
 			}
 		}
 		exit;
@@ -33,7 +63,6 @@ if(isset($_POST['posted'])) {
 }
 
 else {
-	$clave = "Clave:";
 	$nombre = "Nombre:";	
 }
 
@@ -45,11 +74,11 @@ function validaNombre($nombre) {
 	return "";
 }
 
-function validaClave($clave) {
+/*function validaClave($clave) {
 	if (! preg_match("/^[0-9]+$/",$clave))
 		return "La clave requiere digitos.\n";
 	return "";
-}
+}*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"> 
@@ -126,7 +155,6 @@ function validaClave($clave) {
 								</script>
 							
 							<form action="regPais.php" method="post" onSubmit="return validate(this)">
-								<input type="text" value="<?php echo $clave;?>" name="clave" alt="Clave:" title="Introduce la clave del Pais" id="clave"/>
 								<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="Nombre:" title="Escribre el nombre del pais:" id="nombre"/>
 								<input type="submit" value="Registrar" />
 								<input type="hidden" name="posted" value="yes" />
@@ -146,31 +174,37 @@ function validaClave($clave) {
         <div id="left-col">
         
             <!-- Logo -->
-            <a href="index.html" id="logo">Foundation</a>
+            <a href="../principales/profesionalPrincipal.php" id="logo">Foundation</a>
             
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">
-                <ul>
-                    <li class="act"><a href="index.html">Inicio</a></li>
+				<ul>
+                    <li class="act"><a href="../principales/profesionalPrincipal.php">Inicio</a></li>
                     <li>
-							<a href="contruccion.html">Consultorio</a>                     
+                        <a href="../registros/regAdmin.php">Registrar administrador de sitio</a>
+                        
                     </li>
                     <li>
-                        <a href="construccion.html">Dentista	</a>
-                    </li>
-                    <li>
-                        <a href="construccion.html">Escuela</a>      
-                    </li>
-                    <li>
-                        <a href="construccion.html">Paciente</a>      
-                    </li>                 
-                    
-                    <li>
-                        <a href="construccion.html">Solicitudes pendientes</a>      
+                        <a href="../registros/regPais.php">Registrar Pais</a>
+                        
                     </li>
                     
-                	</ul>
-            </div>
+                    <li>
+                        <a href="../registros/regEstado.php">Registrar Estado</a>
+                        
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="../registros/regCiudad.php">Registrar Ciudad</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="../construccion.html">Consultar directorio de consultorios</a>                      
+                    </li>
+                </ul>            
+             </div>
             
             <!-- News Widget -->
             <div class="widget w-news">
@@ -197,12 +231,7 @@ function validaClave($clave) {
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">
-                <div id="sidebar-end">
-                    <form action="#" id="subscribe">
-                        <input type="text" value="" alt="Recibe las �ltimas noticias!" title="Escribe tu correo" />
-                        <input type="submit" value="" title="Subscribe" />
-                    </form>
-                </div>
+               
                 <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
             </div>
             
@@ -236,58 +265,3 @@ function validaClave($clave) {
 
 </body>
 </html>
-
-//Output y HTML
-
-echo <<<_END
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<!-- Seccion HTML -->
-<style>.signup { border: 1px solid #999999;
-font: normal 14px helvetica; color:#444444; }</style>
-<script type="text/javascript">
-	function validate(form){
-		fail = validateNombre(form.name.value);
-			fail += validateClave(form.clave.value);
-	
-		if (fail =="") return true;
-		else {
-			alert(fail);
-			return false;
-		}
-	}
-	
-	function validateNombre(field) {
-		if (field =="") return "Favor de llenar el campo Nombre.\n";
-		else
-			if (! /^[a-zA-Z]+$/.test(field) )
-				return "El campo Nombre solo contiene letras.\n";
-		return "";
-	}
-	
-	function validateClave(field) {
-			if (! /^[0-9]+$/.test(field))
-			return "La clave requiere digitos.\n";					
-		return "";
-	}
-	
-</script></head><body>
-<table class="signup" border="0" cellpadding="2"
-	cellspacing="5" bgcolor="#eeeeee">
-<th colspan="2" align="center">Formulario de inscripción</th> 
-<tr><td colspan="2">$mensaje <p><font color=red size=1><i>$fail</i></font></p>
-</td></tr>
-	<form action="regPais.php" method="post" onSubmit="return validate(this)">
-		
-			<tr><td>Clave:</td><td> <input type="text" name="clave" size="20" id="clave" value="$clave"/>
-
-			<tr><td>Nombre:</td><td> <input type="text" name="nombre" size="20" id="nombre" value="$nombre"/>
-
-			<tr><td><input type="submit" value="Registrar" />
-					
-			<input type="hidden" name="posted" value="yes" />
-			
-	</form>
-_END;
-
-//Funciones PHP
-

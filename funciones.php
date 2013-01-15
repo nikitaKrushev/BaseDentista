@@ -2,7 +2,7 @@
 $servidor ='localhost'; 
 $user = 'monty';
 $pass = 'holygrail';
-$name = 'NewBaseDientes';
+$name = 'newbasedientes';
 
 function conectar($servidor, $user, $pass, $name)
 {

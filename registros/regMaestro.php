@@ -39,16 +39,18 @@ if(isset($_POST['posted'])) {
 	$correo2 = strip_tags($_POST['correo2']);
 	$escuela = strip_tags($_POST['escuela']);
 	$usuario = strip_tags($_POST['usuario']);
+		
+	/***
+	 * Codigo necesario para mandar correo de confirmacion
+	*/
 	
-	//Mail Diferente
-	$nombre2 = "Code Assist"; //Nombre del remitente
-	$mail_from = "cartillasaludbucal@gmail.com"; //Correo del remitente
-	$mail_to = $correo; //Correo receptor
-	$mail_body = $nombre." ".$apaterno."Tu registro ha sido capturado.";
-	$mail_subject = "Mail from: ".$nombre2;
-	$mail_header = "From: ".$nombre2." <".$mail_from.">\r\n";
-	
-	
+	$to = $correo;
+	$nameto = $nombre." ".$apaterno;
+	$from = "registro@cartillabucaldigital.org";
+	$namefrom = "Registro de cuentas";
+	$subject = "Asunto";
+	$message =  $nombre." ".$apaterno." "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!"; //Pondremos contrasenia y usuario al usuario
+		
 	//Para la validacion
 	$fail = validaNombre(trim($nombre));
 	$fail .= validaPaterno(trim($apaterno));
@@ -116,12 +118,13 @@ if(isset($_POST['posted'])) {
 									echo 'Administrador registrado con exito';
 									$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
 									
-									if($sendmail == true) {
+									//if($sendmail == true) {
 										echo 'Mail sent!';
-									}
-									else {
-										echo 'Mail not sent';
-									}
+									//}
+									//else {
+									//	echo 'Mail not sent';
+									//}
+									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									if($_SESSION['type'] == 4)
 										header("refresh:3;url=../principales/directorPrincipal.php");
 									else 

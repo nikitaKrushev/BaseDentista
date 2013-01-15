@@ -38,8 +38,6 @@ else {
 
 $_SESSION['uid'] = $uid;
 $_SESSION['pwd'] = $encript;
-
-
 $loginEncontrado = false;
 $query = "SELECT Usuario FROM Dentista WHERE Usuario='".$uid."' AND Password='".$encript."' LIMIT 1";
 $row = mysql_query($query);
@@ -131,7 +129,7 @@ if(!$loginEncontrado) {
 	<p>
 		El usuario o contraseña son incorrectos, o no eres un usuario
 		registrado en esete sito. Intenta acceder de nuevo al sistema, has
-		click <a href="/src/index.php">aquí.
+		click <a href="/index.php">aquí.
 	</p>
 </body>
 </html>

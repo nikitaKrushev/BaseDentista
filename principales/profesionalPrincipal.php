@@ -93,6 +93,22 @@ exit;
                         
                     </li>
                     <li>
+                        <a href="../registros/regPais.php">Registrar Pais</a>
+                        
+                    </li>
+                    
+                    <li>
+                        <a href="../registros/regEstado.php">Registrar Estado</a>
+                        
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="../registros/regCiudad.php">Registrar Ciudad</a>
+                        
+                    </li>
+                    
+                    <li>
                         <a href="../construccion.html">Consultar directorio de consultorios</a>                      
                     </li>
                 	</ul>

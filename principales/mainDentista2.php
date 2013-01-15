@@ -61,13 +61,7 @@
         <!-- Main Column Start -->
         <div id="wrap">
             <div id="main-col"><!-- Nivo Slider -->
-                <div id="slider-container">
-                    <div id="big-slider"><!-- Add Slides Here -->
-                        <a href="#"><img src="../img/pictures/slide-1.jpg" alt="" title="�Unete al programa!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-2.png" alt="" title="�Registrate hoy!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-3.png" alt="" title="�Empezar a cuidar tus dientes es muy f�cil!" /></a>
-                    </div>
-                </div>
+               
                 
                 <!-- Homepage Welcome Text -->
                 <div id="homepage-post">
@@ -78,16 +72,7 @@
                 </div>
                 
                 <!-- Homepage Teasers Start -->
- <div class="full-page-text">
-                
-                    <br/><br/><p>En M�xico unos de los aspectos de salud que m�s abandono han tenido ha  sido la Salud bucodental de la poblaci�n; hist�ricamente, este derecho le ha  sido negado a un gran porcentaje de usuarios de los servicios de salud  incluy�ndose, dentro de estos, a los de Baja California.</p>
-<p><a href="../img/pictures/niniafeliz.png" title="Una ni�a muy feliz en su consulta"><img src="../img/pictures/niniafeliz.png" alt="Paciente" class="alignleft" /></a>La  Organizaci�n Mundial de la Salud, de acuerdo con su clasificaci�n  internacional, coloca a M�xico entre los pa�ses de alto rango de frecuencia en  afecciones bucales, dentro de ellos la caries dental que afecta a m�s del 90%  de la poblaci�n; tambi�n ha establecido que son la caries dental y la  enfermedad periodontal las enfermedades con mayor prevalencia a nivel mundial.</p>
-                    <p>Hoy en d�a se desconoce la prevalencia de caries en B.C. y a pesar de  que la �ltima encuesta fue elaborada hace m�s de cinco a�os no existen datos  que nos indique que el �ndice de prevalencia de caries haya cambiado o que esa  tendencia fue mejorada.</p>
-        <p>La Ley de Salud P�blica para el Estado de Baja California, establece  como un servicio b�sico de salud para toda persona la atenci�n bucodental</p>
-<h3>Creaci�n de la Cartilla de Salud Bucal</h3>
-<p><a href="../img/pictures/consultamexicana.png" title="Otra ni�a super feliz!"><img src="../img/pictures/consultamexicana.png" alt="Paciente" class="aligncenter" /></a></p>
-                    <p>Uno de los aspectos m�s novedoso y de mayor trascendencia es el  relativo a la creaci�n de un documento oficial denominado &ldquo;CARTILLA DE SALUD  BUCAL DIGITAL&rdquo;, que tendr� como objeto llevar un registro y control de la  atenci�n bucal del ni�o y del adolescente, estableciendo un seguimiento en la  salud oral de cada ni�o que adem�s permita a cualquier persona con la simple  lectura conocer y valorar su estado de salud; por otra parte, ser� una  herramienta de medici�n con la que podremos elaborar� el Perfil epidemiol�gico de salud bucal, que  anualmente nos proporcione datos estad�sticos de los avances y logros obtenidos  en esta materia.</p>
-</div>
+ 
                                 
                 <!-- Homepage Teasers End -->
     
