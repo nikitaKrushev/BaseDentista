@@ -101,7 +101,7 @@
                         <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>
                         
                     </li>
-                	</ul>
+                </ul>
             </div>
             
             <!-- News Widget -->

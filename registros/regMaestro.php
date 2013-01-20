@@ -48,8 +48,11 @@ if(isset($_POST['posted'])) {
 	$nameto = $nombre." ".$apaterno;
 	$from = "registro@cartillabucaldigital.org";
 	$namefrom = "Registro de cuentas";
-	$subject = "Asunto";
-	$message =  $nombre." ".$apaterno." "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!"; //Pondremos contrasenia y usuario al usuario
+	$subject = "Registro exitoso de cartilla bucal digital";
+	$message =  $nombre." ".$apaterno." "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
+		\r\n. Tu usuario es: ".$usuario."\r\n Tu contraseña: ".$pass.
+		"\r\n. Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
+		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario
 		
 	//Para la validacion
 	$fail = validaNombre(trim($nombre));

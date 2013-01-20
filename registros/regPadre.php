@@ -15,14 +15,15 @@ if(isset($_POST['posted'])) {
 	$correo2 = strip_tags($_POST['correo2']);
 	$telefono = strip_tags($_POST['telefono']);
 	
-	//Mail
-	$name2 = "Code Assist"; //Nombre del remitente
-	$mail_from = "cartillasaludbucal@gmail.com"; //Correo del remitente
-	$mail_to = $correo; //Correo receptor
-	$mail_body = $nombre." ".$apellidoPat." ".$apellidoMat."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!";
-	$mail_subject = "Mail from: ".$name2;
-	$mail_header = "From: ".$name2." <".$mail_from.">\r\n";
-	
+	$to = $correo;
+	$nameto = $nombre." ".$apaterno;
+	$from = "registro@cartillabucaldigital.org";
+	$namefrom = "Registro de cuentas";
+	$subject = "Registro exitoso de cartilla bucal digital";
+	$message =  $nombre." ".$apellidoPat.".$apellidoMat. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
+			\r\n Tu usuario es: ".$usuario."\r\n  Tu contraseña: ".$password.
+			"\r\n Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
+			\r\nSi tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario		
 	
 	//Validacion
 	$fail = validaUser($usuario);
