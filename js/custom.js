@@ -1,57 +1,43 @@
-/*$(function() {
+var xmlrequest=new XMLHttpRequest();
+xmlrequest.onreadystatechange=handleReply;
 
-	$( "#box" ).dialog({
-		title: 'Mommy milk',
-		width: 500,
-		height: 300,
-		resizable:false,
-		buttons: [
-		  {
-			  text: 'Okay',
-			  click: function(){
-				  alert('You said okay');
-			  }
-		  },
-		  {
-			  text: 'Nay!',
-			  click: function() {
-				  $(this).dialog('close');
-			  }
-		  },
-		]
-	});
-});
-*/
-function myFunction(valorAntiguo,identificador,posicion)
+function myFunction(valorAntiguo,identificador,posicion,verdadero)
 {
-	//alert("Hello World!");
-	//alert(valor);
-	//<input id="antiguoValor" text=type="text" >
-	//var texto= valorAntiguo;
-	//document.getElementById("antiguoValor").value='12';
-	document.getElementById("antiguoValor").value=valorAntiguo;	
-	//document.write(valorAntiguo);
+	//document.getElementById("antiguoValor").value=valorAntiguo;
+	
+	
+	
 	$( "#box" ).dialog({
 		title: 'Valor de caries',
 		width: 500,
-		height: 300,
+		height: 200,
 		resizable:false,
 		buttons: [
 		  {
 			  text: 'Aceptar',
 			  click: function(){ //Modificar el valor del diente en cuestion
-				  //document.write(identificador);
 				  var nuevoValor = document.getElementById("nuevoValor").value;
 				  var renglones = document.getElementById(identificador).rows;
-				  //document.write(identificador);
-				  //document.write(renglones[1]);
-				  var actualizado = renglones[1].cells;
-				  actualizado[posicion].innerHTML=nuevoValor;
-				  //.rows[posicion].value = nuevoValor;
-				  //document.write(document.getElementById(identificador).rows[posicion].value);
-				  //document.write( document.getElementById(identificador).value);
-				  $(this).dialog('close');
-				  //alert('You said okay');
+				  var actualizado = renglones[posicion].cells;
+				  
+				  /*
+				   * Funcion para revisar que el codigo puesto sea el correcto, si no funciona, poner una
+				   * alerta.
+				   * 
+				   * validaNumero();
+				   */
+				  
+				  //document.write(actualizado[posicion]);
+				  actualizado[1].innerHTML=nuevoValor;
+				  //DEbe existir una funciona para cambiar el valor del nuevo valor a 0 y revisar que los numeros sean correctos
+				  //Poner el valor de nuevo a 0;
+				  document.getElementById("nuevoValor").value=0;
+				
+				  //updateValue(posicion,nuevoValor);
+				  xmlrequest.open("GET",'detallesTrimestral.php?posicion='+verdadero+'&nuevoValor='+nuevoValor,true);
+				  xmlrequest.send(null);				  
+				   $(this).dialog('close');
+				  
 			  }
 		  },
 		  {
@@ -63,3 +49,20 @@ function myFunction(valorAntiguo,identificador,posicion)
 		]
 	});
 }
+
+/*	Funcion para AJAX. Envio el dato a la pagina de detalles, actualizando la variable de
+ * sesion
+ *
+ */ 
+
+function updateValue(posicion, nuevoValor) {
+	xmlrequest.open("GET",'detallesTrimestral.php?posicion='+posicion+'?nuevoValor='+nuevoValor,true);
+	xmlrequest.send(null);
+}
+
+function handleReply () {
+	if(xmlrequest.readyState==4) {
+    	
+	}
+}
+

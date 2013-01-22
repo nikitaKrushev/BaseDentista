@@ -1,7 +1,6 @@
 <?php
 include '../accesoDentista.php';
 
-
 if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
