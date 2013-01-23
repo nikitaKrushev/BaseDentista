@@ -108,6 +108,44 @@ function validaNombre($nombre){
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
 
+<script type="text/javascript">
+
+	
+	
+	
+	function cargaEstados(valor) {
+
+		if(valor==0) { //Selecciono la primera opcion
+			var selectEstado = document.getElementById("estado");
+			selectEstdo.length=0;
+			var nuevaOpcion = document.createElement("option");
+			nuevaOpcion.value=0;
+			nuevaOpcion.innerHTML="Selecciona pa&iacute;s...";
+			selectEstado.appendChild(nuevaOpcion);	selectActual.disabled=true;
+		}
+		else {
+
+			var selectDestino=document.getElementById("estado");
+				
+		 	var xmlrequest=new XMLHttpRequest();		 			 
+		 	xmlrequest.open("GET",'getEstados.php?valor='+valor,true);
+		 	xmlrequest.onreadystatechange=function() 
+				{ 
+			 	if((xmlrequest.readyState==1)) {
+						var nuevaOpcion=document.createElement("option"); nuevaOpcion.value=0; nuevaOpcion.innerHTML="Cargando...";
+						selectDestino.appendChild(nuevaOpcion); 	
+					}
+					
+					if (xmlrequest.readyState==4)					
+						selectDestino.innerHTML=xmlrequest.responseText;										
+				}
+			 
+		 xmlrequest.send(null);
+		}
+	}	
+
+</script>
+
 </head>
 
 <body id="home">
@@ -163,32 +201,41 @@ function validaNombre($nombre){
 							
 						</script>
 								<form action="#" method="post" onsubmit="return validate(this)">
-									<input type="text" value="<?php echo $nombre;?>" alt="Nombre:" title="Escribe un nombre" name="nombre" id="nombre" /> 
-									<select name="estado">
-									<?php
-									//<input type="text" value="<?php echo $estado;>" name="estado" alt="Estado:" title="Selecciona un estado de la lista" id="estado" />
-									 
-									echo $size_estados;
-										if(isset($size_estados)) {
-										for($i=0; $i<$size_estados; $i++) {
-									?>
-										<option value="<?php echo $estados[$i]->Nombre; ?>" ><?php echo $estados[$i]->Nombre; ?> </option>
-									<?php }} 
-									?>										
-									</select>
-									
-									<select name="pais">
+									<input type="text" value="<?php echo $nombre;?>" alt="Nombre:" title="Escribe un nombre" name="nombre" id="nombre" />
+									<select name="pais" onchange="cargaEstados(this.value)">
+									<!--  Valor por default -->
+										<option value="0" >Selecciona un pa&iacute;s </option>
 									<?php
 									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
 									 
-									echo $size;
+								
+									//echo $size;
 										if(isset($size)) {
+									//Valor por default
+										
 										for($i=0; $i<$size; $i++) {
 									?>
 										<option value="<?php echo $paises[$i]->Nombre; ?>" ><?php echo $paises[$i]->Nombre; ?> </option>
 									<?php }} 
 									?>										
 									</select>
+									 
+									<select name="estado"  id="estado">
+										<option value="0" >Selecciona un pa&iacute;s primero </option>
+									
+									<?php
+										
+									//<input type="text" value="<?php echo $estado;>" name="estado" alt="Estado:" title="Selecciona un estado de la lista" id="estado" />
+									 
+									/*echo $size_estados;
+										if(isset($size_estados)) {
+										for($i=0; $i<$size_estados; $i++) {
+									?>
+										<option value="<?php echo $estados[$i]->Nombre; ?>" ><?php echo $estados[$i]->Nombre; ?> </option>
+									<?php }}*/ 
+									?>										
+									</select>
+									
 									<input type="submit" value="Registrar" />
 									<input type="hidden" name="posted" value="yes" />
 								</form>

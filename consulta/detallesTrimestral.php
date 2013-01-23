@@ -49,7 +49,7 @@ else {
 		$dentista = @mysql_fetch_object($query);
 		
 		//Obtenemos el padre del nino
-		//echo count($_SESSION['dientes']);
+	
 		
 		$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio='".$_SESSION['idNino']."'");
 		$nino= @mysql_fetch_object($query);

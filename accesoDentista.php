@@ -129,7 +129,7 @@ if(!$loginEncontrado) {
 	<p>
 		El usuario o contraseña son incorrectos, o no eres un usuario
 		registrado en esete sito. Intenta acceder de nuevo al sistema, has
-		click <a href="/index.php">aquí.
+		click <a href="http://cartillabucaldigital.org/index.php">aquí.
 	</p>
 </body>
 </html>
