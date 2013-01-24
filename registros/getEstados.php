@@ -4,7 +4,7 @@ conectar($servidor, $user, $pass, $name);
 
 $opcionSeleccionada=$_GET["valor"];
 
-$query = mysql_query("SELECT Nombre FROM estado where Pais_Nombre='".$opcionSeleccionada."'");
+$query = mysql_query("SELECT Nombre FROM Estado where Pais_Nombre='".$opcionSeleccionada."'");
 
 echo "<select name='estado' id='estado'>";
 while($registro=mysql_fetch_row($query))

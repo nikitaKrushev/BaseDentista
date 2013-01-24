@@ -97,10 +97,9 @@ if(isset($_POST['posted'])) {
 	$fail .= validaColonia(trim($colonia),1);
 	$fail .= validaColonia(trim($calle),1);
 	$fail .= validaConsultorio($numPostal);	
-	//$fail .= validaCiudad($ciudad);
-	//$fail .= validaEstado($estado);
 	
 	if($fail == "") { //IF A
+		//echo "Todo bien validado";
 		$query = @mysql_query('SELECT * FROM Dentista WHERE Usuario="'.mysql_real_escape_string($usuario).'"');
 		if($existe = @mysql_fetch_object($query)){
 			$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
@@ -144,12 +143,14 @@ if(isset($_POST['posted'])) {
 								header("refresh:3;url=regAdmin.php");
 							}
 
-							else { //ELSE A																					
+							else { //ELSE A						
+								//echo "Entro a insertar dentista";															
 								$password_enc = sha1($password);
 
 								//Primero obtenemos el identificador del pais
 								//$cadena = "select Pais_Nombre from Estado where Nombre='".mysql_real_escape_string($estado)."'";
-								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";								
+								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";		
+								//echo $cadena;						
 								$meter1 = @mysql_query($cadena);
 								$idPais = @mysql_fetch_object($meter1);
 								//echo $idPais->Pais_Nombre;
@@ -163,11 +164,17 @@ if(isset($_POST['posted'])) {
 								//echo $idCiuda->idCiudad;
 								
 								//Despues la direccion								
-																
+
+								//echo "Inserto direccion";
+								
+								/*echo 'INSERT INTO Direccion (Colonia,Calle,Ciudad_idCiudad,Ciudad_Estado_Nombre,Ciudad_Estado_Pais_Nombre,NumeroPostal) VALUES  
+										("'.mysql_real_escape_string($colonia).'","'.mysql_real_escape_string($calle).'",'.mysql_real_escape_string($idCiuda->idCiudad).',"'.mysql_real_escape_string($estado)
+											.'","'.mysql_real_escape_string($idPais->Pais_Nombre).'","'.mysql_real_escape_string($numPostal).'")';*/
+								
 								$meter2 = @mysql_query('INSERT INTO Direccion (Colonia,Calle,Ciudad_idCiudad,Ciudad_Estado_Nombre,Ciudad_Estado_Pais_Nombre,NumeroPostal) VALUES  
 										("'.mysql_real_escape_string($colonia).'","'.mysql_real_escape_string($calle).'",'.mysql_real_escape_string($idCiuda->idCiudad).',"'.mysql_real_escape_string($estado)
 											.'","'.mysql_real_escape_string($idPais->Pais_Nombre).'","'.mysql_real_escape_string($numPostal).'")');
-																
+								
 								//Obtengo el identificador de la direccion
 								$meter3 = @mysql_query('SELECT * from Direccion where Colonia="'.mysql_real_escape_string($colonia).'"&& Calle ="'.mysql_real_escape_string($calle).'" 
 									&& Ciudad_idCiudad="'.mysql_real_escape_string($idCiuda->idCiudad).'" && Ciudad_Estado_Nombre="'.mysql_real_escape_string($estado).'"
@@ -221,6 +228,7 @@ if(isset($_POST['posted'])) {
 	} //IF A 
 }
 else {
+	echo $fail;
 	$nombre = "*Primer Nombre:";
 	$apaterno = "*Apellido Paterno:";
 	$amaterno = "*Apellido Materno";

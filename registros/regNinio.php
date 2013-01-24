@@ -10,7 +10,7 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 			break;
 
 		case 3://Maestro
-			header("refresh:3;url=../principales/padrePrincipal.php");
+			header("refresh:3;url=../principales/maestroPrincipal.php");
 			break;
 
 		case 4://Director
