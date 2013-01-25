@@ -29,9 +29,9 @@ if(isset($_POST['posted'])) {
 	conectar($servidor, $user, $pass, $name);
 
 	$idNinio = strip_tags($_POST['idNinio']);
-	$nombre = strip_tags($_POST['nombre']);
-	$apaterno = strip_tags($_POST['apaterno']);
-	$amaterno = strip_tags($_POST['amaterno']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
+	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
+	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
 	$nacimiento = strip_tags($_POST['nacimiento']);
 	$padre = strip_tags($_POST['padre']);
 	$grupo = strip_tags($_POST['grupo']);

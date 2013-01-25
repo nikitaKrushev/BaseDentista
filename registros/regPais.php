@@ -35,7 +35,7 @@ if(isset($_POST['posted'])) {
 	conectar($servidor, $user, $pass, $name);
 	
 	//recibe info
-	$nombre = strip_tags($_POST['nombre']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
 
 	//Validacion
 	$fail = validaNombre(trim($nombre));

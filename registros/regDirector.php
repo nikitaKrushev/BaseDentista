@@ -48,10 +48,10 @@ if(isset($_POST['posted'])) {
 
 	//Director
 	$usuario = strip_tags($_POST['usuario']);
-	$nombre = strip_tags($_POST['nombre']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$password = strip_tags($_POST['password']);
 	$password2 = strip_tags($_POST['password2']);
-	$apaterno = strip_tags($_POST['apaterno']);
+	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
 	$correo = strip_tags($_POST['correo']);
 	$correo2 = strip_tags($_POST['correo2']);
 
@@ -60,8 +60,8 @@ if(isset($_POST['posted'])) {
 	$nombreEsc = strip_tags($_POST['nomEsc']);
 	
 	//Direccion
-	$colonia = strip_tags($_POST['colonia']);
-	$calle = strip_tags($_POST['calle']);
+	$colonia = strtoupper(strip_tags($_POST['colonia']));
+	$calle = strtoupper(strip_tags($_POST['calle']));
 	$numPostal = strip_tags($_POST['numPostal']);
 	$ciudad =strip_tags($_POST['ciudad']);
 	$estado =strip_tags($_POST['estado']);

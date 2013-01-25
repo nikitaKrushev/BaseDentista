@@ -46,9 +46,9 @@ if(isset($_POST['posted'])) {
 	require_once('../funciones.php');
 	conectar($servidor, $user, $pass, $name);	
 			
-	$nombre = strip_tags($_POST['nombre']);
-	$apaterno = strip_tags($_POST['apaterno']);
-	$amaterno = strip_tags($_POST['amaterno']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
+	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
+	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
 	$cedula = strip_tags($_POST['cedula']);
 	$usuario = strip_tags($_POST['usuario']);
 	$password = strip_tags($_POST['password']);
@@ -56,14 +56,14 @@ if(isset($_POST['posted'])) {
 	$correo = strip_tags($_POST['correo']);
 	$correo2 = strip_tags($_POST['correo2']);
 	
-	$nombreCons = strip_tags($_POST['nombreCons']);
+	$nombreCons = strtoupper(strip_tags($_POST['nombreCons']));
 	$horarioAper = strip_tags($_POST['horarioAper']);
 	$horarioClau = strip_tags($_POST['horarioClau']);
 	$telefono = strip_tags($_POST['telefono']);
 	$institucion = strip_tags($_POST['institucion']);
 	
-	$colonia = strip_tags($_POST['colonia']);
-	$calle = strip_tags($_POST['calle']);
+	$colonia = strtoupper(strip_tags($_POST['colonia']));
+	$calle = strtoupper(strip_tags($_POST['calle']));
 	$numPostal = strip_tags($_POST['numPostal']);
 	$ciudad =strip_tags($_POST['ciudad']);
 	$estado =strip_tags($_POST['estado']);
@@ -228,7 +228,8 @@ if(isset($_POST['posted'])) {
 	} //IF A 
 }
 else {
-	echo $fail;
+	if(isset($fail))
+		echo $fail;
 	$nombre = "*Primer Nombre:";
 	$apaterno = "*Apellido Paterno:";
 	$amaterno = "*Apellido Materno";

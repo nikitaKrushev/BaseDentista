@@ -47,7 +47,7 @@ if(isset($_POST['posted'])) {
 
 	//recibe info
 	
-	$nombre = strip_tags($_POST['nombre']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$estado = strip_tags($_POST['estado']);
 	$pais = strip_tags($_POST['pais']);
 			 

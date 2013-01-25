@@ -40,7 +40,7 @@ if(isset($_POST['posted'])) {
 	conectar($servidor, $user, $pass, $name);
 	
 	//recibe info
-	$nombre = strip_tags($_POST['nombre']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$pais = strip_tags($_POST['pais']);
 
 	$query = @mysql_query("SELECT * FROM Estado WHERE Nombre='".mysql_real_escape_string($nombre).'")');

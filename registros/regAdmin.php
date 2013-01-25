@@ -38,9 +38,9 @@ if(isset($_POST['posted'])) {
 	//code to take action as user submitted the data
 	//recibe info
 	$user = strip_tags($_POST['usuario']);
-	$name = strip_tags($_POST['name']);
-	$apaterno = strip_tags($_POST['apaterno']);
-	$amaterno = strip_tags($_POST['amaterno']);
+	$name = strtoupper(strip_tags($_POST['name']));
+	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
+	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
 	$pass = strip_tags($_POST['password']);
 	$pass2 = strip_tags($_POST['pass2']);
 	$correo = strip_tags($_POST['correo']);
@@ -150,6 +150,8 @@ if(isset($_POST['posted'])) {
 }
 
 else {
+	if(isset($fail))
+		echo $fail;
 	$user = "Usuario:";
 	$pass = "Contraseña:";
 	$pass2 = "Repite Contraseña:";

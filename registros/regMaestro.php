@@ -31,8 +31,8 @@ if(isset($_POST['posted'])) {
 	conectar($servidor, $user, $pass, $name);
 	
 	//recibe info
-	$nombre = strip_tags($_POST['nombre']);
-	$apaterno = strip_tags($_POST['apaterno']);
+	$nombre = strtoupper(strip_tags($_POST['nombre']));
+	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
 	$pass = strip_tags($_POST['password']);
 	$pass2 = strip_tags($_POST['password2']);
 	$correo = strip_tags($_POST['correo']);
