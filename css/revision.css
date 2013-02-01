@@ -32,3 +32,11 @@ img.left {
 	top:400px;	
 	right:40px;
 }
+
+td.noPresente {
+	background-color: black;
+}
+
+td.Presente {
+	background-color: #66CCCC;
+}

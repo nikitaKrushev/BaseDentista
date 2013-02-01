@@ -46,7 +46,7 @@ if(isset($_POST['posted'])) {
 	$query = @mysql_query("SELECT * FROM Estado WHERE Nombre='".mysql_real_escape_string($nombre).'")');
 
 	if($existe = @mysql_fetch_object($query)){
-		$fail.= 'El estado '.$clave.' ya existe';
+		$fail= 'El estado '.$clave.' ya existe';
 		header("refresh:2;url=regEstado.php");
 		
 	}else{
@@ -106,8 +106,9 @@ else {
                         <p>Página de registro de Estado</p>
                         <?php 
                         if(isset($_POST['posted'])) {
-                     	
-                        	echo $fail;
+                     		if(isset($fail)) {
+                        		echo $fail;
+                        	}
                         }
                         ?>
                     </div>

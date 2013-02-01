@@ -93,25 +93,11 @@ if ($_SESSION['type'] != 2) {
                     <li class="act"><a href="index.html">Inicio</a></li>
                     <li>
                         <a href="../construccion.html">Consultar estado de salud de mi hijo(s)</a>
-                        <!--  <ul>
-                            <li><a href="typography.html">Typography</a></li>
-                            <li><a href="lists.html">Lists</a></li>
-                            <li><a href="tables.html">Tables</a></li>
-                            <li><a href="columns.html">Columns</a></li>
-                            <li><a href="images.html">Images</a></li>
-                            <li><a href="tabs-toggles.html">Tabs, Toggles</a></li>
-                        </ul> -->
+                       
                     </li>
                     <li>
-                        <a href="../construccion.html">Consultar directorio de consultorios</a>
-                      <!--   <ul>
-                            <li><a href="page.html">Page</a></li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="post.html">Post</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                            <li><a href="portfolio-item.html">Project</a></li>
-                        </ul>
-                        -->
+                        <a href="../consulta/directorioConsultorios.php">Consultar directorio de consultorios</a>
+                   
                     </li>
                 	</ul>
             </div>

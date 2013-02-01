@@ -95,7 +95,7 @@ if ($_SESSION['type'] != 3) {
 							<a href="contruccion.html">Registrar alumno</a>
                     </li>
                     <li>
-                        <a href="construccion.html">Consultar directorio de consultorios</a>
+                        <a href="../consulta/directorioConsultorios.php">Consultar directorio de consultorios</a>
                     </li>
                 </ul>
             </div>

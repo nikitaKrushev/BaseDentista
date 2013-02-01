@@ -132,10 +132,7 @@
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">
                 <div id="sidebar-end">
-                    <form action="#" id="subscribe">
-                        <input type="text" value="" alt="Recibe las �ltimas noticias!" title="Escribe tu correo" />
-                        <input type="submit" value="" title="Subscribe" />
-                    </form>
+                    
                 </div>
                 <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
             </div>

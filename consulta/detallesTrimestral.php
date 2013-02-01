@@ -33,13 +33,7 @@ else {
 
 	if(isset($_POST['detalles'])) {
 		
-		/*if(isset($_SESSION['dientes'])) {			
-			echo $_SESSION['dientes'][1];
-			echo $_SESSION['dientes'][2];
-		}*/
-		
 		$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
-		//$mysqli->autocommit(FALSE);
 		
 		$querys_ok = true; //Servira de centinela
 		
@@ -53,7 +47,6 @@ else {
 		
 		$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio='".$_SESSION['idNino']."'");
 		$nino= @mysql_fetch_object($query);
-		//echo $nino->idNino;
 		//Fecha
 		$date_array = getdate();
 		$formated_date = $date_array['mday'] . "/";
@@ -66,22 +59,13 @@ else {
 		
 		mysql_query('LOCK TABLES exploraciondental'); //Cerrar las transacciones
 		
-		$mysqli->query("INSERT INTO exploraciondental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio) 
+		$mysqli->query("INSERT INTO ExploracionDental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio) 
 				VALUES ('$formated_date','$dentista->Cedula',$dentista->Consultorio_idConsultorio)") ? null : $querys_ok=false;
 		
-		$query = @mysql_query( "SELECT * FROM exploraciondental ORDER BY idExploracionDental DESC LIMIT 1"); //Obtenemos el ultimo lugar
+		$query = @mysql_query( "SELECT * FROM ExploracionDental ORDER BY idExploracionDental DESC LIMIT 1"); //Obtenemos el ultimo lugar
 		$expoDental = @mysql_fetch_object($query);
-		//echo $expoDentalObjeto->idExploracionDental;
-		
-		/*echo "INSERT INTO dentadura (InFS1,InFS2,InFB1,InFB2,InLS1,InLS2,InLB1,InLB2,CS1,CS2,CB1,CB2,PPS1,PPS2,PPB1,PPB2,SPS1,SPS2,
-				SPB1,SPB2,MPS1,MPS2,MPB1,MPB2,MSS1,MSS2,MSB1,MSB2,MTS1,MTS2,MTB1,MTB2,EXTRA,ExploracionDental_idExploracionDental,
-					ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio,Ninio_idNinio,Ninio_Padre_idPadre) 
-				
-				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14],$a[15],$a[16],$a[17],$a[18],$a[19],$a[20],
-					$a[21],$a[22],$a[23],$a[24],$a[25],$a[26],$a[27],$a[28],$a[29],$a[30],$a[31],$a[32],$a[33],
-						$expoDental->idExploracionDental,'$dentista->Cedula',$dentista->Consultorio_idConsultorio,$nino->idNinio,$nino->Padre_idPadre)";*/
-				
-		$mysqli->query("INSERT INTO dentadura (InFS1,InFS2,InFB1,InFB2,InLS1,InLS2,InLB1,InLB2,CS1,CS2,CB1,CB2,PPS1,PPS2,PPB1,PPB2,SPS1,SPS2,
+
+		$mysqli->query("INSERT INTO Dentadura (InFS1,InFS2,InFB1,InFB2,InLS1,InLS2,InLB1,InLB2,CS1,CS2,CB1,CB2,PPS1,PPS2,PPB1,PPB2,SPS1,SPS2,
 				SPB1,SPB2,MPS1,MPS2,MPB1,MPB2,MSS1,MSS2,MSB1,MSB2,MTS1,MTS2,MTB1,MTB2,EXTRA,ExploracionDental_idExploracionDental,
 					ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio,Ninio_idNinio,Ninio_Padre_idPadre) 
 				
@@ -89,10 +73,11 @@ else {
 					$a[21],$a[22],$a[23],$a[24],$a[25],$a[26],$a[27],$a[28],$a[29],$a[30],$a[31],$a[32],$a[33],
 						$expoDental->idExploracionDental,'$dentista->Cedula',$dentista->Consultorio_idConsultorio,$nino->idNinio,$nino->Padre_idPadre)") ? null : $querys_ok=false;
 						
-		$query = @mysql_query( "SELECT * FROM dentadura ORDER BY idDentadura DESC LIMIT 1"); //Obtenemos el ultimo lugar
+		$query = @mysql_query( "SELECT * FROM Dentadura ORDER BY idDentadura DESC LIMIT 1"); //Obtenemos el ultimo lugar
 		$idDentadura = @mysql_fetch_object($query);
 		
 		//Actualizar ultima de tablas a nino
+		//echo "UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio ";
 		$mysqli->query("UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio ");
 		
 		mysql_query('UNLOCK TABLES');

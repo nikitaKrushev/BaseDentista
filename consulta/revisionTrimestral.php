@@ -41,13 +41,19 @@ if(isset($_POST['posted'])) {
 }
 else  {
 	if(isset($_POST['detail'])) { //Selecciono el detalle
+				
 		if(isset($_POST['ctrl'])) {
 			$_SESSION['idNino'] = $_POST['ctrl']; //Para que la pagina de detalles tenga la informacion que requiere.
-			header("Location: detallesTrimestral.php");
-		}		
-		else {
 			
-		}
+			//Primero vemos si el nino ha tenido una revision o no
+			$query = @mysql_query("SELECT UltimaRevision FROM Ninio WHERE idNinio='".$_SESSION['idNino']."'");
+			$revision= @mysql_fetch_object($query);
+			if($revision->UltimaRevision == 0 )
+				header("Location: registroDientes.php");
+			else
+				header("Location: detallesTrimestral.php");
+		}		
+		
 	}
 }
 
