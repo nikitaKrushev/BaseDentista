@@ -65,7 +65,8 @@ else  {
 		<title>Revisión Trimestral</title>
 		
 		 <!-- Styles -->
-	    <link rel="stylesheet" type="text/css" href="../css/style.css" />	    
+	    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+	    <link rel="stylesheet" type="text/css" href="../css/revision.css" />	    
 	    
 	    <!-- JavaScript -->
 	    <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
@@ -92,26 +93,22 @@ else  {
                     <div class="p-content">
                         <p>Perfil epidemiológico de caries dental</p>                                             
                     </div>
-                    
-                    <div id="revisa"	>
-                    <ul>
-                        <li>
-						
-                        
-							<div id="revisaForm" style="color:#0000FF">
+				</div>   
+                                                                                 
+					<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 			
-						  		<form action="revisionTrimestral.php" method="post">
-						  			<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
-						  			<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
-						  			<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
-						  			<input type="submit" value="Buscar" />								
-									<input type="hidden" name="posted" value="yes" />
-						  		</form>
-							</div>
+						<form action="revisionTrimestral.php" method="post">
+						 	<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
+						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
+						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
+						  	<input type="submit" value="Buscar" />								
+							<input type="hidden" name="posted" value="yes" />
+						</form>
+					</div>
 							
-					<div id="tablaRevisa" >
+					<div id="tablaRevisa" class="divisionDetalles">
 					
-					<form id="revisaSubmit" name="submision" action="revisionTrimestral.php" method="post">
+					 <form id="revisaSubmit" name="submision" action="revisionTrimestral.php" method="post">
 				  		<table>
 				  			<tr>
 				  				<th> Identificador </th>
@@ -140,12 +137,9 @@ else  {
 				  			<input type="hidden" name="detail" value="yes">	
 				  			<input type="submit" value="Detalles">
 				  		</form>
-					</div>
-										
-                       </li>
-                    </ul>
-                    </div>
-                </div>                                              
+					</div>			
+                   
+                                                           
                 <!-- Homepage Teasers End -->
     
             </div>

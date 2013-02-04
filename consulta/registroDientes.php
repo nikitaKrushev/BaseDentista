@@ -631,7 +631,7 @@ else {
                   
                 </div>                                              
                 <!-- Homepage Teasers End -->
-    	  	<img src="../images/codigos.png" alt="Códigos de caries" class="left">
+    	  	<img src="../images/codigoPresentes.png" alt="Códigos de caries" class="left">
                   
             </div>
         </div>

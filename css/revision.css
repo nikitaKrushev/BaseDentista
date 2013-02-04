@@ -40,3 +40,31 @@ td.noPresente {
 td.Presente {
 	background-color: #66CCCC;
 }
+
+td.Sano {
+	background-color: LightGreen ;
+}
+
+td.ManchaSeco {
+	background-color: Khaki;
+}
+
+td.ManchaHumedo {
+	background-color: GoldenRod;
+}
+
+td.Sombra {
+	background-color: Coral;
+}
+
+td.ExposicionMenor {
+	background-color:DarkRed;
+}
+
+td.MicroCavidad {
+	background-color:DarkSalmon;
+}
+
+td.ExposicionMayor {
+	background-color:Teal;
+}
