@@ -32,3 +32,4 @@ function handleReply () {
 			document.getElementById(identif).setAttribute("class","noPresente");		
 	}
 }
+

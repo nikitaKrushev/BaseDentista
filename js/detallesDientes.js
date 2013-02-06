@@ -88,3 +88,38 @@ function handleReply () {
 	}
 }
 
+function pintaDientes(Valor,identifi) {
+	switch (parseInt(Valor)) {
+	
+	case 0:
+		document.getElementById(identif).setAttribute("class","Sano");
+		
+	break;
+		
+	case 1:
+		document.getElementById(identif).setAttribute("class","ManchaSeco");
+	break;
+	
+	case 2:
+		document.getElementById(identif).setAttribute("class","ManchaHumedo");
+	break;
+	
+	case 3:
+		document.getElementById(identif).setAttribute("class","MicroCavidad");
+	break;
+	
+	case 4:
+		document.getElementById(identif).setAttribute("class","Sombra");
+	break;
+	
+	case 5:
+		document.getElementById(identif).setAttribute("class","ExposicionMenor");
+	break;
+	
+	case 6:
+		document.getElementById(identif).setAttribute("class","ExposicionMayor");
+	break;	
+	
+	}	
+}
+
