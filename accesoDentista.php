@@ -1,11 +1,24 @@
 <?php
+/**
+ * Autor: Josué Castañeda 
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ * 
+ * Descripcion:
+ * 	Realiza un filtro dependiendo de la sesión del usuario. Si no esta registrado el usuario, se
+ *  escribe un error en pantalla y se pone un enlace a la pagina de acceso al sistema.
+ *  
+ *  Se realiza una consulta a la base de datos cada vez que se accede a este archivo, creo que
+ *  debo mejorar eso...
+ * 
+ */
+
 if(!isset($_SESSION['uid']))
 	session_start();
 
 require_once('funciones.php');
 conectar($servidor, $user, $pass, $name);
 
-//echo phpversion();
 $redireccionar=false;
 
 if(isset($_SESSION['uid']) || isset($_POST['pass'])) {
