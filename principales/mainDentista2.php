@@ -1,4 +1,14 @@
  <?php 
+ /**
+  * Autor: Josué Castañeda
+  * Escrito: 2/FEB/2013
+  * Ultima actualizacion: 2/FEB/2013
+  *
+  * Descripcion:
+  *  La página principal de los dentistas.
+  *
+  */
+ 
  session_start();
  include '../accesoDentista.php';
  

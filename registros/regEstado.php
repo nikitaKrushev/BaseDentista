@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Realiza el registro de estados, se muestra en un dialogo de selección los paises
+ *  registrados en la base de datos.
+ */
+
 include '../accesoDentista.php';
 
 if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -50,8 +60,6 @@ if(isset($_POST['posted'])) {
 		header("refresh:2;url=regEstado.php");
 		
 	}else{
-	
-		//echo 'INSERT INTO Estado values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($pais).'")';
 		$meter=@mysql_query('INSERT INTO Estado values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($pais).'")');
 
 		if($meter){

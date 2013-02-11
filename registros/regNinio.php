@@ -1,4 +1,15 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Realiza el registro de pacientes, en caso de que los datos sean correctos, se crea un
+ *  paciente en la base de datos. Además se le asigna una dentadura vacia. 
+ *
+ */
+
 include '../accesoDentista.php';
 
 if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -60,13 +71,6 @@ if(isset($_POST['posted'])) {
 				
 				$idPadre2 = @mysql_fetch_object($meter2);							
 				
-				/*echo 'INSERT INTO Ninio (idNinio,Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
-						("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
-							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'",0'.')';*/
-				/*$meter=@mysql_query('INSERT INTO Ninio (idNinio,Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre) values 
-						("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
-							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'")');	*/
-
 				$meter=@mysql_query('INSERT INTO Ninio (idNinio,Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
 						("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'",0'.')');

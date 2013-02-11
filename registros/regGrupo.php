@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Aun no es funcional este código....
+ *
+ */
+
 if(isset($_POST['posted'])) {
 
 	require_once('../funciones.php');

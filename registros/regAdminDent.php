@@ -1,5 +1,15 @@
 <?php
-//session_start();
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registro de dentistas. Primero se validan los datos introducidos por el usuario.Después se verifica
+ *  la unicidad del usuario, si es único se registra primero consultorio, después dirección, finalmente
+ *  dentista. Se envía un correo de registro al sistema. 
+ *
+ */
 include '../accesoDentista.php';
 	
 if ($_SESSION['type'] != 6) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -160,17 +170,9 @@ if(isset($_POST['posted'])) {
 								//echo "select * from Ciudad where Nombre='".mysql_real_escape_string($ciudad)."' && Estado_Nombre='".mysql_real_escape_string($estado)."'";
 								$meter2 = @mysql_query($cadena_ciudad);
 								$idCiuda = @mysql_fetch_object($meter2);
-								
-								//echo $idCiuda->idCiudad;
-								
+															
 								//Despues la direccion								
 
-								//echo "Inserto direccion";
-								
-								/*echo 'INSERT INTO Direccion (Colonia,Calle,Ciudad_idCiudad,Ciudad_Estado_Nombre,Ciudad_Estado_Pais_Nombre,NumeroPostal) VALUES  
-										("'.mysql_real_escape_string($colonia).'","'.mysql_real_escape_string($calle).'",'.mysql_real_escape_string($idCiuda->idCiudad).',"'.mysql_real_escape_string($estado)
-											.'","'.mysql_real_escape_string($idPais->Pais_Nombre).'","'.mysql_real_escape_string($numPostal).'")';*/
-								
 								$meter2 = @mysql_query('INSERT INTO Direccion (Colonia,Calle,Ciudad_idCiudad,Ciudad_Estado_Nombre,Ciudad_Estado_Pais_Nombre,NumeroPostal) VALUES  
 										("'.mysql_real_escape_string($colonia).'","'.mysql_real_escape_string($calle).'",'.mysql_real_escape_string($idCiuda->idCiudad).',"'.mysql_real_escape_string($estado)
 											.'","'.mysql_real_escape_string($idPais->Pais_Nombre).'","'.mysql_real_escape_string($numPostal).'")');
@@ -182,8 +184,6 @@ if(isset($_POST['posted'])) {
 																
 								$idDireccion2 = @mysql_fetch_object($meter3);
 								
-								//echo $idDireccion2->idDireccion;								
-																								
 								//Despues Consultorio
 
 								$meter4 = @@mysql_query('INSERT INTO Consultorio (Nombre, HoraApertura, HoraCerrado, Telefono, Institucion,Direccion_idDireccion) 
@@ -205,12 +205,6 @@ if(isset($_POST['posted'])) {
 
 								if($meter){
 									echo 'Usuario registrado con exito';
-									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
-
-									//if($sendmail == true) 
-									//	echo 'Mail sent!';									
-									//else 
-									//	echo 'Mail not sent';
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									echo 'Mail sent!';
 									header("refresh:3;url=../principales/adminPage.php");									
@@ -574,8 +568,6 @@ function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 									<input type="text" value="<?php echo $numPostal;?>" name="numPostal" alt="*Numero postal:" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>
 									<select name="ciudad">
 									<?php
-									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									 
 									echo $size;
 										if(isset($size)) {
 										for($i=0; $i<$size; $i++) {
@@ -586,8 +578,6 @@ function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 									</select>
 									<select name="estado">									
 									<?php
-									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									//<input type="text" value="<?php echo $estado;>" name="estado" alt="*Estado:" title="Pon el estado postal donde se encuentra el consultorio" id="estado"/>
 									 
 									echo $size2;
 										if(isset($size2)) {

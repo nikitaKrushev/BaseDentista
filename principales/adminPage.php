@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Pagina principal de los administradores. Cuenta con las posibles funciones.
+ *
+ */
+
 session_start();
 include '../accesoDentista.php';
 

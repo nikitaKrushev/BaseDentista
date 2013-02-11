@@ -1,4 +1,15 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registro de un pais, mediante una forma de captura en html.
+ *
+ *
+ */
+
 include '../accesoDentista.php';
 
 if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -26,7 +37,6 @@ if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay un
 	}
 	exit;
 }
-
 
 
 if(isset($_POST['posted'])) {
@@ -74,11 +84,6 @@ function validaNombre($nombre) {
 	return "";
 }
 
-/*function validaClave($clave) {
-	if (! preg_match("/^[0-9]+$/",$clave))
-		return "La clave requiere digitos.\n";
-	return "";
-}*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"> 

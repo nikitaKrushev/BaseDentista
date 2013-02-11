@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Se registra a los administradores semejante al registro de padres.
+ *
+ */
+
 session_start();
 include '../accesoDentista.php';
 //Checamos si hay una session vacia o si ya hay una sesion

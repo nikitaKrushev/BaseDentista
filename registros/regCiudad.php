@@ -1,4 +1,15 @@
-<?php 
+<?php
+
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registro de ciudades, se hace una lista de los paises disponibles, usando AJAX se muestran 
+ *  después los estados registrados del país.
+ */
+
 include '../accesoDentista.php';
 
 if ($_SESSION['type'] != 5) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -109,10 +120,7 @@ function validaNombre($nombre){
 <script type="text/javascript" src="../js/main.js"></script>
 
 <script type="text/javascript">
-
-	
-	
-	
+		
 	function cargaEstados(valor) {
 
 		if(valor==0) { //Selecciono la primera opcion
@@ -131,7 +139,7 @@ function validaNombre($nombre){
 		 	xmlrequest.open("GET",'getEstados.php?valor='+valor,true);
 		 	xmlrequest.onreadystatechange=function() 
 				{ 
-			 	if((xmlrequest.readyState==1)) {
+			 	if((xmlrequest.readyState==1)) { //El cliente espera la respuesta del servidor
 						var nuevaOpcion=document.createElement("option"); nuevaOpcion.value=0; nuevaOpcion.innerHTML="Cargando...";
 						selectDestino.appendChild(nuevaOpcion); 	
 					}

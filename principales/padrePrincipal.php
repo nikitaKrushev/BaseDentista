@@ -1,4 +1,14 @@
-<?php 	
+<?php 
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Página principal de padres
+ *
+ */
+
 session_start();
 include '../accesoDentista.php';
 

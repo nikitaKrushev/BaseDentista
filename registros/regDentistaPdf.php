@@ -1,4 +1,15 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Permite subir un archivo pdf a la carpeta FILEREPOSITORY. Con el nombre que puso
+ *  el usuario.
+ *
+ */
+
 define ("FILEREPOSITORY","/srv/http/t/src/FILEREPOSITORY/");
 
 if (is_uploaded_file($_FILES['classnotes']['tmp_name'])) {

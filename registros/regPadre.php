@@ -1,4 +1,17 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registro de los padres. Primero se verifica que la información introducida sea
+ * 	correctamente formateada. Después se verifica la unicidad del usuario, en caso de 
+ *  repetición, el registro no puede ser completado, de otra forma, se da de alta al 
+ *  usuario y se envia un correo a la dirección que fue proporcionada.
+ *
+ */
+
 if(isset($_POST['posted'])) {
 
 	require_once('../funciones.php');
@@ -165,7 +178,6 @@ function validaEqualPass($field,$field2) {
 	return "";
 }
 
-
 function validaCorreo($field) {
 	if ($field == "") return "Introduce una contraseÃ±a.\n";
 	else if (!((strpos($field, ".") > 0) &&
@@ -179,6 +191,12 @@ function validaEqualCorreo($field,$field2){
 	if($field !=$field2) return "Los correos no son iguales.\n";
 	return "";
 }
+
+/**
+ * Función proporcionada por el servidor donde estamos haciendo host.
+ * No tocar.
+ */
+
 function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 {
 	//SMTP + Detalles del servidor

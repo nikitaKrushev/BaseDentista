@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Llamado por AJAX, envia una tabla de los estados de un pais.
+ *
+ */
+
 require_once('../funciones.php');
 conectar($servidor, $user, $pass, $name);
 

@@ -1,4 +1,14 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registro de maestros, similar al registro de padre.
+ * 
+ */
+
 session_start();
 include '../accesoDentista.php';
 //Checamos si hay una session vacia o si ya hay una sesion
@@ -119,14 +129,8 @@ if(isset($_POST['posted'])) {
 											.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($idEscuela->idEscuela).'","'.mysql_real_escape_string($idEscuela->Direccion_idDireccion).'","'.mysql_real_escape_string($correo).'")');
 								if($meter){
 									echo 'Administrador registrado con exito';
-									$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
-									
-									//if($sendmail == true) {
-										echo 'Mail sent!';
-									//}
-									//else {
-									//	echo 'Mail not sent';
-									//}
+									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);									
+									echo 'Mail sent!';
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									if($_SESSION['type'] == 4)
 										header("refresh:3;url=../principales/directorPrincipal.php");

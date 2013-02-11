@@ -1,6 +1,16 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 2/FEB/2013
+ * Ultima actualizacion: 2/FEB/2013
+ *
+ * Descripcion:
+ * 	Registra un director en la base de datos, similar al registro de
+ *  padres.
+ *
+ */
+
 include '../accesoDentista.php';
-//include '../correo.php';
 
 if ($_SESSION['type'] != 6) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
@@ -142,7 +152,6 @@ if(isset($_POST['posted'])) {
 								$password_enc = sha1($password);
 
 								//Primero obtenemos el identificador del pais
-								//$cadena = "select Pais_Nombre from Estado where Nombre='".mysql_real_escape_string($estado)."'";
 								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";
 								$meter1 = @mysql_query($cadena);
 								$idPais = @mysql_fetch_object($meter1);
@@ -178,14 +187,8 @@ if(isset($_POST['posted'])) {
 									
 								if($meter){
 									echo 'Usuario registrado con exito';
-									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									echo 'Mail sent!';
-									//if($sendmail == true)
-									//	echo 'Mail sent!';
-									//else
-									//	echo 'Mail not sent';
-									
 									header("refresh:3;url=../principales/adminPage.php");
 								}
 								else {
