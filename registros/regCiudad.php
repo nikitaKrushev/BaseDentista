@@ -3,7 +3,7 @@
 /**
  * Autor: Josué Castañeda
  * Escrito: 2/FEB/2013
- * Ultima actualizacion: 2/FEB/2013
+ * Ultima actualizacion: 17/FEB/2013
  *
  * Descripcion:
  * 	Registro de ciudades, se hace una lista de los paises disponibles, usando AJAX se muestran 
@@ -61,20 +61,32 @@ if(isset($_POST['posted'])) {
 	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$estado = strip_tags($_POST['estado']);
 	$pais = strip_tags($_POST['pais']);
-			 
-		$query = @mysql_query("SELECT * FROM Ciudad WHERE nombre=".mysql_real_escape_string($nombre)." && Estado_Nombre=".mysql_real_escape_string($estado)." && Estado_Nombre=".mysql_real_escape_string($pais) );
+
+			$query = @mysql_query("SELECT * FROM Ciudad WHERE nombre='".mysql_real_escape_string($nombre)."' && Estado_Nombre='".mysql_real_escape_string($estado)."' && Estado_Pais_Nombre='".mysql_real_escape_string($pais)."'");
+		
 		if( $existe = @mysql_fetch_object($query)){
 			echo 'La ciudad '.$nombre.' ya existe, cuyo estado es:'.$estado.' y pais:'.$pais;
+			print '<script type="text/javascript">';
+			print 'alert("La ciudad ya existe")';
+			print '</script>';
+			header("refresh:1;url=regCiudad.php");
+			exit;
 		}else{
 
 			$meter=@mysql_query('INSERT INTO Ciudad (Nombre, Estado_Nombre,Estado_Pais_Nombre) values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($estado).'","'.mysql_real_escape_string($pais).'")');
 
-			if($meter){
-				echo 'Ciudad registrado con exito';
-			header("refresh:3;url=../principales/profesionalPrincipal.php");
+			if($meter){				
+				print '<script type="text/javascript">';
+				print 'alert("Ciudad registrada con exito")';
+				print '</script>';
+				header("refresh:10;url=../principales/profesionalPrincipal.php");
+				exit;
 			}else{
-				echo 'Hubo un error';
-			header("refresh:10;url=regEstado.php");		
+				print '<script type="text/javascript">';
+				print 'alert("Hubo un error al registrar")';
+				print '</script>';
+				header("refresh:10;url=regCiudad.php");	
+				exit;	
 			}
 		}
 

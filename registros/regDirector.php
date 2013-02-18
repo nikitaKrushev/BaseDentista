@@ -100,55 +100,64 @@ if(isset($_POST['posted'])) {
 	$fail .= validaColonia(trim($colonia),1);
 	$fail .= validaColonia(trim($calle),1);
 	$fail .= validaConsultorio($numPostal);
-	//$fail .= validaConsultorio($ciudad);
-	//$fail .= validaEstado($estado);
-
+	
 	if($fail == "") { //IF A
 		$query = @mysql_query('SELECT * FROM Dentista WHERE Usuario="'.mysql_real_escape_string($usuario).'"');
 		if($existe = @mysql_fetch_object($query)){
 			$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-			echo $fail;
-			header("refresh:3;url=regDirector.php");
+			print '<script type="text/javascript">';
+			print 'alert("Usuario existente en la base")';
+			print '</script>';
+			header("refresh:1;url=regDirector.php");
 		}else{//ELSE F
 				
 			$query = @mysql_query("SELECT * FROM Administrador WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 			if($existe = @mysql_fetch_object($query)){
 				$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-				echo $fail;
-				header("refresh:3;url=regDirector.php");
+				print '<script type="text/javascript">';
+				print 'alert("Usuario existente en la base")';
+				print '</script>';
+				header("refresh:1;url=regDirector.php");
 			}
 			else { //ELSE E
 				$query = @mysql_query("SELECT * FROM ProfesionalSalud WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 				if($existe = @mysql_fetch_object($query)){
 					$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-					echo $fail;
-					header("refresh:3;url=regDirector.php");
+					print '<script type="text/javascript">';
+					print 'alert("Usuario existente en la base")';
+					print '</script>';
+					header("refresh:1;url=regDirector.php");
 				}
 				else { //ELSE D
 					$query = @mysql_query("SELECT * FROM Director WHERE idDirector='".mysql_real_escape_string($usuario)."'");
 					if($existe = @mysql_fetch_object($query)){
 						$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-						echo $fail;
-						header("refresh:3;url=regDirector.php");
+						header("refresh:1;url=regDirector.php");
+						print '<script type="text/javascript">';
+						print 'alert("Usuario existente en la base")';
+						print '</script>';
 					}
 					else { //ELSE C
 						$query = @mysql_query("SELECT * FROM Maestro WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 						if($existe = @mysql_fetch_object($query)){
 							$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-							echo $fail;
-							header("refresh:3;url=regDirector.php");
+							print '<script type="text/javascript">';
+							print 'alert("Usuario existente en la base")';
+							print '</script>';
+							header("refresh:1;url=regDirector.php");
 						}
 						else { //ELSE B
 								
 							$query = @mysql_query("SELECT * FROM Padre WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 							if($existe = @mysql_fetch_object($query)){
 								$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-								echo $fail;
-								header("refresh:3;url=regDirector.php");
+								print '<script type="text/javascript">';
+								print 'alert("Usuario existente en la base")';
+								print '</script>';
+								header("refresh:1;url=regDirector.php");
 							}
 
 							else { //ELSE A
-								//echo "djdifjdiogjrio";
 								$password_enc = sha1($password);
 
 								//Primero obtenemos el identificador del pais
@@ -158,7 +167,6 @@ if(isset($_POST['posted'])) {
 								
 								//Despues el id de la ciudad
 								$cadena_ciudad = "select * from Ciudad where Nombre='".mysql_real_escape_string($ciudad)."' && Estado_Nombre='".mysql_real_escape_string($estado)."'";
-								// "select * from Ciudad where Nombre='".mysql_real_escape_string($ciudad)."' && Estado_Nombre='".mysql_real_escape_string($estado)."'";
 								$meter2 = @mysql_query($cadena_ciudad);
 								$idCiuda = @mysql_fetch_object($meter2);
 																
@@ -186,14 +194,18 @@ if(isset($_POST['posted'])) {
 										'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($idnEscuela).'","'.$idDireccion2->idDireccion.'","'.mysql_real_escape_string($correo).'")');
 									
 								if($meter){
-									echo 'Usuario registrado con exito';
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
-									echo 'Mail sent!';
-									header("refresh:3;url=../principales/adminPage.php");
+									print '<script type="text/javascript">';
+									print 'alert("Registro exitoso de Director. Revisa tu bandeja de correo")';
+									print '</script>';
+									header("refresh:1;url=../principales/adminPage.php");
+									exit;
 								}
 								else {
-									$fail .= 'Hubo un error';
-									echo $fail;
+									$fail .= 'Hubo un error en el registro del usuario';
+									print '<script type="text/javascript">';
+									print 'alert("Hubo un error en el registro")';
+									print '</script>';		
 								}
 							} //ELSE A
 						} //ELSE B
@@ -202,6 +214,11 @@ if(isset($_POST['posted'])) {
 			}//ELSE E
 		}//ELSE F
 	} //IF A
+	else {
+		print '<script type="text/javascript">';
+		print 'alert("Hubo un error en el registro")';
+		print '</script>';
+	}
 }
 else {
 	$nombre = "*Primer Nombre:";

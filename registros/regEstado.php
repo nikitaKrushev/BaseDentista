@@ -52,23 +52,33 @@ if(isset($_POST['posted'])) {
 	//recibe info
 	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$pais = strip_tags($_POST['pais']);
-
-	$query = @mysql_query("SELECT * FROM Estado WHERE Nombre='".mysql_real_escape_string($nombre).'")');
+	
+	$query = @mysql_query("SELECT * FROM Estado WHERE Nombre='".mysql_real_escape_string($nombre)."'");
 
 	if($existe = @mysql_fetch_object($query)){
-		$fail= 'El estado '.$clave.' ya existe';
-		header("refresh:2;url=regEstado.php");
+		$fail= 'El estado '.$nombre.' ya existe';
+		print '<script type="text/javascript">';
+		print 'alert("El estado ya existe")';
+		print '</script>';
+		header("refresh:1;url=regEstado.php");
+		exit;
 		
 	}else{
 		$meter=@mysql_query('INSERT INTO Estado values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($pais).'")');
 
 		if($meter){
-			echo 'Estado registrado con exito';
-			header("refresh:3;url=../principales/profesionalPrincipal.php");
+			print '<script type="text/javascript">';
+			print 'alert("Estado registrado con exito")';
+			print '</script>';
+			header("refresh:1;url=../principales/profesionalPrincipal.php");
+			exit;
 				
 		}else{
-			echo 'Hubo un error';
-			header("refresh:10;url=regEstado.php");			
+			print '<script type="text/javascript">';
+			print 'alert("Hubo un error al registrar")';
+			print '</script>';
+			header("refresh:1;url=regEstado.php");	
+			exit;		
 		}
 	}
 }
@@ -124,28 +134,8 @@ else {
                     <div id="registra"	>
                     <ul>
                         <li>
-					         <script type="text/javascript">
-									function validate(form){
-										fail = validateNombre(form.name.value);
-											fail += validateClave(form.clave.value);
-									
-										if (fail =="") return true;
-										else {
-											alert(fail);
-											return false;
-										}
-									}
-									
-									function validateNombre(field) {
-										if (field =="") return "Favor de llenar el campo Nombre.\n";
-										else
-											if (! /^[a-zA-Z]+$/.test(field) )
-												return "El campo Nombre solo contiene letras.\n";
-										return "";
-									}
-								</script>
-							
-							<form action="regEstado.php" method="post" onSubmit="return validate(this)">
+					       							
+							<form action="regEstado.php" method="post" >
 								<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="Nombre:" title="Escribre el nombre del pais:" id="nombre"/>
 									<select name="pais">
 									<?php

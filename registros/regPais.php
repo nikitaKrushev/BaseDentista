@@ -2,7 +2,7 @@
 /**
  * Autor: Josué Castañeda
  * Escrito: 2/FEB/2013
- * Ultima actualizacion: 2/FEB/2013
+ * Ultima actualizacion: 17/FEB/2013
  *
  * Descripcion:
  * 	Registro de un pais, mediante una forma de captura en html.
@@ -51,21 +51,30 @@ if(isset($_POST['posted'])) {
 	$fail = validaNombre(trim($nombre));
 	
 	if($fail == "") {
-		$query = @mysql_query("SELECT * FROM Pais WHERE Nombre='".mysql_real_escape_string($nombre).'")');
+		$query = @mysql_query("SELECT * FROM Pais WHERE Nombre='".mysql_real_escape_string($nombre)."'");
 		
 		if($existe = @mysql_fetch_object($query)){			
-			$fail.= 'El pais '.$clave.' ya existe';
-			header("refresh:2;url=regPais.php");
+			$fail.= 'El pais '.$nombre.' ya existe';
+			print '<script type="text/javascript">';
+			print 'alert("Ya existe el pais")';
+			print '</script>';			
+			header("refresh:1;url=regPais.php");
+			exit;
 			
 		}else{
 			$meter=@mysql_query('INSERT INTO Pais values ("'.mysql_real_escape_string($nombre).'")');			
 		
 			if($meter){
-				echo 'Pais registrado con exito';
-				header("refresh:3;url=../principales/profesionalPrincipal.php");									
+				print '<script type="text/javascript">';
+				print 'alert("Registro exitoso")';
+				print '</script>';
+				header("refresh:1;url=../principales/profesionalPrincipal.php");
+				exit;									
 			}else{
-				echo 'Hubo un error';
-				header("refresh:2;url=regPais.php");					
+				print '<script type="text/javascript">';
+				print 'alert("Hubo un error en el registro")';
+				print '</script>';
+				header("refresh:1;url=regPais.php");					
 			}
 		}
 		exit;
@@ -119,7 +128,7 @@ function validaNombre($nombre) {
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
                         <p>Perfil epidemiolÃ³gico de caries dental</p>
-                        <p>PÃ¡gina de registro de Capturista</p>
+                        <p>PÃ¡gina de registro de Pa&iacute;s</p>
                         <?php 
                         if(isset($_POST['posted'])) {
                      	

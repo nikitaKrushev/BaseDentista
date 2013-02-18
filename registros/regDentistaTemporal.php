@@ -10,33 +10,8 @@
  *  dentista. Se envía un correo de registro al sistema. 
  *
  */
-include '../accesoDentista.php';
-	
-if ($_SESSION['type'] != 6) { //Checamos si hay una session vacia o si ya hay una sesion
-	echo("Contenido Restringido");
-	switch($_SESSION['type']) {
-		case 1: //Dentista
-			header("refresh:3, url=../principales/mainDentista2.php");
-			break;
-			
-		case 2: //Padre
-			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
-			break;
-
-		case 3://Maestro
-			header("refresh:3;url=../principales/padrePrincipal.php");
-			break;
-
-		case 4://Director
-			header("refresh:3;url=../principales/directorPrincipal.php");
-			break;
-
-		case 5://Admin
-			header("refresh:3;url=../principales/profesionalPrincipal.php");
-			break;
-	}
-	exit;
-}
+require_once('../funciones.php');
+conectar($servidor, $user, $pass, $name);
 
 //Aqui consigo los valores de la ciudad
 $query = @mysql_query("SELECT Nombre FROM Ciudad");
@@ -116,7 +91,7 @@ if(isset($_POST['posted'])) {
 			print '<script type="text/javascript">';
 			print 'alert("Usuario existente en la base")';
 			print '</script>';
-			header("refresh:1;url=regAdminDent.php");
+			header("refresh:1;url=regDentistaTemporal.php");
 		}else{//ELSE F
 			
 			$query = @mysql_query("SELECT * FROM Administrador WHERE Usuario='".mysql_real_escape_string($usuario)."'");
@@ -125,7 +100,7 @@ if(isset($_POST['posted'])) {
 				print '<script type="text/javascript">';
 				print 'alert("Usuario existente en la base")';
 				print '</script>';
-				header("refresh:1;url=regAdminDent.php");
+				header("refresh:1;url=regDentistaTemporal.php");
 			}
 			else { //ELSE E
 				$query = @mysql_query("SELECT * FROM ProfesionalSalud WHERE Usuario='".mysql_real_escape_string($usuario)."'");
@@ -134,7 +109,7 @@ if(isset($_POST['posted'])) {
 					print '<script type="text/javascript">';
 					print 'alert("Usuario existente en la base")';
 					print '</script>';
-					header("refresh:1;url=regAdminDent.php");
+					header("refresh:1;url=regDentistaTemporal.php");
 				}
 				else { //ELSE D
 					$query = @mysql_query("SELECT * FROM Director WHERE idDirector='".mysql_real_escape_string($usuario)."'");
@@ -143,7 +118,7 @@ if(isset($_POST['posted'])) {
 						print '<script type="text/javascript">';
 						print 'alert("Usuario existente en la base")';
 						print '</script>';
-						header("refresh:1;url=regAdminDent.php");
+						header("refresh:1;url=regDentistaTemporal.php");
 					}
 					else { //ELSE C
 						$query = @mysql_query("SELECT * FROM Maestro WHERE Usuario='".mysql_real_escape_string($usuario)."'");
@@ -152,7 +127,7 @@ if(isset($_POST['posted'])) {
 							print '<script type="text/javascript">';
 							print 'alert("Usuario existente en la base")';
 							print '</script>';
-							header("refresh:1;url=regAdminDent.php");
+							header("refresh:1;url=regDentistaTemporal.php");
 						}
 						else { //ELSE B
 													
@@ -162,7 +137,7 @@ if(isset($_POST['posted'])) {
 								print '<script type="text/javascript">';
 								print 'alert("Usuario existente en la base")';
 								print '</script>';
-								header("refresh:1;url=regAdminDent.php");
+								header("refresh:1;url=regDentistaTemporal.php");
 							}
 
 							else { //ELSE A						
@@ -216,7 +191,7 @@ if(isset($_POST['posted'])) {
 									print '<script type="text/javascript">';
 									print 'alert("Registro exitoso de Dentista. Revisa tu bandeja de correo")';
 									print '</script>';
-									header("refresh:1;url=../principales/adminPage.php");									
+									header("refresh:1;url=../index.php");									
 								}
 								else {
 									$fail .= 'Hubo un error';
@@ -477,10 +452,10 @@ function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 
 					<div id="registra">
 						<ul>
-							<li>						
+							<li>							
 								<span style="color:red">Datos personales </span>
 									
-								<form action="regAdminDent.php" method="post">
+								<form action="regDentistaTemporal.php" method="post">
 									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
 									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
 									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
@@ -539,40 +514,29 @@ function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
 		<div id="left-col">
 
 			<!-- Logo -->
-			<a href="../principales/adminPage.php" id="logo">Foundation</a>
+			<a href="../index.php" id="logo">Foundation</a>
 
 			<!-- Main Naigation (active - .act) -->
 			<div id="main-nav">
 				<ul>
-                    <li class="act"><a href="../principales/adminPage.php">Inicio</a></li>
+                    <li class="act"><a href="../index.php">Inicio</a></li>
                     <li>
-                        <a href="../registros/regAdminDent.php">Registro de Dentistas</a>
+                        <a href="../ProfesionalSaludPrincipal.php">Profesional de Salud</a>                        
                     </li>
                     <li>
-                        <a href="../registros/regDirector.php">Registro de Directores</a>      
+                        <a href="../padrePrincipal.php">Padres de familia</a>                      
                     </li>
-                    <li>
-                        <a href="../registros/regNinio.php">Registro de Pacientes</a>      
-                    </li>                 
-                    
-                    <li>
-                        <a href="../construccion.html">Solicitudes pendientes</a>      
-                    </li>
-				
+                    <li><a href="../escuelaPrincipal.php">Escuelas</a></li>          
 				</ul>
 			</div>
 
 			<!-- News Widget -->
 			<div class="widget w-news">
-				<h4 class="w-title title-light">Cerrar sesion.</h4>
+				<h4 class="w-title title-light"></h4>
 				<div class="w-content">
 					<ul>
 						<li>
-							<form action="../finSesion.php" method="post">
-								Usuario:
-								<?php echo $_SESSION["uid"];?>
-								<input type="submit" value="Fin de sesiÃ³n" />
-							</form>
+							
 						</li>
 					</ul>
 				</div>

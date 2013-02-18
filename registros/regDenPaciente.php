@@ -51,12 +51,14 @@ if(isset($_POST['posted'])) {
 			echo $fail;
 			header("refresh:3;url=regNinio.php");
 		}else{//ELSE F
-			echo "ENTRO BIEN AQUI";
 			if($grupo == "")  {
 				
 				//Obtener el identificador del padre
-				$meter2 = @mysql_query('SELECT * from Padre where Usuario="'.mysql_real_escape_string($padre).'"');								
-				$idPadre2 = @mysql_fetch_object($meter2);									
+				$meter2 = @mysql_query('SELECT * from Padre where Usuario="'.mysql_real_escape_string($padre).'"');
+				
+				
+				$idPadre2 = @mysql_fetch_object($meter2);							
+				
 				$meter=@mysql_query('INSERT INTO Ninio (idNinio,Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
 						("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'",0'.')');
