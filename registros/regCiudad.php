@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Autor: Josué Castañeda
+ * Autor: JosuÃ© CastaÃ±eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 17/FEB/2013
  *
  * Descripcion:
  * 	Registro de ciudades, se hace una lista de los paises disponibles, usando AJAX se muestran 
- *  después los estados registrados del país.
+ *  despuï¿½s los estados registrados del paï¿½s.
  */
 
 include '../accesoDentista.php';
@@ -79,13 +79,13 @@ if(isset($_POST['posted'])) {
 				print '<script type="text/javascript">';
 				print 'alert("Ciudad registrada con exito")';
 				print '</script>';
-				header("refresh:10;url=../principales/profesionalPrincipal.php");
+				header("refresh:1;url=../principales/profesionalPrincipal.php");
 				exit;
 			}else{
 				print '<script type="text/javascript">';
 				print 'alert("Hubo un error al registrar")';
 				print '</script>';
-				header("refresh:10;url=regCiudad.php");	
+				header("refresh:1;url=regCiudad.php");	
 				exit;	
 			}
 		}

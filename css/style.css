@@ -808,7 +808,7 @@ img.avatar {
 }
 #copyright {
 	text-align: center;
-	padding-top: 31px;
+	padding-top: 35px;
 	clear: both;
 	font-size: 12px;
 }
@@ -824,7 +824,9 @@ img.avatar {
 	border-right-style: solid;
 }
 .w-25 { width: 130px; }
-.w-50 { width: 295px; }
+.w-50 {
+	width: 650px;
+}
 
 #footer .w-title {
 	font-weight: normal;

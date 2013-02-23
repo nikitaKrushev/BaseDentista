@@ -1,6 +1,6 @@
 <?php
 /**
- * Autor: Josué Castañeda
+ * Autor: JosuÃ© CastaÃ±eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 17/FEB/2013
  *
@@ -89,7 +89,7 @@ function validaNombre($nombre) {
 	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
 	else
 		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-		return "El campo Nombre solo contiene letras.\n";
+		return "El campo Nombre solo contiene letras sin acentos.\n";
 	return "";
 }
 

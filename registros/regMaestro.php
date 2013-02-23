@@ -1,6 +1,6 @@
 <?php
 /**
- * Autor: Josu� Casta�eda
+ * Autor: Josué Castañeda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 2/FEB/2013
  *
@@ -11,6 +11,9 @@
 
 session_start();
 include '../accesoDentista.php';
+include '../validaciones.php';
+include '../enviarMail.php';
+
 //Checamos si hay una session vacia o si ya hay una sesion
 if ($_SESSION['type'] != 4 && $_SESSION['type'] != 6) {
 	echo("Contenido Restringido");
@@ -49,24 +52,26 @@ if(isset($_POST['posted'])) {
 	$correo2 = strip_tags($_POST['correo2']);
 	$escuela = strip_tags($_POST['escuela']);
 	$usuario = strip_tags($_POST['usuario']);
+	echo $usuario;
 		
 	/***
 	 * Codigo necesario para mandar correo de confirmacion
 	*/
 	
 	$to = $correo;
-	$nameto = $nombre." ".$apaterno;
+	$nameto = $name." ".$apaterno;
 	$from = "registro@cartillabucaldigital.org";
 	$namefrom = "Registro de cuentas";
 	$subject = "Registro exitoso de cartilla bucal digital";
-	$message =  $nombre." ".$apaterno." "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
-		\r\n. Tu usuario es: ".$usuario."\r\n Tu contrase�a: ".$pass.
-		"\r\n. Recuerda escribir en alg�n lugar seguro esta informaci�n, para que no se pierdan tus datos
-		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario
+	$message =  $name." ".$apaterno.".$apaterno. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
+		\r\n. Tu usuario es: ".$user."\r\n Tu contraseña: ".$pass.
+		"\r\n. Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
+		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario			
+	
 		
 	//Para la validacion
 	$fail = validaNombre(trim($nombre));
-	$fail .= validaPaterno(trim($apaterno));
+	$fail .= validaPaterno(trim($apaterno),1	);
 	$fail .=validaPass($pass);
 	$fail .= validaEqualPass($pass,$pass2);
 	$fail .= validaCorreo($correo);
@@ -77,41 +82,41 @@ if(isset($_POST['posted'])) {
 	
 		$query = @mysql_query("SELECT * FROM Maestro WHERE idMaestro='".mysql_real_escape_string($usuario)."'");		
 		if($existe = @mysql_fetch_object($query)){
-			$fail.= 'Este usuario '.$clave.' ya existe. Intente otro usuario';
+			$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 1';
 			echo $fail;
 			header("refresh:3;url=regMaestro.php");							
 	
 		}else{
 			$query = @mysql_query("SELECT * FROM Administrador WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 			if($existe = @mysql_fetch_object($query)){
-				$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
+				$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 2';
 				echo $fail;
 				header("refresh:3;url=regAdmin.php");
 			}else {
 				$query = @mysql_query("SELECT * FROM ProfesionalSalud WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 				if($existe = @mysql_fetch_object($query)){
-					$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
+					$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 3';
 					echo $fail;
 					header("refresh:3;url=regAdmin.php");
 				}
 				else {
 					$query = @mysql_query("SELECT * FROM Dentista WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 					if($existe = @mysql_fetch_object($query)){
-						$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
+						$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 4';
 						echo $fail;
 						header("refresh:3;url=regAdmin.php");
 					}
 					else {
 						$query = @mysql_query("SELECT * FROM Director WHERE idDirector='".mysql_real_escape_string($usuario)."'");
 						if($existe = @mysql_fetch_object($query)){
-							$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
+							$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 5';
 							echo $fail;
 							header("refresh:3;url=regAdmin.php");
 						}
 						else {
 							$query = @mysql_query("SELECT * FROM Padre WHERE Usuario='".mysql_real_escape_string($usuario)."'");
 							if($existe = @mysql_fetch_object($query)){
-								$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
+								$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario 6';
 								echo $fail;
 								header("refresh:3;url=regAdmin.php");
 							}
@@ -127,15 +132,16 @@ if(isset($_POST['posted'])) {
 								$meter=@mysql_query('INSERT INTO Maestro (Nombre, ApellidoPaterno,Password,Usuario, Escuela_idEscuela,Escuela_Direccion_idDireccion,Correo) 
 										values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($pass_enc).'","'
 											.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($idEscuela->idEscuela).'","'.mysql_real_escape_string($idEscuela->Direccion_idDireccion).'","'.mysql_real_escape_string($correo).'")');
-								if($meter){
-									echo 'Administrador registrado con exito';
+								if($meter){									
 									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);									
-									echo 'Mail sent!';
+									print '<script type="text/javascript">';
+									print 'alert("Registro exitoso de Maestro. Revisa tu bandeja de correo")';
+									print '</script>';
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									if($_SESSION['type'] == 4)
-										header("refresh:3;url=../principales/directorPrincipal.php");
+										header("refresh:1;url=../principales/directorPrincipal.php");
 									else 
-										header("refresh:3;url=../principales/adminPage.php");
+										header("refresh:1;url=../principales/adminPage.php");
 								}else{
 									echo 'Hubo un error';
 								}
@@ -161,69 +167,8 @@ else {
 	$correo2 = "Repite correo";
 	$escuela = "Escuela";
 	$clave = "Clave";
+	$usuario ="Usuario";
 	
-}
-
-function validaNombre($nombre) {
-	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$nombre )) return "El campo Nombre solo contiene letras.\n";
-	return "";
-}
-
-function validaPaterno($nombre) {
-	if ($nombre =="") {
-		return "Favor de llenar el campo apellido paterno.\n";
-	}
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-		return "Los apellidos solo contienen letras.\n";
-	return "";
-}
-
-function validaPass($field) {
-
-	if($field == "") return "Introduce una contraseña.\n";
-	else{
-
-		if (strlen($field) < 5)
-			return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
-
-		else
-			if (! preg_match("/[a-z]/",$field) || ! preg_match("/[0-9]/",$field))
-			return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";
-	}
-	return "";
-}
-
-function validaEqualPass($field,$field2) {
-	if($field !=$field2) return "Las contraseñas no son iguales.\n";
-	return "";
-}
-
-
-function validaCorreo($field) {
-	if ($field == "") return "Introduce una contraseña.\n";
-	else if (!((strpos($field, ".") > 0) &&
-			(strpos($field, "@") > 0))  ||
-			preg_match("/[^a-zA-Z0-9.@_-]/",$field))
-		return "La dirección de correo electrónico es inválida".$field."\n";
-	return "";
-}
-
-function validaEqualCorreo($field,$field2){
-	if($field !=$field2) return "Los correos no son iguales.\n";
-	return "";
-}
-
-function validaEscuela($escuela) {
-	if($escuela == "") return "Llena el campo de escuela";
-}
-
-function validaClave($clave) {
-	if (! preg_match("/^[0-9]+$/",$clave))
-		return "La clave requiere digitos.\n";
-	return "";
 }
 
 ?>
@@ -274,77 +219,7 @@ function validaClave($clave) {
                     <div id="registra"	>
                     <ul>
                         <li>
-         <script type="text/javascript">
-				function validate(form){
-					fail = validateNombre(form.nombre.value);
-					fail += validatePaterno(form.apaterno.value);
-					fail += validatePass(form.pass.value);
-					fail += validateEqualPass(form.pass2.value,form.pass.value);
-					fail += validateCorreo(form.correo.value);
-					fail += validateEqualCorreo(form.correo.value,form.correo2.value);
-					fail += validateEscuela(form.escuela.value);
-					
-					if (fail =="") return true;
-					else {
-						alert(fail);
-						return false;
-					}
-				}
-					
-				function validateNombre(field) {
-					if (field =="") return "Favor de llenar el campo Nombre.\n";
-					else
-						if (! /^[a-zA-Z]+$/.test(field) )
-							return "El campo Nombre Ht solo contiene letras.\n";
-					return "";
-				}
-				
-				function validatePaterno(field) {
-					if (field =="") {
-							return "Favor de llenar el campo apellido paterno.\n";
-					else
-						if (! /^[a-zA-Z]+$/.test(field) )
-							return "Los apellidos contienen solo letras.\n";
-					return "";
-				}
-				
-				function validatePassword(field){
-					if(field == "") return "Introduce una contraseña.\n";
-					else
-						if (field.length < 5)
-							return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
-						else 
-							if (! /[a-z]/.test(field) || ! /[0-9]/.test(field))
-								return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";					
-					return "";		
-				}
-					
-				function validatePasswordEqual(field,field2) {
-					if(field !=field2) return "Las contraseñas no son iguales.\n";
-					return "";
-				}
-				
-				function validateCorreo(field) {
-					if(field == "") return "Introduce una contraseña.\n";
-					else if (!((field.indexOf(".") > 0) && (field.indexOf("@") > 0)) || /[^a-zA-Z0-9.@_-]/.test(field))
-						return "La dirección de correo electrónico es inválida.\n"
-					return "";
-				}
-				
-				function validateEqualsCorreo(field,field2){
-					if(field !=field2) return "Los correos no son iguales.\n";
-					return "";
-				}
-				
-				function validateEscuela(field) {
-					if (! /^[0-9]+$/.test(field))
-						return "El campo Escuela requiere digitos.\n";					
-					return "";
-				}
-					
-				
-			</script>               	                        								
-							<form action="regMaestro.php" method="post" onSubmit="return validate(this)">
+        					<form action="regMaestro.php" method="post" onSubmit="return validate(this)">
 								<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="Nombre: " title="Introduce el nombre del maestro" id="nombre"/>
 								<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="Apellido paterno: " title="Introduce tu apellido paterno" id="apaterno"/>			
 								<input type="text" value="<?php echo $usuario;?>" name="usuario" alt="Usuario asignado: " title="Introduce un usuario" id="usuario" />

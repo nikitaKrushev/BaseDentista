@@ -1,11 +1,11 @@
 <?php
 /**
- * Autor: Josué Castañeda
+ * Autor: JosuÃ© CastaÃ±eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 2/FEB/2013
  *
  * Descripcion:
- * 	Aun no es funcional este código....
+ * 	Aun no es funcional este cÃ³digo....
  *
  */
 

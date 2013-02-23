@@ -1,19 +1,22 @@
 <?php
 /**
- * Autor: Josué Castañeda
+ * Autor: JosuÃ© CastaÃ±eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 17/FEB/2013
  *
  * Descripcion:
- * 	Registro de los padres. Primero se verifica que la información introducida sea
- * 	correctamente formateada. Después se verifica la unicidad del usuario, en caso de 
- *  repetición, el registro no puede ser completado, de otra forma, se da de alta al 
- *  usuario y se envia un correo a la dirección que fue proporcionada.
+ * 	Registro de los padres. Primero se verifica que la informaciï¿½n introducida sea
+ * 	correctamente formateada. Despuï¿½s se verifica la unicidad del usuario, en caso de 
+ *  repeticiï¿½n, el registro no puede ser completado, de otra forma, se da de alta al 
+ *  usuario y se envia un correo a la direcciï¿½n que fue proporcionada.
  */
 
 if(isset($_POST['posted'])) {
 
 	require_once('../funciones.php');
+	include '../validaciones.php';
+	include '../enviarMail.php';
+	
 	conectar($servidor, $user, $pass, $name);
 	
 	//recibe info
@@ -33,12 +36,13 @@ if(isset($_POST['posted'])) {
 	$namefrom = "Registro de cuentas";
 	$subject = "Registro exitoso de cartilla bucal digital";
 	$message =  $name." ".$apellidoPat.".$apellidoMat. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
-			\r\n Tu usuario es: ".$usuario."\r\n  Tu contraseña: ".$password.
-			"\r\n Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
-			\r\nSi tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario		
+		\r\n. Tu usuario es: ".$user."\r\n Tu contraseÃ±a: ".$pass.
+		"\r\n. Recuerda escribir en algÃºn lugar seguro esta informaciÃ³n, para que no se pierdan tus datos
+		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario			
+			
 	
 	//Validacion
-	$fail = validaUser($usuario);
+	$fail = validateUser($usuario);
 	$fail .= validaPass($password);
 	$fail .= validaEqualPass($password,$password2);
 	$fail .= validaNombre(trim($name));
@@ -159,148 +163,6 @@ else {
 	$telefono = "Telefono:";	
 }
 
-function validaUser($usuario) {
-	if ($usuario =="") return " Favor de llenar el campo Identificador.\n";
-	return "";
-}
-
-function validaNombre($name) {
-	echo $name;
-	if ($name =="") return " Favor de llenar el campo Nombre.\n";
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$name ))
-			return " El campo Nombre solo contiene letras.\n";
-	return "";
-}
-
-function validaPaterno($nombre,$tipo) {
-	if ($nombre =="") {
-		if($tipo ==1)
-			return " Favor de llenar el campo apellido paterno.\n";
-		else
-			return " Favor de llenar el campo apellido materno.\n";
-	}
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-		return " Los apellidos solo contienen letras.\n";
-	return "";
-}
-
-function validaPass($field) {
-
-	if($field == "") return " Introduce una contraseÃ±a.\n";
-	else{
-
-		if (strlen($field) < 5)
-			return " El tamaÃ±o de la contraseÃ±a debe ser por lo menos de 5 caracteres.\n";
-
-		else
-			if (! preg_match("/[a-z]/",$field) || ! preg_match("/[0-9]/",$field))
-			return " La contraseÃ±a requiere por lo menos un caracter de [a-z] y [0-9].\n";
-	}
-	return "";
-}
-
-function validaEqualPass($field,$field2) {
-	if($field !=$field2) return " Las contraseÃ±as no son iguales.\n";
-	return "";
-}
-
-function validaCorreo($field) {
-	if ($field == "") return " Introduce una correo.\n";
-	else if (!((strpos($field, ".") > 0) &&
-			(strpos($field, "@") > 0))  ||
-			preg_match("/[^a-zA-Z0-9.@_-]/",$field))
-		return " La direcciÃ³n de correo electrÃ³nico es invÃ¡lida".$field."\n";
-	return "";
-}
-
-function validaEqualCorreo($field,$field2){
-	if($field !=$field2) return " Los correos no son iguales.\n";
-	return "";
-}
-
-/**
- * Función proporcionada por el servidor donde estamos haciendo host.
- * No tocar.
- */
-
-function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
-{
-	//SMTP + Detalles del servidor
-	/* * * * Inicia configuración * * * */
-	$smtpServer = "mail.cartillabucaldigital.org";
-	$port = "25";
-	$timeout = "30";
-	$username = "registro@cartillabucaldigital.org";
-	$password = "l@c0yota719p0r";
-	$localhost = "localhost";
-	$newLine = "\r\n";
-	/* * * * Termina configuración * * * * */
-
-	//Conexión al servidor en el puerto específico
-	$smtpConnect = fsockopen($smtpServer, $port, $errno, $errstr, $timeout);
-	$smtpResponse = fgets($smtpConnect, 515);
-	if(empty($smtpConnect))
-	{
-		$output = "Failed to connect: $smtpResponse";
-		return $output;
-	}
-	else
-	{
-		$logArray['connection'] = "Connected: $smtpResponse";
-	}
-
-	//Solicitud de logueo
-	fputs($smtpConnect,"AUTH LOGIN" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['authrequest'] = "$smtpResponse";
-
-	//Envío de usuario
-	fputs($smtpConnect, base64_encode($username) . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['authusername'] = "$smtpResponse";
-
-	//Envío de password
-	fputs($smtpConnect, base64_encode($password) . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['authpassword'] = "$smtpResponse";
-
-	//Saludo a SMTP
-	fputs($smtpConnect, "HELO $localhost" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['heloresponse'] = "$smtpResponse";
-
-	//Envía correo desde
-	fputs($smtpConnect, "MAIL FROM: $from" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['mailfromresponse'] = "$smtpResponse";
-
-	//Envía correo a
-	fputs($smtpConnect, "RCPT TO: $to" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['mailtoresponse'] = "$smtpResponse";
-
-	//Cuerpo del mensaje
-	fputs($smtpConnect, "DATA" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['data1response'] = "$smtpResponse";
-
-	//Construyendo encabezados
-	$headers = "MIME-Version: 1.0" . $newLine;
-	$headers .= "Content-type: text/html; charset=iso-8859-1" . $newLine;
-	$headers .= "To: $nameto <$to>" . $newLine;
-	$headers .= "From: $namefrom <$from>" . $newLine;
-
-	fputs($smtpConnect, "To: $to\nFrom: $from\nSubject: $subject\n$headers\n\n$message\n.\n");
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['data2response'] = "$smtpResponse";
-
-	//Despedida a SMTP
-	fputs($smtpConnect,"QUIT" . $newLine);
-	$smtpResponse = fgets($smtpConnect, 515);
-	$logArray['quitresponse'] = "$smtpResponse";
-}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -380,7 +242,7 @@ function authSendEmail($from, $namefrom, $to, $nameto, $subject, $message)
         <div id="left-col">
         
             <!-- Logo -->
-            <a href="index.html" id="logo">Foundation</a>
+            <a href="../index.php" id="logo">Foundation</a>
             
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">

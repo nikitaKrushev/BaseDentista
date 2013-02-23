@@ -1,11 +1,11 @@
 <?php
 /**
- * Autor: Josué Castañeda
+ * Autor: JosuÃ© CastaÃ±eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 2/FEB/2013
  *
  * Descripcion:
- * 	Realiza el registro de estados, se muestra en un dialogo de selección los paises
+ * 	Realiza el registro de estados, se muestra en un dialogo de selecciï¿½n los paises
  *  registrados en la base de datos.
  */
 
