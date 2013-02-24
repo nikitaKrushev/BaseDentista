@@ -1,5 +1,6 @@
 <?php
 include '../accesoDentista.php';
+include '../validaciones.php';
 
 if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
@@ -25,32 +26,42 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 }
 
 if(isset($_POST['posted'])) {
-	require_once('../funciones.php');
+	require_once('../funciones.php');	
+	
 	conectar($servidor, $user, $pass, $name);
-
-	$idNinio = strip_tags($_POST['idNinio']);
+	
+	$fail ="";
 	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
 	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
-	$nacimiento = strip_tags($_POST['nacimiento']);
+	//$nacimiento = strip_tags($_POST['nacimiento']);
 	$padre = strip_tags($_POST['padre']);
 	$grupo = strip_tags($_POST['grupo']);
-
+	$dia = $_POST['dia'];
+	$mes = $_POST['mes'];
+	$anio =$_POST['year'];
+	
 	//Para la validacion
-	$fail = validaNino($idNinio);
 	$fail .= validaNombre(trim($nombre));
 	$fail .= validaPaterno($apaterno,1);
 	$fail .= validaPaterno($amaterno,2);
-	//Falta validacion de nacimiento
 	$fail .= validaPadre(trim($padre));
-
+	//echo $nacimiento;
+	
 	if($fail == "") { //IF A
+		echo "Entro aqui no hay fail";
 		$query = @mysql_query('SELECT * FROM Nino WHERE idNino="'.mysql_real_escape_string($idNinio).'"');
 		if($existe = @mysql_fetch_object($query)){
 			$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
-			echo $fail;
-			header("refresh:3;url=regNinio.php");
+			print '<script type="text/javascript">';
+			print 'alert("Error en el registro.")';
+			print '</script>';
+			header("refresh:1;url=regDenPaciente.php");
 		}else{//ELSE F
+			
+			//Correcto formato de fecha
+			$nacimiento = $anio."-".$mes."-".$dia;
+			
 			if($grupo == "")  {
 				
 				//Obtener el identificador del padre
@@ -59,8 +70,8 @@ if(isset($_POST['posted'])) {
 				
 				$idPadre2 = @mysql_fetch_object($meter2);							
 				
-				$meter=@mysql_query('INSERT INTO Ninio (idNinio,Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
-						("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
+				$meter=@mysql_query('INSERT INTO Ninio (Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
+						("'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'",0'.')');
 				
 			}
@@ -69,21 +80,29 @@ if(isset($_POST['posted'])) {
 				$meter3 = @mysql_query('SELECT * from Grupo where idGrupo="'.mysql_real_escape_string($grupo).'"');
 				
 				$idGrupo = @mysql_fetch_object($meter3);																						
-				$meter=@mysql_query('INSERT INTO Ninio values ("'.mysql_real_escape_string($idNinio).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
+				$meter=@mysql_query('INSERT INTO Ninio values ("'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 					'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($padre).'","'
 					.mysql_real_escape_string($grupo).'","'.mysql_real_escape_string($idGrupo->Escuela_idEscuela)
 						.'","'.mysql_real_escape_string($idGrupo->Escuela_Direccion_idDireccion).'",0"'.'")');
 			}	
 			
 			if($meter){
-				echo 'Usuario registrado con exito';
-				header("refresh:3;url=../principales/mainDentista2.php");
+				print '<script type="text/javascript">';
+				print 'alert("Registro exitoso de paciente.")';
+				print '</script>';
+				header("refresh:1;url=../principales/mainDentista2.php");
 			}
 			else {
 				$fail .= 'Hubo un error';				
 			}
 		} //ELSE A
 	} //ELSE B
+	else {
+		print '<script type="text/javascript">';
+		print 'alert("Error en el registro.")';
+		print '</script>';
+		header("refresh:1;url=regDenPaciente.php");
+	}
 }	//ELSE C
 
 else {
@@ -95,37 +114,6 @@ else {
 	$padre = "Padre del nino:";
 	$grupo = "";
 }
-function validaNombre($nombre) {
-	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-		return "El campo Nombre solo contiene letras.\n";
-	return "";
-}
-
-function validaPaterno($nombre,$tipo) {
-	if ($nombre =="") {
-		if($tipo == 1)
-			return "Favor de llenar el campo apellido paterno.\n";
-		else
-			return "Favor de llenar el campo apellido materno.\n";
-	}
-	else
-		if (! preg_match("/^[a-zA-Z]+$/",$nombre ))
-		return "Los apellidos solo contienen letras.\n";
-	return "";
-}
-
-function validaPadre($field) {
-	if ($field =="") return "Favor de llenar el campo de padre.\n";
-}
-
-function validaNino($idNinio) {
-	if (! preg_match("/^[0-9]+$/",$idNinio))
-		return "La clave del niño requiere solo digitos.\n";
-	return "";
-}
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -180,61 +168,60 @@ function validaNino($idNinio) {
 					<div id="registra">
 						<ul>
 							<li>
-								<script type="text/javascript">
-									function validate(form){
-										fail = validateNombre(form.nombre.value);
-										fail += validatePaterno(form.apaterno.value,1);
-										fail += validatePaterno(form.amaterno.value,2);
-										fail += validatePadre(form.padre.value);
-										fail += validateNinio(form.idNinio.value);
-																												
-										if (fail =="") return true;
-										else {
-											alert(fail);
-											return false;
-										}
-									}
-									
-									function validateNombre(field) {
-										if (field =="") return "Favor de llenar el campo Nombre.\n";
-										else
-											if (! /^[a-zA-Z]+$/.test(field) )
-												return "El campo Nombre solo contiene letras.\n";
-										return "";
-									}																		
-									
-									function validatePaterno(field,tipo) {
-										if (field =="") {
-											if(tipo == 1)
-												return "Favor de llenar el campo apellido paterno.\n";
-											else
-												return "Favor de llenar el campo apellido materno.\n";
-										}
-										else
-											if (! /^[a-zA-Z]+$/.test(field) )
-												return "Los apellidos contienen solo letras.\n";
-										return "";
-									}
-									
-									function validatePadre(field) {
-										if (field =="") return "Favor de llenar el campo padre.\n";
-									}									
-									
-									function validateNinio(field) {
-										if (! /^[0-9]+$/.test(field))
-											return "El campo ninio requiere digitos.\n";					
-										return "";
-									}
-									
-								</script>
+								
 								<span style="color:red">Datos personales </span>
 									
 								<form action="regDenPaciente.php" method="post" >
 									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
 									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
-									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
-									<input type="text" value="<?php echo $idNinio;?>" name="idNinio" alt="*Identificador Niño:" title="Introduce el identificador del niño" id="idNinio" />
-									<input type="text" value="<?php echo $nacimiento;?>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />
+									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" />
+									<span style="color:red">Fecha de nacimiento </span>
+									<select name="dia" id="dia">
+										<?PHP
+										//<input type="text" value="<?php echo $nacimiento;>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />									 
+										for($i=1; $i<=31; $i++)
+		  								if($year == $i)
+											echo "<option value='$i' selected>$i</option>";
+										else
+											echo "<option value='$i'>$i</option>";
+										?>
+									</select>
+									
+									<select name="mes" id="mes">
+										<?PHP for($i=1; $i<=12; $i++) {
+											switch ($i) {											
+												case 1: $nombreMes = "Enero"; break;
+												case 2: $nombreMes = "Febrero"; break;
+												case 3: $nombreMes = "Marzo"; break;
+												case 4: $nombreMes = "Abril"; break;
+												case 5: $nombreMes = "Mayo"; break;
+												case 6: $nombreMes = "Junio"; break;
+												case 7: $nombreMes = "Julio"; break;
+												case 8: $nombreMes = "Agosto"; break;
+												case 9: $nombreMes = "Septiembre"; break;
+												case 10: $nombreMes = "Octubre"; break;
+												case 11: $nombreMes = "Noviembre"; break;
+												case 12: $nombreMes = "Diciembre"; break;
+											}
+											
+		  								if($mes == $i)
+											echo "<option value='$i' selected>$nombreMes</option>";
+										else
+											echo "<option value='$i'>$nombreMes</option>";
+										}
+										?>
+									</select>
+									
+									
+									<select name="year" id="year">
+										<?PHP for($i=1994; $i<=date("Y")-2; $i++)
+		  								if($year == $i)
+											echo "<option value='$i' selected>$i</option>";
+										else
+											echo "<option value='$i'>$i</option>";
+										?>
+									</select>
+									 
 									<input type="text" value="<?php echo $padre;?>" name="padre" alt="*Usurario del padre:" title="Introduce el usuario del padre" id="padre" />
 									<input type="text" value="<?php echo $grupo;?>" name="grupo" alt="" title="Introduce el grupo del nino" id="padre" />								
 									 

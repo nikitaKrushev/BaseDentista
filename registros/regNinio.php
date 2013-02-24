@@ -37,24 +37,28 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 }
 
 if(isset($_POST['posted'])) {
-	require_once('../funciones.php');
+	require_once('../funciones.php');	
 	conectar($servidor, $user, $pass, $name);
-
+	
 	$fail ="";
 	$nombre = strtoupper(strip_tags($_POST['nombre']));
 	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
 	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
-	$nacimiento = strip_tags($_POST['nacimiento']);
+	//$nacimiento = strip_tags($_POST['nacimiento']);
 	$padre = strip_tags($_POST['padre']);
 	$grupo = strip_tags($_POST['grupo']);
 	
+	$dia = $_POST['dia'];
+	$mes = $_POST['mes'];
+	$anio =$_POST['year'];
+			
 	//Para la validacion
 	$fail .= validaNombre(trim($nombre));
 	$fail .= validaPaterno($apaterno,1);
-	$fail .= validaPaterno($amaterno,2);	
-	$fail .=  dateCheck($nacimiento);
+	$fail .= validaPaterno($amaterno,2);
+	$fail .= revisaFecha($dia,$mes,$anio);
 	$fail .= validaPadre(trim($padre));
-
+	
 	if($fail == "") { //IF A
 		$query = @mysql_query('SELECT * FROM Nino WHERE idNino="'.mysql_real_escape_string($idNinio).'"');
 		if($existe = @mysql_fetch_object($query)){
@@ -64,12 +68,8 @@ if(isset($_POST['posted'])) {
 		}else{//ELSE F
 			
 			//Correcto formato de fecha
-			$format='d/m/Y';
-			$parts = date_parse_from_format($format, $nacimiento);
-			$nacimiento = $parts['year']."-".$parts['month']."-".$parts['day'];
-			
+			$nacimiento = $anio."-".$mes."-".$dia;
 			if($grupo == "")  {
-				
 				//Obtener el identificador del padre
 				$meter2 = @mysql_query('SELECT * from Padre where Usuario="'.mysql_real_escape_string($padre).'"');
 				
@@ -104,6 +104,12 @@ if(isset($_POST['posted'])) {
 			}
 		} //ELSE A
 	} //ELSE B
+	else {
+		print '<script type="text/javascript">';
+		print 'alert("Error en el registro.")';
+		print '</script>';
+		header("refresh:1;url=regNinio.php");
+	}
 }	//ELSE C
 
 else {	
@@ -114,6 +120,7 @@ else {
 	$padre = "Padre del nino:";
 	$grupo = "";
 }
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -175,7 +182,52 @@ else {
 									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
 									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
 									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
-									<input type="text" value="<?php echo $nacimiento;?>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />
+									<span style="color:red">Fecha de nacimiento </span>
+									<select name="dia" id="dia">
+										<?PHP
+										//<input type="text" value="<?php echo $nacimiento;>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />									 
+										for($i=1; $i<=31; $i++)
+		  								if($year == $i)
+											echo "<option value='$i' selected>$i</option>";
+										else
+											echo "<option value='$i'>$i</option>";
+										?>
+									</select>
+									
+									<select name="mes" id="mes">
+										<?PHP for($i=1; $i<=12; $i++) {
+											switch ($i) {											
+												case 1: $nombreMes = "Enero"; break;
+												case 2: $nombreMes = "Febrero"; break;
+												case 3: $nombreMes = "Marzo"; break;
+												case 4: $nombreMes = "Abril"; break;
+												case 5: $nombreMes = "Mayo"; break;
+												case 6: $nombreMes = "Junio"; break;
+												case 7: $nombreMes = "Julio"; break;
+												case 8: $nombreMes = "Agosto"; break;
+												case 9: $nombreMes = "Septiembre"; break;
+												case 10: $nombreMes = "Octubre"; break;
+												case 11: $nombreMes = "Noviembre"; break;
+												case 12: $nombreMes = "Diciembre"; break;
+											}
+											
+		  								if($mes == $i)
+											echo "<option value='$i' selected>$nombreMes</option>";
+										else
+											echo "<option value='$i'>$nombreMes</option>";
+										}
+										?>
+									</select>
+									
+									
+									<select name="year" id="year">
+										<?PHP for($i=1994; $i<=date("Y")-2; $i++)
+		  								if($year == $i)
+											echo "<option value='$i' selected>$i</option>";
+										else
+											echo "<option value='$i'>$i</option>";
+										?>
+									</select>
 									<input type="text" value="<?php echo $padre;?>" name="padre" alt="*Usurario del padre:" title="Introduce el usuario del padre" id="padre" />
 									<input type="text" value="<?php echo $grupo;?>" name="grupo" alt="" title="Introduce el grupo del nino" id="padre" />								
 									 

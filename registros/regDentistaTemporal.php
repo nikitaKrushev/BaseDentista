@@ -298,10 +298,7 @@ else {
 									<input type="text" value="<?php echo $correo2;?>" name="correo2" alt="Confirmar Correo electronico: " title="Repite tu correo electronico" id="correo2" /> 
 									<br> </br> <span style="color:red">Consultorio </span>
 									<input type="text" value="<?php echo $nombreCons;?>" name="nombreCons" alt="*Nombre del Consultorio:" title="Pon el nombre del Consultorio" id="nombreCons"/>
-									<input type="text" value="<?php echo $horarioAper;?>" name="horarioAper" alt="Horario de Apertura:" title="Pon el horario de consulta" id="horarioAper"/>
-									<input type="text" value="<?php echo $horarioClau;?>" name="horarioClau" alt="Horario de Clausura:" title="Pon la hora de clausura" id="horarioClau"/>
 									<input type="text" value="<?php echo $telefono;?>" name="telefono" alt="Telefono de contacto:" title="Pon un numero de contacto" id="telefono"/>
-									<input type="text" value="<?php echo $institucion;?>" name="institucion" alt="Institucion de procedencia:" title="Si el consultorio tiene una institucion de salud escribela" id="telefono"/>
 									<br> </br> <span style="color:red">Direccion del consultorio </span>
 									<input type="text" value="<?php echo $colonia;?>" name="colonia" alt="*Colonia:" title="Pon la colonia donde se encuentra el consultorio" id="colonia"/>
 									<input type="text" value="<?php echo $calle;?>" name="calle" alt="*Calle:" title="Pon la calle donde se encuentra el consultorio" id="calle"/>

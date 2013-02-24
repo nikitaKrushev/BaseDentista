@@ -37,10 +37,13 @@ function validaPaterno($nombre,$tipo) {
 
 function validaEscuela($escuela) {
 	if ($escuela == "") return "Introduce un identificador de escuela valido.\n";
-	return "";
+	else 
+		if(strlen($escuela) > 30)
+			return "Identificador de escuela demasiado largo";
 }
 
-function dateCheck($date,$format='d/m/Y'){
+function dateCheck($date){
+	$format='d/m/Y';
 	$parts = date_parse_from_format($format, $date);
 	$anio = date("Y");
 	if ($parts['year'] < 1992 || $parts['year'] > $anio)
@@ -50,16 +53,35 @@ function dateCheck($date,$format='d/m/Y'){
 		return "Formato de fecha dd/m/a"; 				
 }
 
+/**
+ * Para versiones de php < 5.3
+ * @param unknown $dia
+ * @param unknown $mes
+ * @param unknown $anio
+ * @return string
+ */
+function revisaFecha($dia,$mes,$anio){
+	if (!checkdate($mes,$dia,$anio)) {
+		echo "MAL";
+		return "Fecha no aceptada";
+	}
+}
+
 function validaCedula($field) {
 	if ($field =="") return "Favor de llenar el campo cedula.\n";
 }
 
 function validaColonia($field,$i) {
-	if ($field =="")
+	if ($field =="") {
 		if ($i ==1)
-		return "Favor de llenar el campo colonia.\n";
-	else
-		return "Favor de llenar el campo calle.\n";
+			return "Favor de llenar el campo colonia.\n";
+		else
+			return "Favor de llenar el campo calle.\n";
+	}
+	else {
+		if(strlen($field) > 30)
+			return "Descripción de colonia muy extensa";
+	}
 }
 
 
@@ -122,10 +144,15 @@ function validaNombreConsultorio($nombre) {
 
 function validateUser($nombre) {
 	if ($nombre =="") return "Favor de llenar el campo Usuario.\n";
-	return "";
+	else
+		if(strlen($nombre) >20)
+			return "Usuario demasiado largo";
 }
 
 function validaPadre($field) {
 	if ($field =="") return "Favor de llenar el campo de padre.\n";
+	else 
+		if(strlen($field) >30)
+			return "Campo de padre demasiado largo";
 }
 ?>
