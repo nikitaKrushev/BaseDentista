@@ -1,11 +1,11 @@
  <?php 
  /**
-  * Autor: JosuÈ CastaÒeda
+  * Autor: JosuÔøΩ CastaÔøΩeda
   * Escrito: 2/FEB/2013
   * Ultima actualizacion: 2/FEB/2013
   *
   * Descripcion:
-  *  La p·gina principal de los dentistas.
+  *  La pÔøΩgina principal de los dentistas.
   *
   */
  
@@ -108,8 +108,10 @@
                     </li>
                     
                     <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisi√≥n trimestral</a>
-                        
+                        <a href="../consulta/revisionTrimestral.php">Revisi√≥n trimestral</a>                        
+                    </li>
+                     <li>
+                        <a href="../consulta/incrementarDentadura.php">A√±adir dientes a paciente</a>                        
                     </li>
                 </ul>
             </div>

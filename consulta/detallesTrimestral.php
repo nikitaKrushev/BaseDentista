@@ -177,7 +177,7 @@ else {
 		//Construccion de la tabla del primer cuadrante										
 		$strCuad1.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad1.="<tr>\n";
-		$strCuad1.="<th> Código </th>";
+		$strCuad1.="<th> Cï¿½digo </th>";
 		$strCuad1.="<th> Estado </th>";
 		$strCuad1.="</tr>\n";
 		
@@ -219,7 +219,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad2.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad2.="<tr>\n";
-		$strCuad2.="<th> Código </th>";
+		$strCuad2.="<th> Cï¿½digo </th>";
 		$strCuad2.="<th> Estado </th>";
 		$strCuad2.="</tr>\n";
 		$_SESSION['segundoCuadrante'] = $arrayCuadranteII;
@@ -257,7 +257,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad3.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad3.="<tr>\n";
-		$strCuad3.="<th> Código </th>";
+		$strCuad3.="<th> Cï¿½digo </th>";
 		$strCuad3.="<th> Estado </th>";
 		$strCuad3.="</tr>\n";
 		$_SESSION['tercerCuadrante'] = $arrayCuadranteIII;
@@ -295,7 +295,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad4.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad4.="<tr>\n";
-		$strCuad4.="<th> Código </th>";
+		$strCuad4.="<th> Cï¿½digo </th>";
 		$strCuad4.="<th> Estado </th>";
 		$strCuad4.="</tr>\n";
 		$_SESSION['cuartoCuadrante'] = $arrayCuadranteIV;
@@ -393,7 +393,7 @@ function pintaDientes($valor) {
                 <div id="homepage-post">
                 <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiolï¿½gico de caries dental</p>                                             
                     </div>
                     
                     <div id="revisa" class="divisionDetalles">
@@ -449,7 +449,7 @@ function pintaDientes($valor) {
                   
                 </div>                                              
                 <!-- Homepage Teasers End -->
-    	  	<img src="../images/codigos.png" alt="Códigos de caries" class="left">
+    	  	<img src="../images/codigos.png" alt="Cï¿½digos de caries" class="left">
                   
             </div>
         </div>
@@ -464,17 +464,19 @@ function pintaDientes($valor) {
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">
                 <ul>
-                 <li class="act"><a href="mainDentista2.php">Inicio</a></li>
+                 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
                     <li>
-							<a href="../registros/regNinio.php">Registrar paciente</a>                        
+							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
 							<a href="construccion.html">Consulta historia dental</a>                        
                     </li>
                     
                     <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>
-                        
+                        <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a>                        
+                    </li>
+                      <li>
+                        <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a>                        
                     </li>
                 </ul>
             </div>
@@ -487,7 +489,7 @@ function pintaDientes($valor) {
                         <li>
                         	<form action="../finSesion.php" method="post">
                                 Usuario: <?php echo $_SESSION["uid"];?> 
-                                <input type="submit" value="Fin de sesión" />
+                                <input type="submit" value="Fin de sesi&oacute;n" />
                         	</form>                        	                            
                         </li>
                     </ul>

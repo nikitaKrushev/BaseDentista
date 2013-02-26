@@ -248,7 +248,7 @@ else {
 			<!-- Main Naigation (active - .act) -->
 			<div id="main-nav">
 				<ul>
-				 <li class="act"><a href="mainDentista2.php">Inicio</a></li>
+				 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
                     <li>
 							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
@@ -257,9 +257,11 @@ else {
                     </li>
                     
                     <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>
-                        
+                        <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>                                               
                     </li>	
+                      <li>
+                        <a href="../consulta/incrementarDentadura.php">Añadir dientes a paciente</a>                        
+                    </li>
 				</ul>
 			</div>
 

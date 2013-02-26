@@ -62,7 +62,7 @@ else  {
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Revisión Trimestral</title>
+		<title>RevisiÃ³n Trimestral</title>
 		
 		 <!-- Styles -->
 	    <link rel="stylesheet" type="text/css" href="../css/style.css" />
@@ -91,14 +91,14 @@ else  {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiolÃ³gico de caries dental</p>                                             
                     </div>
 				</div>   
                                                                                  
 					<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 			
 						<form action="revisionTrimestral.php" method="post">
-						 	<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
+						 	<input type="text"  value="Nombre o clave del niï¿½o" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
 						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
 						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
 						  	<input type="submit" value="Buscar" />								
@@ -155,7 +155,7 @@ else  {
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">
                 <ul>
-              	 <li class="act"><a href="mainDentista2.php">Inicio</a></li>
+              	 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
                     <li>
 							<a href="../registros/regNinio.php">Registrar paciente</a>                        
                     </li>
@@ -164,8 +164,11 @@ else  {
                     </li>
                     
                     <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>
+                        <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a>
                         
+                    </li>
+                      <li>
+                        <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a>                        
                     </li>
                 </ul>
             </div>
@@ -178,7 +181,7 @@ else  {
                         <li>
                         	<form action="../finSesion.php" method="post">
                                 Usuario: <?php echo $_SESSION["uid"];?> 
-                                <input type="submit" value="Fin de sesión" />
+                                <input type="submit" value="Fin de sesi&oacute;n" />
                         	</form>                        	                            
                         </li>
                     </ul>
