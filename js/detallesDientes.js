@@ -14,8 +14,7 @@ function myFunction(valorAntiguo,identificador,arregloCuadrante,posicion) {
 		buttons: [
 		  {
 			  text: 'Aceptar',
-			  click: function(){ 
-				  
+			  click: function(){ 				  
 				  //document.write(valorAntiguo+" VA "+identificador+" ID "+arregloCuadrante+" AC "+posicion+ " POS");
 				  var nuevoValor = document.getElementById("nuevoValor").value;
 				  if( nuevoValor <0 || nuevoValor>6 || isNaN(nuevoValor) || nuevoValor=="" || nuevoValor %1!=0) {
@@ -24,8 +23,7 @@ function myFunction(valorAntiguo,identificador,arregloCuadrante,posicion) {
 				  }
 				  
 				  else {
-					  document.getElementById("nuevoValor").value=0;
-					  
+					  document.getElementById("nuevoValor").value=0;					  
 					  //alert("Buen trabajo");
 					  xmlrequest.open("GET",'detallesTrimestral.php?arregloCuadrante='+arregloCuadrante+'&posicion='+posicion+'&identificador='+identificador+'&nuevoValor='+nuevoValor,true);
 					  xmlrequest.send(null);
@@ -95,10 +93,10 @@ function handleReply2() {
 	if(xmlrequest2.readyState==4) {
 		var respuestaHTML = xmlrequest2.responseText;
 		var nuevoValor = respuestaHTML.substring(0,2);
-		//alert(nuevoValor); 
 		var miTabla = document.getElementById("nuevos");
 		var fila = document.createElement("tr"); 
 		var celda1 = document.createElement('td');
+		celda1.id=nuevoValor;
 		celda1.innerHTML = nuevoValor; 
 		fila.appendChild(celda1); 
 		miTabla.appendChild(fila);
@@ -263,8 +261,6 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 //alert("Vamos bien");
-									 //xmlrequest.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
 									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
 									 xmlrequest2.send(null);
 									 $(this).dialog('close');
@@ -277,7 +273,9 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 							 
@@ -287,7 +285,9 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 							 
@@ -297,7 +297,9 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 							 
@@ -307,13 +309,20 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 							 
 							 case 6:
 								 if( nuevoValor >65 || nuevoValor <61) {
 									 alert("C&oacute;digo no aceptado. Valores en el rango 61-65 para este cuadrante");
+									 $(this).dialog('close');
+								 }
+								 else {
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
 									 $(this).dialog('close');
 								 }
 								 break;
@@ -324,7 +333,9 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 								 
@@ -334,7 +345,9 @@ function debugTexto() {
 									 $(this).dialog('close');
 								 }
 								 else {
-									 alert("Vamos bien");
+									 xmlrequest2.open("GET",'incDentaduraDetalle.php?nuevoDiente='+nuevoValor+'&categoria='+categoriaNuevoDiente,true);
+									 xmlrequest2.send(null);
+									 $(this).dialog('close');
 								 }
 							 break;
 							 }

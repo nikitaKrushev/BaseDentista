@@ -30,30 +30,70 @@ if(isset($_GET['nuevoDiente']) && isset($_GET['categoria']) ){
 	//echo "Your mother";
 	$nuevo =$_GET['nuevoDiente'];
 	$cat = $_GET['categoria'];
-	//echo $nuevo." ".$cat;
+	echo $nuevo." ".$cat;
 	
+	if($cat == 5 ) $cat =1;
+	else {
+		if($cat == 6 ) $cat =2;
+		else {
+			if($cat == 7 ) $cat =3;
+			else {
+				if($cat == 8 ) $cat =4;
+			}
+		}
+	}
+		
 	switch($cat) {
-		case 1:
-			//echo "UNIDAD 1";
+		case 1:			
 			$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
 			$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($_SESSION['idNino'])."");
 			$existe= @mysql_fetch_object($query);
 			$idDentadura = $existe->UltimaRevision;
-			//echo $idDentadura;
 			$query = @mysql_query("SELECT * FROM Dentadura WHERE idDentadura=$idDentadura");
 			$ultimaDentadura = @mysql_fetch_object($query);
 			$idCuadrante1 = $ultimaDentadura->CuadranteI_idCuadranteI;
-			//echo $idCuadrante1;
-			//echo "UPDATE CuadranteI SET $nuevo=0 WHERE idCuadranteI=$idCuadrante1";
 			$query = @mysql_query("UPDATE `CuadranteI` SET `$nuevo`=0 WHERE `idCuadranteI`=$idCuadrante1");
 			$existe= @mysql_fetch_object($query);
-			//header("Location: incDentaduraDetalle.php");
-			//parent.window.location.reload();
 			echo $nuevo;
 		break;
 		
 		case 2:
-			echo "UNIDAD 2";
+			$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
+			$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($_SESSION['idNino'])."");
+			$existe= @mysql_fetch_object($query);
+			$idDentadura = $existe->UltimaRevision;
+			$query = @mysql_query("SELECT * FROM Dentadura WHERE idDentadura=$idDentadura");
+			$ultimaDentadura = @mysql_fetch_object($query);
+			$idCuadrante1 = $ultimaDentadura->CuadranteII_idCuadranteII;
+			$query = @mysql_query("UPDATE `CuadranteII` SET `$nuevo`=0 WHERE `idCuadranteII`=$idCuadrante1");
+			$existe= @mysql_fetch_object($query);
+			echo $nuevo;		
+		break;
+		
+		case 3:
+			$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
+			$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($_SESSION['idNino'])."");
+			$existe= @mysql_fetch_object($query);
+			$idDentadura = $existe->UltimaRevision;
+			$query = @mysql_query("SELECT * FROM Dentadura WHERE idDentadura=$idDentadura");
+			$ultimaDentadura = @mysql_fetch_object($query);
+			$idCuadrante1 = $ultimaDentadura->CuadranteIII_idCuadranteIII;
+			$query = @mysql_query("UPDATE `CuadranteIII` SET `$nuevo`=0 WHERE `idCuadranteIII`=$idCuadrante1");
+			$existe= @mysql_fetch_object($query);
+			echo $nuevo;
+		break;
+		
+		case 4:
+			$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
+			$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($_SESSION['idNino'])."");
+			$existe= @mysql_fetch_object($query);
+			$idDentadura = $existe->UltimaRevision;
+			$query = @mysql_query("SELECT * FROM Dentadura WHERE idDentadura=$idDentadura");
+			$ultimaDentadura = @mysql_fetch_object($query);
+			$idCuadrante1 = $ultimaDentadura->CuadranteIV_idCuadranteIV;
+			$query = @mysql_query("UPDATE `CuadranteIV` SET `$nuevo`=0 WHERE `idCuadranteIV`=$idCuadrante1");
+			$existe= @mysql_fetch_object($query);
+			echo $nuevo;
 		break;
 		
 	}
