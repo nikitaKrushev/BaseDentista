@@ -18,7 +18,7 @@ function myFunction(valorAntiguo,identificador,arregloCuadrante,posicion) {
 				  //document.write(valorAntiguo+" VA "+identificador+" ID "+arregloCuadrante+" AC "+posicion+ " POS");
 				  var nuevoValor = document.getElementById("nuevoValor").value;
 				  if( nuevoValor <0 || nuevoValor>6 || isNaN(nuevoValor) || nuevoValor=="" || nuevoValor %1!=0) {
-					  alert("C�digo no aceptado");
+					  alert("Código no aceptado");
 					  $(this).dialog('close');
 				  }
 				  

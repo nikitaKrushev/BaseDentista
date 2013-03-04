@@ -13,10 +13,14 @@
 include '../accesoDentista.php';
 include '../validaciones.php';
 
-if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
+if ($_SESSION['type'] != 6 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
 
+		case 1: //Padre
+			header( "refresh:3;url=../principales/mainDentista2.php" ); //Redireccionar a pagina
+		break;
+		
 		case 2: //Padre
 			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
 			break;
@@ -29,9 +33,10 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 			header("refresh:3;url=../principales/directorPrincipal.php");
 			break;
 
-		case 5://Admin
+		case 5://Profesional
 			header("refresh:3;url=../principales/profesionalPrincipal.php");
-			break;
+		break;
+			
 	}
 	exit;
 }

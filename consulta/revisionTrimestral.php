@@ -157,10 +157,10 @@ else  {
                 <ul>
               	 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
                     <li>
-							<a href="../registros/regNinio.php">Registrar paciente</a>                        
+							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
+							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>

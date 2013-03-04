@@ -36,8 +36,6 @@
  		case 6://Admin
  			header("refresh:3;url=../principales/adminPage.php");
  			break;
- 
- 
  	}
  	exit;
  }
@@ -104,7 +102,7 @@
 							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
+							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>

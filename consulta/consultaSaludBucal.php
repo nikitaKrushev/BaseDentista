@@ -1,6 +1,4 @@
 <?php
-
-?><?php
 include '../accesoDentista.php';
 
 if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
@@ -53,7 +51,7 @@ else  {
 			if($revision->UltimaRevision == 0 )
 				header("Location: registroDientes.php");
 			else
-				header("Location: incDentaduraDetalle.php");
+				header("Location: detalleSaludBucal.php");
 		}		
 		
 	}
@@ -64,7 +62,7 @@ else  {
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Incrementar dentadura</title>
+		<title>Revisión Trimestral</title>
 		
 		 <!-- Styles -->
 	    <link rel="stylesheet" type="text/css" href="../css/style.css" />
@@ -99,7 +97,7 @@ else  {
                                                                                  
 					<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 			
-						<form action="incrementarDentadura.php" method="post">
+						<form action="consultaSaludBucal.php" method="post">
 						 	<input type="text"  value="Nombre o clave del ni�o" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
 						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
 						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
@@ -110,7 +108,7 @@ else  {
 							
 					<div id="tablaRevisa" class="divisionDetalles">
 					
-					 <form id="revisaSubmit" name="submision" action="incrementarDentadura.php" method="post">
+					 <form id="revisaSubmit" name="submision" action="consultaSaludBucal.php" method="post">
 				  		<table>
 				  			<tr>
 				  				<th> Identificador </th>
@@ -159,14 +157,15 @@ else  {
                 <ul>
               	 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
                     <li>
-							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
+							<a href="../registros/regNinio.php">Registrar paciente</a>                        
                     </li>
                     <li>
 							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a>                        
+                        <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a>
+                        
                     </li>
                       <li>
                         <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a>                        

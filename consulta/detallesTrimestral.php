@@ -26,32 +26,39 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 }
 
 if(isset($_GET['arregloCuadrante']) && isset($_GET['posicion']) && isset($_GET['identificador']) && isset($_GET['nuevoValor']) ){
-	switch($_GET['arregloCuadrante']) {
+	
+	if (strlen($_GET['nuevoValor'])==1) {
+		switch($_GET['arregloCuadrante']) {
 		
-		case 1:			
+			case 1:
 				$_SESSION['primerCuadrante'][$_GET['posicion']] = $_GET['nuevoValor'];
-				echo $_SESSION['primerCuadrante'][$_GET['posicion']];										
-				echo $_GET['identificador'];			
-		break;
+				echo $_SESSION['primerCuadrante'][$_GET['posicion']];
+				echo $_GET['identificador'];
+				break;
 		
-		case 2:			
+			case 2:
 				$_SESSION['segundoCuadrante'][$_GET['posicion']] = $_GET['nuevoValor'];
 				echo $_SESSION['segundoCuadrante'][$_GET['posicion']];
-				echo $_GET['identificador'];		
-		break;	
+				echo $_GET['identificador'];
+				break;
 		
-		case 3:
+			case 3:
 				$_SESSION['tercerCuadrante'][$_GET['posicion']] = $_GET['nuevoValor'];
 				echo $_SESSION['tercerCuadrante'][$_GET['posicion']];
-				echo $_GET['identificador'];				
-		break;
+				echo $_GET['identificador'];
+				break;
 		
-		case 4:
+			case 4:
 				$_SESSION['cuartoCuadrante'][$_GET['posicion']] =$_GET['nuevoValor'];
 				echo $_SESSION['cuartoCuadrante'][$_GET['posicion']];
-				echo $_GET['identificador'];		
-		break;
-	}	
+				echo $_GET['identificador'];
+				break;
+		}
+	}
+	else 
+		echo "Error";
+	//echo "ARREGLO: ". $_GET['arregloCuadrante']." POSICION:".$_GET['posicion']." IDENTIFICADOR:".$_GET['identificador']." NUEVOVALOR:".$_GET['nuevoValor'];
+	
 }
 else {	
 
@@ -344,7 +351,7 @@ function pintaDientes($valor) {
 		return "MicroCavidad"; break;
 	
 	case 4:
-		return "Sombre"; break;
+		return "Sombra"; break;
 	
 	case 5:
 		return "ExposicionMenor"; break;
@@ -469,7 +476,7 @@ function pintaDientes($valor) {
 							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
+							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>

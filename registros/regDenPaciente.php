@@ -2,7 +2,7 @@
 include '../accesoDentista.php';
 include '../validaciones.php';
 
-if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
+if ($_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
 
@@ -18,9 +18,14 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 			header("refresh:3;url=../principales/directorPrincipal.php");
 			break;
 
-		case 5://Admin
+		case 5://Profesional Principal
 			header("refresh:3;url=../principales/profesionalPrincipal.php");
 			break;
+			
+		case 6://Admin
+			header("refresh:3;url=../principales/adminPage.php");
+		break;
+			
 	}
 	exit;
 }
@@ -253,7 +258,7 @@ else {
 							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
+							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>

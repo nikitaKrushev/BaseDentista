@@ -391,7 +391,7 @@ function pintaDientes($valor) {
 		return "MicroCavidad"; break;
 	
 	case 4:
-		return "Sombre"; break;
+		return "Sombra"; break;
 	
 	case 5:
 		return "ExposicionMenor"; break;
@@ -520,7 +520,7 @@ function pintaDientes($valor) {
 							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
                     </li>
                     <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
+							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
                     </li>
                     
                     <li>
