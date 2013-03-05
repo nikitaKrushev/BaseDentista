@@ -151,15 +151,56 @@ for($i=0; $i<count($dentaduras); $i++) {
 }
 
 //Construccion de la tabla
-$strCuad1.="<table cellspacing=15 id=Consulta width=100%>\n";
-
-for($i=0;$i<1;$i++) {
-	for($j=0;$j<23;$j++) {
-		echo $tabla[$j][$i].",";
-	}
-	echo "TR";
+$strTabla="<table cellspacing=15 id=Consulta width=100%>\n";
+$strTabla.="<tr>\n";
+$strCuad1 = str_replace("`","",$strCuad1);
+$arregloDientes = explode(',', $strCuad1, 6);
+$strTabla.="<th> Revision </th>";
+for($i=0; $i<count($arregloDientes); $i++) {
+	$strTabla.="<th> $arregloDientes[$i] </th>";
 }
 
+$strCuad2 = str_replace("`","",$strCuad2);
+$arregloDientes = explode(',', $strCuad2, 6);
+
+for($i=0; $i<count($arregloDientes); $i++) {
+	$strTabla.="<th> $arregloDientes[$i] </th>";
+}
+
+$strCuad3 = str_replace("`","",$strCuad3);
+$arregloDientes = explode(',', $strCuad3, 6);
+
+for($i=0; $i<count($arregloDientes); $i++) {
+	$strTabla.="<th> $arregloDientes[$i] </th>";
+}
+
+$strCuad4 = str_replace("`","",$strCuad4);
+$arregloDientes = explode(',', $strCuad4, 6);
+
+for($i=0; $i<count($arregloDientes); $i++) {
+	$strTabla.="<th> $arregloDientes[$i] </th>";
+}
+
+$strTabla.="</tr>\n";
+
+//echo count($tabla);
+
+for($i=0;$i<count($dentaduras);$i++) {
+	
+	
+	
+	$strTabla.="<tr>\n";
+	$strTabla.= "<td> $i </td> \n";
+	for($j=0;$j<count($tabla);$j++) {
+		
+		$val = $tabla[$j][$i];
+		$strTabla.= "<td> $val </td> \n";
+		
+		//echo $tabla[$j][$i].",";
+	}	
+	$strTabla.="</tr>\n";
+}		
+$strTabla.=" </table>";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -213,8 +254,11 @@ for($i=0;$i<1;$i++) {
 								</div>
 			
 						  		<div class="divisionDetalles">
+						  		<p>Tabla </p>	
+						  		<?php 
 						  		
-						  		
+						  			echo $strTabla;
+						  			?>
 						  	   </div>
 						  	<div class="divisionDetalles">	
 						  		
