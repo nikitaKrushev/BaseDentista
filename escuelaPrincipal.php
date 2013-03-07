@@ -69,13 +69,11 @@
             <div id="main-nav">
                 <ul>
                     <li class="act"><a href="index.php">Inicio</a></li>
-                    <li>
-                        <a href="ProfesionalSaludPrincipal.php">Profesional de Salud</a>                        
-                    </li>
-                    <li>
-                        <a href="padrePrincipal.php">Padres de familia</a>                      
-                    </li>
-                    <li><a href="escuelaPrincipal.php">Escuelas</a></li>                    
+                    <li> <a href="ProfesionalSaludPrincipal.php">Profesional de Salud</a> </li>
+                    <li> <a href="padrePrincipal.php">Padres de familia</a> </li>
+                    <li> <a href="escuelaPrincipal.php">Escuelas</a></li>  
+                    <li> <a href="contacto.php">Contacto</a> </li>    
+                    <li> <a href="creditos.php">Créditos</a> </li>                    
                 </ul>
             </div>
             
@@ -108,37 +106,17 @@
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">
-                <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
+                <div id="copyright"> </div>
             </div>
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Links -->
-                <div class="widget w-25 w-links">
-                  <!--  <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Our Team</a></li>
-                        <li><a href="#">Site Map</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>-->
-                </div>
-                <!-- Social -->
-                <div class="widget w-25 w-links">
-                   <!-- <h5 class="w-title">Follow Us:</h5>
-                    <ul>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Google+</a></li>
-                    </ul>-->
-                </div>
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
+                   
                     <div class="w-content">
-                        <a href="#"><img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                        Tijuana, B.C., México<br />
-                        Tel.: 664 400 7866<br />
-                        <a href="#">cartillasaludbucal@gmail.com</a>
+                        <a href="#"><img src="img/pictures/zamudio.png" class="alignright" /></a>
+                       
                     </div>
                 </div>
             </div>

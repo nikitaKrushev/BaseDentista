@@ -174,29 +174,11 @@ else {
             <div id="main-nav">
                 <ul>
                     <li class="act"><a href="../principales/profesionalPrincipal.php">Inicio</a></li>
-                    <li>
-                        <a href="../registros/regAdmin.php">Registrar administrador de sitio</a>
-                        
-                    </li>
-                    <li>
-                        <a href="../registros/regPais.php">Registrar Pais</a>
-                        
-                    </li>
-                    
-                    <li>
-                        <a href="../registros/regEstado.php">Registrar Estado</a>
-                        
-                    </li>
-                    
-                    
-                    <li>
-                        <a href="../registros/regCiudad.php">Registrar Ciudad</a>
-                        
-                    </li>
-                    
-                    <li>
-                        <a href="../construccion.html">Consultar directorio de consultorios</a>                      
-                    </li>
+                    <li> <a href="../registros/regAdmin.php">Registrar administrador de sitio</a></li>
+                    <li> <a href="../registros/regPais.php">Registrar Pais</a> </li>                    
+                    <li> <a href="../registros/regEstado.php">Registrar Estado</a> </li>                                        
+                    <li> <a href="../registros/regCiudad.php">Registrar Ciudad</a> </li>                    
+                    <li> <a href="../construccion.html">Consultar directorio de consultorios</a> </li>
                 </ul>
             </div>
             
@@ -225,26 +207,16 @@ else {
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">                
-                <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
+                <div id="copyright">  </div>
             </div>
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Links -->
-                <div class="widget w-25 w-links">                
-                </div>
-                <!-- Social -->
-                <div class="widget w-25 w-links">
-                   
-                </div>
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
                     <div class="w-content">
-                        <a href="#"><img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                        Tijuana, B.C., M�xico<br />
-                        Tel.: 664 400 7866<br />
-                        <a href="#">cartillasaludbucal@gmail.com</a>
+                     <img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" />
+                     
                     </div>
                 </div>
             </div>

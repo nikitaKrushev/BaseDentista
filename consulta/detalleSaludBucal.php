@@ -298,19 +298,10 @@ $strTabla.=" </table>";
             <div id="main-nav">
                 <ul>
                  <li class="act"><a href="mainDentista2.php">Inicio</a></li>
-                    <li>
-							<a href="../registros/regDenPaciente.php">Registrar paciente</a>                        
-                    </li>
-                    <li>
-							<a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a>                        
-                    </li>
-                    
-                    <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a>                        
-                    </li>
-                      <li>
-                        <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a>                        
-                    </li>
+                    <li> <a href="../registros/regDenPaciente.php">Registrar paciente</a> </li>
+                    <li> <a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a> </li>                    
+                    <li> <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a> </li>
+                    <li> <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a> </li>
                 </ul>
             </div>
             
@@ -344,19 +335,11 @@ $strTabla.=" </table>";
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Links -->
-                <div class="widget w-25 w-links">                
-                </div>
-                <!-- Social -->
-                <div class="widget w-25 w-links">
-                   
-                </div>
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
                  
                     <div class="w-content">
-                       
-                        
+                       <img src="../img/pictures/zamudio.png"  class="alignright" />                        
                     </div>
                 </div>
             </div>

@@ -82,7 +82,7 @@ if(isset($_POST['posted'])) {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiolï¿½gico de caries dental</p>                                             
                     </div>
                 </div>
                   
@@ -93,7 +93,7 @@ if(isset($_POST['posted'])) {
                 <div id="revisa" class="divisionDetalles">                                            					                       
 					<div id="revisaForm" style="color:#0000FF">			
 						<form action="directorioConsultorios.php" method="post">
-							<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Texto:" title="" id="nombre" /><br>  					
+							<input type="text"  value="Nombre o clave del niï¿½o" name="nombre" alt="Texto:" title="" id="nombre" /><br>  					
 						  	<input type="radio" name="name" CHECKED value="Nombre">B&uacute;squeda por nombre<br>
 						  	<input type="radio" name="name" value="Colonia">B&uacute;squeda por colonia<br>
 						  	<input type="radio" name="name" value="Calle">B&uacute;squeda por calle<br>						  			
@@ -159,7 +159,7 @@ if(isset($_POST['posted'])) {
 						<a href="construccion.html">Consulta historia dental</a>                        
                     </li>                    
                     <li>
-                    	<a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>                        
+                    	<a href="../consulta/revisionTrimestral.php">Revisiï¿½n trimestral</a>                        
                     </li>
                 </ul>
             </div>
@@ -172,7 +172,7 @@ if(isset($_POST['posted'])) {
                         <li>
                         	<form action="../finSesion.php" method="post">
                                 Usuario: <?php echo $_SESSION["uid"];?> 
-                                <input type="submit" value="Fin de sesión" />
+                                <input type="submit" value="Fin de sesiï¿½n" />
                         	</form>                        	                            
                         </li>
                     </ul>
@@ -189,26 +189,17 @@ if(isset($_POST['posted'])) {
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">
-                <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
+                <div id="copyright"> </div>
             </div>
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Links -->
-                <div class="widget w-25 w-links">                
-                </div>
-                <!-- Social -->
-                <div class="widget w-25 w-links">
-                   
-                </div>
+               
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
+                    
                     <div class="w-content">
-                        <a href="#"><img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                        Tijuana, B.C., Mï¿½xico<br />
-                        Tel.: 664 400 7866<br />
-                        <a href="#">cartillasaludbucal@gmail.com</a>
+                      <img src="img/pictures/zamudio.png" class="alignright" />
                     </div>
                 </div>
             </div>

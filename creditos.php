@@ -25,18 +25,7 @@
         
         <!-- Main Column Start -->
         <div id="wrap">
-            <div id="main-col"><!-- Nivo Slider -->
-                <div id="slider-container">
-                    <div id="big-slider"><!-- Add Slides Here -->
-                       <a href="#"><img src="img/pictures/p1.png" alt="" title="!Unete al programa!" /></a>
-                        <a href="#"><img src="img/pictures/p2.png" alt="" title="!Registrate hoy!" /></a>
-                        <a href="#"><img src="img/pictures/p3.png" alt="" title="!Empezar a cuidar tus dientes es muy fácil!" /></a>
-                        <a href="#"><img src="img/pictures/p4.png" alt="" title="!Registrate hoy!" /></a>
-                        <a href="#"><img src="img/pictures/p5.png" alt="" title="!Empezar a cuidar tus dientes es muy fácil!" /></a>
-                        <a href="#"><img src="img/pictures/p6.png" alt="" title="!Unete al programa!" /></a>
-                        <a href="#"><img src="img/pictures/p7.png" alt="" title="!Registrate hoy!" /></a>
-                    </div>
-                </div>
+            <div id="main-col"><!-- Nivo Slider -->               
                 
                 <!-- Homepage Welcome Text -->
                 <div id="homepage-post">
@@ -45,16 +34,24 @@
                         <p>Perfil epidemiológico de caries dental</p>
                     </div>
                 </div>
-                               
- 				<div class="full-page-text">                
-  
-					<h3>Informaci&oacute;n para padres de familia.</h3>
-	                <p>Como padre, puedes registrarte al programa, tu hijo tendr&aacute un seguimiento de su salud bucal y podr&aacute;s ver como mejora su estado de salud. Adem&aacute;s podr&aacute;s tener acceso al directorio de consultorios, donde se encuentran los dentistas registrados al programa y podr&aacute;s llevar a tu hijo sin ning&uacute;n costo</p>
-                    <p>Para registrarte al programa haz click en el siguiente v&iacute;nculo: <a href="registros/regPadre.php" title="P&aacute;gina de registro de padres">registrate!</a></p>
-				</div>
                 
+                <!-- Homepage Teasers Start -->
+ 				<div class="full-page-text">
+             		 <h1 class="w-title" style="text-align:justify" >Cr&eacute;ditos:</h1> 
+                	<p style="text-align:justify"> Universidad Aut&oacute;noma de Baja California. 
+                	 <br />Facultad de Ciencias Qu&iacute;micas e Ingenier&iacute;a.
+					 <br />Cuerpo Acad&eacute;mico de Tecnolog&iacute;as de Software para Educaci&oacute;n.
+					 <br />Facultad de Odontolog&iacute;a Tijuana.
+					 <br />Cuerpo Acad&eacute;mico de Odontolog&iacute;a Pedi&aacute;trica y Ciencias Afines.
+					 <br />Especialidad en Odontolog&iacute;a Pedi&aacute;trica.		
+					 </p>	
+				</div>
+                                
+                <!-- Homepage Teasers End -->
+    
             </div>
         </div>
+        <!-- Main Column End -->
         
         <!-- Left Column Start -->
         <div id="left-col">
@@ -68,9 +65,9 @@
                     <li class="act"><a href="index.php">Inicio</a></li>
                     <li> <a href="ProfesionalSaludPrincipal.php">Profesional de Salud</a> </li>
                     <li> <a href="padrePrincipal.php">Padres de familia</a> </li>
-                    <li> <a href="escuelaPrincipal.php">Escuelas</a></li>    
-                    <li> <a href="contacto.php">Contacto</a> </li>    
-                    <li> <a href="creditos.php">Créditos</a> </li>                  
+                    <li> <a href="escuelaPrincipal.php">Escuelas</a></li> 
+                    <li> <a href="contacto.php">Contacto</a></li>  
+                    <li> <a href="creditos.php">Créditos</a></li>                                                           
                 </ul>
             </div>
             
@@ -102,22 +99,19 @@
         <div id="footer">
         
             <!-- Subscribe Form and Copyright Text -->
-            <div id="f-left-col">
-                <div id="copyright">  
-                
-                </div>
+            <div id="f-left-col">                
+                <div id="copyright" align="right">
+               		
+                 </div>
             </div>
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Contact Info -->
-                <div class="widget w-50 w-text last" id="text-1">
-                    <div class="w-content">
-                        <a href="#"><img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                      
-                    </div>
-                </div>
-            </div>
+                <!-- Links --><!-- Social --><!-- Contact Info -->
+                <div class="widget w-50 w-text last" id="text-1">                  
+                        <img src="img/pictures/zamudio.png" class="alignright" />                                                                                                       
+              </div>
+          </div>
             
             <div class="clear"></div>
         </div>

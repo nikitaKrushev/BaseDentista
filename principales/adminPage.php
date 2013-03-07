@@ -1,6 +1,6 @@
 <?php
 /**
- * Autor: Josué Castañeda
+ * Autor: Josuï¿½ Castaï¿½eda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 2/FEB/2013
  *
@@ -95,21 +95,11 @@ exit;
             <div id="main-nav">
                 <ul>
                     <li class="act"><a href="adminPage.php">Inicio</a></li>
-                    <li>
-                        <a href="../registros/regAdminDent.php">Registro de Dentistas</a>
-                    </li>
-                    <li>
-                        <a href="../registros/regDirector.php">Registro de Directores</a>      
-                    </li>
-                    <li>
-                        <a href="../registros/regNinio.php">Registro de Pacientes</a>      
-                    </li>                 
-                    
-                    <li>
-                        <a href="construccion.html">Solicitudes pendientes</a>      
-                    </li>
-                    
-                	</ul>
+                    <li> <a href="../registros/regAdminDent.php">Registro de Dentistas</a> </li>
+                    <li> <a href="../registros/regDirector.php">Registro de Directores</a> </li>
+                    <li> <a href="../registros/regNinio.php">Registro de Pacientes</a> </li>                                     
+                    <li> <a href="construccion.html">Solicitudes pendientes</a> </li>                   
+                </ul>
             </div>
             
             <!-- News Widget -->
@@ -137,7 +127,7 @@ exit;
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">                
-                <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
+                <div id="copyright"> </div>
             </div>
             
             <!-- Footer Widgets -->
@@ -152,12 +142,8 @@ exit;
                 </div>
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
                     <div class="w-content">
-                        <a href="#"><img src="../img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                        Tijuana, B.C., MÃ©xico<br />
-                        Tel.: 664 400 7866<br />
-                        <a href="#">cartillasaludbucal@gmail.com</a>
+                      <img src="../img/pictures/zamudio.png" class="alignright" />
                     </div>
                 </div>
             </div>

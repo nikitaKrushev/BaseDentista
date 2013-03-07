@@ -70,24 +70,6 @@ function validaEscuela($escuela) {
 	return "";
 }
 
-/*include '../accesoDentista.php';
- //Checamos si hay una session vacia o si ya hay una sesion
-if ($_SESSION['type'] != 3) {
-echo("Contenido Restringido");
-switch($_SESSION['type']) {
-
-case 1:
-header("refresh:3, url=loggeado.php");
-break;
-
-case 2:
-header( "refresh:3;url=padrePrincipal.php" ); //Redireccionar a pagina
-break;
-
-}
-
-}
-*/
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"> 

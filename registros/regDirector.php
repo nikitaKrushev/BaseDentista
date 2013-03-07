@@ -294,96 +294,9 @@ else {
 					<div id="registra">
 						<ul>
 							<li>
-								<script type="text/javascript">
-									function validate(form){
-										fail = validateNombre(form.nombre.value);
-										fail += validatePaterno(form.apaterno.value,1);
-										fail += validatePass(form.password.value);
-										fail += validateEqualPass(form.password2.value,form.password.value);
-										fail += validateCorreo(form.correo.value);
-										fail += validateCorreo(form.correo2.vaue);
-										fail += validateEqualCorreo(form.correo.value,form.correo2.value);
-
-										fail += validateEscuela(form.idnEscuela.value);
-										fail += validateNombre(form.nomEsc.value);
-
-										fail += validateNombre(form.nombreCons.value);
-										fail += validateEscuela(form.colonia.value,1);
-										fail += validateColonia(form.calle.value,1);
-										fail += validateConsultorio(form.numPostal.value);
-										fail += validateConsultorio(form.ciudad.value);
-																														
-										if (fail =="") return true;
-										else {
-											alert(fail);
-											return false;
-										}
-									}
-									
-									function validateNombre(field) {
-										if (field =="") return "Favor de llenar el campo Nombre.\n";
-										else
-											if (! /^[a-zA-Z]+$/.test(field) )
-												return "El campo Nombre solo contiene letras.\n";
-										return "";
-									}
-
-									function validateEscuela(field) {
-										if (field =="") return "Favor de llenar el campo Escuela.\n";
-										return "";
-									}																		
-									
-									function validatePaterno(field,tipo) {
-										if (field =="") {
-											if(tipo == 1)
-												return "Favor de llenar el campo apellido paterno.\n";
-											else
-												return "Favor de llenar el campo apellido materno.\n";
-										}
-										else
-											if (! /^[a-zA-Z]+$/.test(field) )
-												return "Los apellidos contienen solo letras.\n";
-										return "";
-									}																		
-									
-									function validatePassword(field){
-										if(field == "") return "Introduce una contraseña.\n";
-										else
-											if (field.length < 5)
-												return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
-											else 
-												if (! /[a-z]/.test(field) || ! /[0-9]/.test(field))
-													return "La contraseña requiere por lo menos un caracter de [a-z] y [0-9].\n";					
-										return "";		
-									}
-										
-									function validatePasswordEqual(field,field2) {
-										if(field !=field2) return "Las contraseñas no son iguales.\n";
-										return "";
-									}
-									
-									function validateCorreo(field) {
-										if(field == "") return "Introduce una contraseña.\n";
-										else if (!((field.indexOf(".") > 0) && (field.indexOf("@") > 0)) || /[^a-zA-Z0-9.@_-]/.test(field))
-											return "La dirección de correo electrónico es inválida.\n"
-										return "";
-									}
-									
-									function validateEqualsCorreo(field,field2){
-										if(field !=field2) return "Los correos no son iguales.\n";
-										return "";
-									}
-									
-									function validateConsultorio(field) {
-										if (! /^[0-9]+$/.test(field))
-											return "El campo Consultorio requiere digitos.\n";					
-										return "";
-									}
-									
-								</script>
 								<span style="color:red">Datos del director de la escuela </span>
 									
-								<form action="regDirector.php" method="post" onsubmit="return validate(this)">
+								<form action="regDirector.php" method="post" >
 									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
 									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
 									<input type="text" value="<?php echo $usuario;?>" name="usuario" alt="*Usuario:" title="Introduce un usuario" id="usuario" /> 
@@ -446,20 +359,10 @@ else {
 			<div id="main-nav">
 				<ul>
                     <li class="act"><a href="../principales/adminPage.php">Inicio</a></li>
-                    <li>
-                        <a href="../registros/regAdminDent.php">Registro de Dentistas</a>
-                    </li>
-                    <li>
-                        <a href="../registros/regDirector.php">Registro de Directores</a>      
-                    </li>
-                    <li>
-                        <a href="../registros/regNinio.php">Registro de Pacientes</a>      
-                    </li>                 
-                    
-                    <li>
-                        <a href="../construccion.html">Solicitudes pendientes</a>      
-                    </li>
-				
+                    <li> <a href="../registros/regAdminDent.php">Registro de Dentistas</a> </li>
+                    <li> <a href="../registros/regDirector.php">Registro de Directores</a> </li>
+                    <li> <a href="../registros/regNinio.php">Registro de Pacientes</a> </li>                                     
+                    <li> <a href="../construccion.html">Solicitudes pendientes</a> </li>				
 				</ul>
 			</div>
 
@@ -489,22 +392,15 @@ else {
 
 			<!-- Subscribe Form and Copyright Text -->
 			<div id="f-left-col">
-				<div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC</div>
+				<div id="copyright"> </div>
 			</div>
 
 			<!-- Footer Widgets -->
 			<div id="f-main-col">
-				<!-- Links -->
-				<div class="widget w-25 w-links"></div>
-				<!-- Social -->
-				<div class="widget w-25 w-links"></div>
 				<!-- Contact Info -->
 				<div class="widget w-50 w-text last" id="text-1">
-					<h5 class="w-title">Contacto:</h5>
 					<div class="w-content">
-						<a href="#"><img src="../img/pictures/zamudio.png" alt="Our Building"
-							class="alignright" /> </a> Tijuana, B.C., México<br /> Tel.: 664
-						400 7866<br /> <a href="#">cartillasaludbucal@gmail.com</a>
+						<img src="../img/pictures/zamudio.png" class="alignright" /> 
 					</div>
 				</div>
 			</div>

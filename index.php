@@ -81,7 +81,9 @@
                     <li>
                         <a href="padrePrincipal.php">Padres de familia</a>
                     </li>
-                    <li><a href="escuelaPrincipal.php">Escuelas</a></li>                                        
+                    <li><a href="escuelaPrincipal.php">Escuelas</a></li> 
+                    <li><a href="contacto.php">Contacto</a></li>  
+                    <li><a href="creditos.php">Créditos</a></li>                                                           
                 </ul>
             </div>
             
@@ -115,14 +117,7 @@
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">                
                 <div id="copyright" align="right">
-                <h5 class="w-title" style="text-align:justify" >Cr&eacute;ditos:</h5> 
-                	<p style="text-align:justify"> Universidad Aut&oacute;noma de Baja California. 
-                	 <br />Facultad de Ciencias Qu&iacute;micas e Ingenier&iacute;a.
-					 <br />Cuerpo Acad&eacute;mico de Tecnolog&iacute;as de Software para Educaci&oacute;n.
-					 <br />Facultad de Odontolog&iacute;a Tijuana.
-					 <br />Cuerpo Acad&eacute;mico de Odontolog&iacute;a Pedi&aacute;trica y Ciencias Afines.
-					 <br />Especialidad en Odontolog&iacute;a Pedi&aacute;trica.		
-					 </p>			
+              		
                  </div>
             </div>
             
@@ -130,16 +125,9 @@
             <div id="f-main-col">
                 <!-- Links --><!-- Social --><!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
-                   
+                    
                         <img src="img/pictures/zamudio.png" class="alignright" />
-                        Calzada Universidad 14418, Parque Industrial Internacional, C.P. 22390 Tijuana, Baja California, M&eacute;xico <br />
-                        Dr. Miguel Alberto Zamudio G&oacute;mez. Coordinador General del Programa de Cartilla de Salud Bucal Digital. zamudioalberto@gmail.com <br />
-                        Tel.: 01 (664) 6851531 Comentarios y Sugerencias a: cartillasaludbucal@gmail.com<br />
-                        &Uacute;ltima actualizaci&oacute;n: 18/FEB/2013 <br />
-						Derechos reservados Facultad de Odontolog&iacute;a Tijuana/Cartilla de Salud Bucal Digital<br />
-						Edici&oacute;n: Josu&eacute Casta&ntilde;eda Cisneros. castaedaj@uabc.edu.mx <br />                                                                     
-                   
+                       
               </div>
           </div>
             

@@ -258,7 +258,7 @@ else {
                 <div id="homepage-post">
                 <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiolï¿½gico de caries dental</p>                                             
                     </div>
                     
                     <div id="revisa" class="divisionDetalles">
@@ -289,7 +289,7 @@ else {
 						  		
 						  		 <table cellspacing="15" id="incisivo" width="100%">
 						  			<tr>
-						  				<th> Código </th>
+						  				<th> Cï¿½digo </th>
 						  				<th> Estado </th>  				
 						  			</tr>	
 						  			<tr>
@@ -631,7 +631,7 @@ else {
                   
                 </div>                                              
                 <!-- Homepage Teasers End -->
-    	  	<img src="../images/codigoPresentes.png" alt="Códigos de caries" class="left">
+    	  	<img src="../images/codigoPresentes.png" alt="Cï¿½digos de caries" class="left">
                   
             </div>
         </div>
@@ -647,17 +647,9 @@ else {
             <div id="main-nav">
                 <ul>
                  <li class="act"><a href="mainDentista2.php">Inicio</a></li>
-                    <li>
-							<a href="../registros/regNinio.php">Registrar paciente</a>                        
-                    </li>
-                    <li>
-							<a href="construccion.html">Consulta historia dental</a>                        
-                    </li>
-                    
-                    <li>
-                        <a href="../consulta/revisionTrimestral.php">Revisión trimestral</a>
-                        
-                    </li>
+                    <li> <a href="../registros/regNinio.php">Registrar paciente</a> </li>
+                    <li> <a href="construccion.html">Consulta historia dental</a> </li>                    
+                    <li> <a href="../consulta/revisionTrimestral.php">Revisiï¿½n trimestral</a> </li>
                 </ul>
             </div>
             
@@ -669,7 +661,7 @@ else {
                         <li>
                         	<form action="../finSesion.php" method="post">
                                 Usuario: <?php echo $_SESSION["uid"];?> 
-                                <input type="submit" value="Fin de sesión" />
+                                <input type="submit" value="Fin de sesiÃ³n" />
                         	</form>                        	                            
                         </li>
                     </ul>
@@ -691,21 +683,10 @@ else {
             
             <!-- Footer Widgets -->
             <div id="f-main-col">
-                <!-- Links -->
-                <div class="widget w-25 w-links">                
-                </div>
-                <!-- Social -->
-                <div class="widget w-25 w-links">
-                   
-                </div>
                 <!-- Contact Info -->
-                <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
+                <div class="widget w-50 w-text last" id="text-1">                
                     <div class="w-content">
-                        <a href="#"><img src="img/pictures/zamudio.png" alt="Our Building" class="alignright" /></a>
-                        Tijuana, B.C., Mï¿½xico<br />
-                        Tel.: 664 400 7866<br />
-                        <a href="#">cartillasaludbucal@gmail.com</a>
+                    <img src="../img/pictures/zamudio.png" class="alignright" />
                     </div>
                 </div>
             </div>
