@@ -51,9 +51,7 @@ array_pop($dentaduras); // pop the last row off, which is an empty row
 $ultimo = count($dentaduras);
 $ultimo = implode($dentaduras[$ultimo-1]) ;
 
-if(count($dentaduras) > 13) {
-	header("Location: detalleSaludBucalExtenso.php");
-}
+
 
 //Se obtien los identificadores de los cuadrantes de la ultima dentadura
 $query = "SELECT CuadranteI_idCuadranteI,CuadranteII_idCuadranteII,CuadranteIII_idCuadranteIII,CuadranteIV_idCuadranteIV  FROM `Dentadura` WHERE idDentadura=$ultimo";
@@ -235,16 +233,11 @@ $strTabla.=" </table>";
         
         <!-- Main Column Start -->
         <div id="wrap">
-            <div id="main-col"><!-- Nivo Slider -->                                                                         
+            <div id="main-col2"><!-- Nivo Slider -->                                                                         
                 <!-- Homepage Welcome Text -->
-                <div id="homepage-post">
-                <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
-                    <div class="p-content">
-                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
-                    </div>
-                    
-                    <div id="revisa" class="divisionDetalles">                     	                                        
-                    		<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
+              
+                                     	                                        
+                   		<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 							
 								<div class="divisionDetalles">
 									<p>
@@ -263,13 +256,13 @@ $strTabla.=" </table>";
 						  		
 						  			echo $strTabla;
 						  			?>
-						  	   </div>						  							   
+						 </div>						  							   
                   	      
-						</div>	
+					
 																				                       
-                    </div>
+              
                                                       
-                </div>                                              
+              </div>                                              
                 <!-- Homepage Teasers End -->   	  
                   
             </div>
@@ -311,30 +304,9 @@ $strTabla.=" </table>";
         </div>
         <!-- Left Column End -->
     
-        <div class="clear clear-wrap"></div>
-    
-        <!-- Footer Start -->
-        <div id="footer">
         
-            <!-- Subscribe Form and Copyright Text -->
-            <div id="f-left-col">
-               
-            </div>
-            
-            <!-- Footer Widgets -->
-            <div id="f-main-col">
-                <!-- Contact Info -->
-                <div class="widget w-50 w-text last" id="text-1">
-                 
-                    <div class="w-content">
-                       <img src="../img/pictures/zamudio.png"  class="alignright" />                        
-                    </div>
-                </div>
-            </div>
-            
-            <div class="clear"></div>
-        </div>
-        <!-- Footer End -->
+    
+       
         
     </div>
     <!-- Page End -->		
