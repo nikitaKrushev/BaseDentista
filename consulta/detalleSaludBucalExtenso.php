@@ -75,8 +75,8 @@ for($i=0; $i<count($dientesPresentes); $i++) {
 		$cambio=true;
 	}
 }
-$strCuad1 = substr_replace($strCuad1 ,"",-1);;
-//echo $strCuad1."\n"; //Dientes presentes en el primer cuadrante
+$cuadrante1Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 1
+$strCuad1 = substr_replace($strCuad1 ,"",-1);
 
 $id = $identificadores[1];
 $query = "SELECT `21`,`22`,`23`,`24`,`25`,`26`,`27`,`28`,`61`,`62`,`63`,`64`,`65` FROM CuadranteII WHERE idCuadranteII = $id";
@@ -94,8 +94,8 @@ for($i=0; $i<count($dientesPresentes); $i++) {
 		$cambio=true;
 	}
 }
-$strCuad2 = substr_replace($strCuad2 ,"",-1);;
-//echo $strCuad2; //Dientes presentes en el s cuadrante
+$cuadrante2Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 2
+$strCuad2 = substr_replace($strCuad2 ,"",-1);
 
 $id = $identificadores[2];
 $query = "SELECT `31`,`32`,`33`,`34`,`35`,`36`,`37`,`38`,`71`,`72`,`73`,`74`,`75` FROM CuadranteIII WHERE idCuadranteIII = $id";
@@ -113,8 +113,8 @@ for($i=0; $i<count($dientesPresentes); $i++) {
 		$cambio=true;
 	}
 }
-$strCuad3 = substr_replace($strCuad3 ,"",-1);;
-//echo $strCuad3; //Dientes presentes en el primer cuadrante
+$cuadrante3Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 3
+$strCuad3 = substr_replace($strCuad3 ,"",-1);
 
 $id = $identificadores[3];
 $query = "SELECT `41`,`42`,`43`,`44`,`45`,`46`,`47`,`48`,`81`,`82`,`83`,`84`,`85` FROM CuadranteIV WHERE idCuadranteIV = $id";
@@ -132,10 +132,9 @@ for($i=0; $i<count($dientesPresentes); $i++) {
 		$cambio=true;
 	}
 }
+$cuadrante4Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 4
 $strCuad4 = substr_replace($strCuad4 ,"",-1);;
-//echo $strCuad4; //Dientes presentes en el primer cuadrante
 
-//echo count($dentaduras);
 
 //Ahora a crear el arreglo 2x2 que contendra cada estado de los dientes en cada revision
 for($i=0; $i<count($dentaduras); $i++) {
@@ -161,7 +160,7 @@ for($i=0; $i<count($dentaduras); $i++) {
 $strTabla="<table cellspacing=15 class=\"consulta\" id=Consulta width=100%>\n";
  $strTabla.="<tr>\n";
 $strCuad1 = str_replace("`","",$strCuad1);
-$arregloDientes1 = explode(',', $strCuad1, 6);
+$arregloDientes1 = explode(',', $strCuad1, $cuadrante1Len);
 
 $strTabla.="<th> Dientes </th>";
 for($i=1; $i<count($dentaduras); $i++) {
@@ -169,14 +168,14 @@ for($i=1; $i<count($dentaduras); $i++) {
 }
 
 $strCuad2 = str_replace("`","",$strCuad2);
-$arregloDientes2 = explode(',', $strCuad2, 6);
+$arregloDientes2 = explode(',', $strCuad2, $cuadrante2Len);
 
 $strCuad3 = str_replace("`","",$strCuad3);
-$arregloDientes3 = explode(',', $strCuad3, 6);
+$arregloDientes3 = explode(',', $strCuad3, $cuadrante3Len);
 
 
 $strCuad4 = str_replace("`","",$strCuad4);
-$arregloDientes4 = explode(',', $strCuad4, 6);
+$arregloDientes4 = explode(',', $strCuad4, $cuadrante4Len);
 //echo count ($arregloDientes1);
 $arregloDientes1 = array_merge($arregloDientes1,$arregloDientes2);
 $arregloDientes1 = array_merge($arregloDientes1,$arregloDientes3);

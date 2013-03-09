@@ -359,7 +359,7 @@ else {
 						  			
 						  			<tr>
 						  				<td>Dientes extras</td>
-						  				<td id="59" class="noPresente"  onclick="myFunction('<?php echo $_SESSION['primerCuadrante'][14];?>', '59','1','14')">  </td>
+						  				<td id="59" style="visibility:hidden" class="noPresente"  onclick="myFunction('<?php echo $_SESSION['primerCuadrante'][14];?>', '59','1','14')">  </td>
 						  			</tr>	
 						  			
 						  		 </table>
