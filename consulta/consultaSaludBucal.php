@@ -62,7 +62,7 @@ else  {
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Revisión Trimestral</title>
+		<title>Revisi&oacute;n Trimestral</title>
 		
 		 <!-- Styles -->
 	    <link rel="stylesheet" type="text/css" href="../css/style.css" />
@@ -91,14 +91,14 @@ else  {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
                     </div>
 				</div>   
                                                                                  
 					<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 			
 						<form action="consultaSaludBucal.php" method="post">
-						 	<input type="text"  value="Nombre o clave del ni�o" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
+						 	<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
 						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
 						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
 						  	<input type="submit" value="Buscar" />								

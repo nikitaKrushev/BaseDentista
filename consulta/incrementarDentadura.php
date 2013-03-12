@@ -93,7 +93,7 @@ else  {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>                                             
+                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
                     </div>
 				</div>   
                                                                                  
@@ -101,8 +101,8 @@ else  {
 			
 						<form action="incrementarDentadura.php" method="post">
 						 	<input type="text"  value="Nombre o clave del ni�o" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
-						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
-						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
+						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">B&uacute;squeda por nombre<br>
+						  	<input type="radio" name="name" value="Busqueda por clave">B&uacute;squeda por clave<br>  			  				
 						  	<input type="submit" value="Buscar" />								
 							<input type="hidden" name="posted" value="yes" />
 						</form>
@@ -167,7 +167,7 @@ else  {
             
             <!-- News Widget -->
             <div class="widget w-news">
-                <h4 class="w-title title-light">Cerrar sesion.</h4>
+                <h4 class="w-title title-light">Cerrar sesi&oacute;n.</h4>
                 <div class="w-content">
                     <ul>
                         <li>

@@ -157,7 +157,7 @@ else {
 		print 'alert("Cambios guardados")';
 		print '</script>';
 		header('refresh:0;URL=../principales/mainDentista2.php');
-		
+		exit;
 		
 	} else {
 		
@@ -184,7 +184,7 @@ else {
 		//Construccion de la tabla del primer cuadrante										
 		$strCuad1.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad1.="<tr>\n";
-		$strCuad1.="<th> C�digo </th>";
+		$strCuad1.="<th> C&oacute;digo </th>";
 		$strCuad1.="<th> Estado </th>";
 		$strCuad1.="</tr>\n";
 		
@@ -226,7 +226,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad2.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad2.="<tr>\n";
-		$strCuad2.="<th> C�digo </th>";
+		$strCuad2.="<th> C&oacute;digo </th>";
 		$strCuad2.="<th> Estado </th>";
 		$strCuad2.="</tr>\n";
 		$_SESSION['segundoCuadrante'] = $arrayCuadranteII;
@@ -264,7 +264,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad3.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad3.="<tr>\n";
-		$strCuad3.="<th> C�digo </th>";
+		$strCuad3.="<th> C&oacute;digo </th>";
 		$strCuad3.="<th> Estado </th>";
 		$strCuad3.="</tr>\n";
 		$_SESSION['tercerCuadrante'] = $arrayCuadranteIII;
@@ -302,7 +302,7 @@ else {
 		//Construccion de la tabla del primer cuadrante
 		$strCuad4.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad4.="<tr>\n";
-		$strCuad4.="<th> C�digo </th>";
+		$strCuad4.="<th> C&oacute;digo </th>";
 		$strCuad4.="<th> Estado </th>";
 		$strCuad4.="</tr>\n";
 		$_SESSION['cuartoCuadrante'] = $arrayCuadranteIV;
@@ -400,7 +400,7 @@ function pintaDientes($valor) {
                 <div id="homepage-post">
                 <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiol�gico de caries dental</p>                                             
+                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
                     </div>
                     
                     <div id="revisa" class="divisionDetalles">

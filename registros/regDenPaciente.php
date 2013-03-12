@@ -53,8 +53,7 @@ if(isset($_POST['posted'])) {
 	$fail .= validaPadre(trim($padre));
 	//echo $nacimiento;
 	
-	if($fail == "") { //IF A
-		echo "Entro aqui no hay fail";
+	if($fail == "") { //IF A	
 		$query = @mysql_query('SELECT * FROM Nino WHERE idNino="'.mysql_real_escape_string($idNinio).'"');
 		if($existe = @mysql_fetch_object($query)){
 			$fail.= 'Este usuario '.$usuario.' ya existe. Intente otro usuario';
@@ -95,7 +94,8 @@ if(isset($_POST['posted'])) {
 				print '<script type="text/javascript">';
 				print 'alert("Registro exitoso de paciente.")';
 				print '</script>';
-				header("refresh:1;url=../principales/mainDentista2.php");
+				header("refresh:0;url=../principales/mainDentista2.php");
+				exit;
 			}
 			else {
 				$fail .= 'Hubo un error';				
@@ -106,7 +106,8 @@ if(isset($_POST['posted'])) {
 		print '<script type="text/javascript">';
 		print 'alert("Error en el registro.")';
 		print '</script>';
-		header("refresh:1;url=regDenPaciente.php");
+		header("refresh:0;url=regDenPaciente.php");
+		exit;
 	}
 }	//ELSE C
 

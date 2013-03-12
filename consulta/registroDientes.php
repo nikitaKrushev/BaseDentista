@@ -185,7 +185,7 @@ else {
 		print 'alert("Cambios guardados")';
 		print '</script>';
 		header('refresh:0;URL=../principales/mainDentista2.php');
-		
+		exit;
 	}
 	
 	else {
@@ -258,7 +258,7 @@ else {
                 <div id="homepage-post">
                 <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiol�gico de caries dental</p>                                             
+                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
                     </div>
                     
                     <div id="revisa" class="divisionDetalles">
@@ -289,7 +289,7 @@ else {
 						  		
 						  		 <table cellspacing="15" id="incisivo" width="100%">
 						  			<tr>
-						  				<th> C�digo </th>
+						  				<th> C&oacute;digo </th>
 						  				<th> Estado </th>  				
 						  			</tr>	
 						  			<tr>
@@ -357,10 +357,6 @@ else {
 						  				<td id="55" class="noPresente"  onclick="myFunction('<?php echo $_SESSION['primerCuadrante'][13];?>', '55','1','13')">   </td>
 						  			</tr>
 						  			
-						  			<tr>
-						  				<td>Dientes extras</td>
-						  				<td id="59" style="visibility:hidden" class="noPresente"  onclick="myFunction('<?php echo $_SESSION['primerCuadrante'][14];?>', '59','1','14')">  </td>
-						  			</tr>	
 						  			
 						  		 </table>
 						  	   </div>
@@ -373,7 +369,7 @@ else {
 						  		<table cellspacing="15" id="canino"  width="100%">
 						  			
 						  			<tr>
-						  				<th> Nombre </th>
+						  				<th> C&oacute;digo </th>
 						  				<th> Estado </th>  				
 						  			</tr>
 						  			
@@ -442,10 +438,6 @@ else {
 						  				<td id="65" class="noPresente" onclick="myFunction('<?php echo $_SESSION['segundoCuadrante'][13];?>', '65','2','13' )">  </td>
 						  			</tr>
 						  			
-						  			<tr>
-						  				<td>Dientes extras</td>
-						  				<td id="69" class="noPresente" onclick="myFunction('<?php echo $_SESSION['segundoCuadrante'][14];?>', '69','2','14' )"> </td>
-						  			</tr>	
 						  		
 						  		</table>
 						  	</div>	
@@ -459,7 +451,7 @@ else {
 						  		<table cellspacing="15" id="premolar"  width="100%">
 						  		
 						  			<tr>
-						  				<th> Nombre </th>
+						  				<th> C&oacute;digo </th>
 						  				<th> Estado </th>  				
 						  			</tr>
 						  			
@@ -528,10 +520,6 @@ else {
 						  				<td id="75" class="noPresente" onclick="myFunction('<?php echo $_SESSION['tercerCuadrante'][13];?>', '75','3','13' )"> </td>
 						  			</tr>
 						  			
-						  			<tr>
-						  				<td>Dientes extras</td>
-						  				<td id="79" class="noPresente" onclick="myFunction('<?php echo $_SESSION['tercerCuadrante'][14];?>', '79','3','14' )"> </td>
-						  			</tr>					  									  	
 						  			
 						  		</table>
 						  	</div>	
@@ -544,7 +532,7 @@ else {
 						  		<table cellspacing="15" id="molar"  width="100%">
 						  			
 						  			<tr>
-						  				<th> Nombre </th>
+						  				<th> C&oacute;digo </th>
 						  				<th> Estado </th>  				
 						  			</tr>
 						  			
@@ -613,10 +601,6 @@ else {
 						  				<td id="85" class="noPresente" onclick="myFunction('<?php echo $_SESSION['cuartoCuadrante'][13];?>', '85','4','13' )"> </td>
 						  			</tr>
 						  			
-						  			<tr>
-						  				<td> Extra</td>
-						  				<td id="89" class="noPresente" onclick="myFunction('<?php echo $_SESSION['cuartoCuadrante'][14];?>', '89','4','14' )"> </td>
-						  			</tr>  			  			  			
 						  		</table>
 						  								  		
 						  	</div>	
@@ -649,7 +633,8 @@ else {
                  <li class="act"><a href="mainDentista2.php">Inicio</a></li>
                     <li> <a href="../registros/regNinio.php">Registrar paciente</a> </li>
                     <li> <a href="construccion.html">Consulta historia dental</a> </li>                    
-                    <li> <a href="../consulta/revisionTrimestral.php">Revisi�n trimestral</a> </li>
+                    <li> <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a> </li>
+                    <li> <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a> </li>
                 </ul>
             </div>
             
@@ -661,7 +646,7 @@ else {
                         <li>
                         	<form action="../finSesion.php" method="post">
                                 Usuario: <?php echo $_SESSION["uid"];?> 
-                                <input type="submit" value="Fin de sesión" />
+                                <input type="submit" value="Fin de sesi&oacute;n" />
                         	</form>                        	                            
                         </li>
                     </ul>
@@ -678,7 +663,7 @@ else {
         
             <!-- Subscribe Form and Copyright Text -->
             <div id="f-left-col">
-                <div id="copyright">&copy; 2012 Miguel Alberto Zamudio | UABC </div>
+                <div id="copyright"> </div>
             </div>
             
             <!-- Footer Widgets -->
