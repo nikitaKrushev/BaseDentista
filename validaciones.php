@@ -62,7 +62,7 @@ function dateCheck($date){
  */
 function revisaFecha($dia,$mes,$anio){
 	if (!checkdate($mes,$dia,$anio)) {
-		echo "MAL";
+		echo "Fecha no aceptada";
 		return "Fecha no aceptada";
 	}
 }
@@ -129,7 +129,6 @@ function validaConsultorio($consultorio) {
 }
 
 function validaNombreConsultorio($nombre) {
-	echo $nombre." Consultorio";
 	if ($nombre =="") return "Favor de llenar el nombre del consultorio.\n";
 	else {
 		if (! preg_match("/^[a-zA-Z\s]+$/",$nombre ))
@@ -137,6 +136,19 @@ function validaNombreConsultorio($nombre) {
 		else {
 			if (strlen($nombre) >30)
 				return "Nombre de consultorio demasiado largo";
+		}
+	}
+	return "";
+}
+
+function validaNombreEscuela($nombre) {
+	if ($nombre =="") return "Favor de llenar el nombre de la escuela.\n";
+	else {
+		if (! preg_match("/^[a-zA-Z\s]+$/",$nombre ))
+			return "El nombre de la escuela solo contiene letras sin acentos.\n";
+		else {
+			if (strlen($nombre) >30)
+				return "Nombre de escuela demasiado largo";
 		}
 	}
 	return "";

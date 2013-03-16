@@ -110,12 +110,18 @@ if(isset($_POST['posted'])) {
 								header("refresh:3;url=regPadre.php");
 							}
 							else {
-								$pass_enc = sha1($password);
-																
-								$meter=@mysql_query('INSERT INTO Padre(Nombre,ApellidoPaterno,ApellidoMaterno,Usuario,Password,Telefono,Correo)  
-										values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($apellidoPat).'","'.mysql_real_escape_string($apellidoMat).
+								//$pass_enc = sha1($password);
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($password);
+								$split_at = $password_length / 2;
+								$password_array = str_split($password, $split_at);
+								$pass_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
+								 						
+								$meter=@mysql_query('INSERT INTO Padre(Nombre,ApellidoPaterno,ApellidoMaterno,Usuario,Password,Telefono,Correo,Sasonado)  
+										values ("'.mysql_real_escape_string($name).'","'.mysql_real_escape_string($apellidoPat).'","'.mysql_real_escape_string($apellidoMat).
 											'","'.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($pass_enc).'","'
-												.mysql_real_escape_string($telefono).'","'.mysql_real_escape_string($correo).'")');
+												.mysql_real_escape_string($telefono).'","'.mysql_real_escape_string($correo).'","'.$sal_dinamica.'")');
 								
 								if($meter){									
 									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);

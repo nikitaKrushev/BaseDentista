@@ -179,8 +179,14 @@ else {
 		$idCuadrante1 = $ultimaDentadura->CuadranteI_idCuadranteI;
 		$queryCuadr1 = @mysql_query("SELECT * FROM CuadranteI WHERE idCuadranteI=$idCuadrante1");
 		$arrayCuadranteI = @mysql_fetch_array($queryCuadr1, MYSQL_NUM);
+		//echo "TAMANIO 1: ".count($arrayCuadranteI);
+		/*for($i=1; $i<count($arrayCuadranteI); $i++) {
+			if($arrayCuadranteI[$i]!=-1)
+				echo $i."=".$arrayCuadranteI[$i]." ";
+		}
+		echo "PRIMER CUADRANTE ";*/
 		$strCuad1="";
-		$valor=10;
+		$valor=11;
 		//Construccion de la tabla del primer cuadrante										
 		$strCuad1.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad1.="<tr>\n";
@@ -189,12 +195,14 @@ else {
 		$strCuad1.="</tr>\n";
 		
 		$_SESSION['primerCuadrante'] = $arrayCuadranteI;
-		$contadorPosicion =0;
-		
-		foreach ($arrayCuadranteI as $a) {
-			if($a!=-1  && $a !=$idCuadrante1 ) {
-				$strClase = pintaDientes($a);
-				//echo $a+" ".$valor." @";
+		$contadorPosicion =1;
+		//$d = 0;
+		//foreach ($arrayCuadranteI as $a) {
+		for($i=1; $i<count($arrayCuadranteI); $i++) {					
+			//if($a!=-1  && $a !=$idCuadrante1 ) {
+			if($arrayCuadranteI[$i]!=-1){
+				$strClase = pintaDientes($arrayCuadranteI[$i]);
+				//echo $valor." @ ";
 				//echo $strClase;
 				$strCuad1.="<tr>\n";
 				$strCuad1 .= "<td>$valor </td> \n";
@@ -204,6 +212,7 @@ else {
 					$valor=50;
 				$valor++;
 				$contadorPosicion++;
+				//$d++;
 			}
 			else
 			{
@@ -213,16 +222,23 @@ else {
 				$contadorPosicion++;
 					
 			}
-		}
+		}	
+		//}
 		$strCuad1.=" </table>";				
-		//echo "\n";
+		//echo $d;
 		
 		//Segundo Cuadrante
 		$idCuadrante2 = $ultimaDentadura->CuadranteII_idCuadranteII;
 		$queryCuadr2 = @mysql_query("SELECT * FROM CuadranteII WHERE idCuadranteII=$idCuadrante2");
 		$arrayCuadranteII = @mysql_fetch_array($queryCuadr2, MYSQL_NUM);
+		//echo "TAMANIO 2: ".count($arrayCuadranteII);
+		/*for($i=1; $i<count($arrayCuadranteII); $i++) {
+			if($arrayCuadranteII[$i]!=-1)
+				echo $i."=".$arrayCuadranteII[$i]." ";
+		}
+		echo "SEGUNDO CUADRANTE ";*/
 		$strCuad2="";
-		$valor=20;
+		$valor=21;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad2.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad2.="<tr>\n";
@@ -230,11 +246,14 @@ else {
 		$strCuad2.="<th> Estado </th>";
 		$strCuad2.="</tr>\n";
 		$_SESSION['segundoCuadrante'] = $arrayCuadranteII;
-		$contadorPosicion =0;
-		foreach ($arrayCuadranteII as $a) {
-			if($a!=-1  && $a !=$idCuadrante2 ) {
-				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+		$contadorPosicion =1;
+		//$d = 0;
+		//foreach ($arrayCuadranteII as $a) {
+		for($i=1; $i<count($arrayCuadranteII); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante2 ) {
+			if($arrayCuadranteII[$i]!=-1){
+				//echo $valor." @ ";
+				$strClase = pintaDientes($arrayCuadranteII[$i]);
 				$strCuad2.="<tr>\n";
 				$strCuad2 .= "<td>$valor </td> \n";
 				$strCuad2 .= "<td id=\"$valor\" class=\"$strClase\" onclick=\"myFunction(".$_SESSION['segundoCuadrante'][$contadorPosicion].",$valor,2,$contadorPosicion)\"> </td> \n";
@@ -243,6 +262,7 @@ else {
 					$valor=60;
 				$valor++;
 				$contadorPosicion++;
+				//$d++;
 			}
 			else
 			{
@@ -252,15 +272,22 @@ else {
 				$contadorPosicion ++;
 			}
 		}
+		//}
 		
 		$strCuad2.=" </table>";
-		//echo "\n";
+		//echo $d;
 		//Tercer cuadrante
 		$idCuadrante3 = $ultimaDentadura->CuadranteIII_idCuadranteIII;
 		$queryCuadr3 = @mysql_query("SELECT * FROM CuadranteIII WHERE idCuadranteIII=$idCuadrante3");
 		$arrayCuadranteIII = @mysql_fetch_array($queryCuadr3, MYSQL_NUM);
+		//echo "TAMANIO 3: ".count($arrayCuadranteIII);
+		/*for($i=1; $i<count($arrayCuadranteIII); $i++) {
+			if($arrayCuadranteIII[$i]!=-1)
+				echo $i."=".$arrayCuadranteIII[$i]." ";
+		}
+		echo "TERCER CUADRANTE";*/
 		$strCuad3="";
-		$valor=30;
+		$valor=31;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad3.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad3.="<tr>\n";
@@ -268,11 +295,14 @@ else {
 		$strCuad3.="<th> Estado </th>";
 		$strCuad3.="</tr>\n";
 		$_SESSION['tercerCuadrante'] = $arrayCuadranteIII;
-		$contadorPosicion =0;
-		foreach ($arrayCuadranteIII as $a) {
-			if($a!=-1  && $a !=$idCuadrante3 ) {
-				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+		$contadorPosicion =1;
+		//$d=0;
+		//foreach ($arrayCuadranteIII as $a) {
+		for($i=1; $i<count($arrayCuadranteIII); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante3 ) {
+			if($arrayCuadranteIII[$i]!=-1){
+				//echo $valor." @ ";
+				$strClase = pintaDientes($arrayCuadranteIII[$i]);
 				$strCuad3.="<tr>\n";
 				$strCuad3 .= "<td>$valor </td> \n";
 				$strCuad3 .= "<td id=\"$valor\" class=\"$strClase\" onclick=\"myFunction(".$_SESSION['tercerCuadrante'][$contadorPosicion].",$valor,3,$contadorPosicion)\"> </td> \n";
@@ -281,6 +311,7 @@ else {
 					$valor=70;
 				$valor++;
 				$contadorPosicion ++;
+				//$d++;
 			}
 			else
 			{
@@ -289,16 +320,23 @@ else {
 				$valor++;
 				$contadorPosicion++;					
 			}
-		}
+		}	
+		//}
 		
 		$strCuad3.=" </table>";
-		//echo "\n";
+		//echo $d;
 		//Cuarto Cuadrante
 		$idCuadrante4 = $ultimaDentadura->CuadranteIV_idCuadranteIV;
 		$queryCuadr4 = @mysql_query("SELECT * FROM CuadranteIV WHERE idCuadranteIV=$idCuadrante4");
 		$arrayCuadranteIV = @mysql_fetch_array($queryCuadr4, MYSQL_NUM);
+		//echo "TAMANIO 4: ".count($arrayCuadranteIV);
+		/*for($i=1; $i<count($arrayCuadranteIV); $i++) {
+			if($arrayCuadranteIV[$i]!=-1)
+				echo $i."=".$arrayCuadranteIV[$i]." ";
+		}
+		echo "CUARTO CUADRANTE";*/
 		$strCuad4="";
-		$valor=40;
+		$valor=41;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad4.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad4.="<tr>\n";
@@ -306,11 +344,14 @@ else {
 		$strCuad4.="<th> Estado </th>";
 		$strCuad4.="</tr>\n";
 		$_SESSION['cuartoCuadrante'] = $arrayCuadranteIV;
-		$contadorPosicion=0;
-		foreach ($arrayCuadranteIV as $a) {
-			if($a!=-1  && $a !=$idCuadrante4 ) {
-				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+		$contadorPosicion=1;
+		//$d=0;
+		//foreach ($arrayCuadranteIV as $a) {
+		for($i=1; $i<count($arrayCuadranteIV); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante4 ) {
+			if($arrayCuadranteIV[$i]!=-1){
+				//echo $valor." @ ";
+				$strClase = pintaDientes($arrayCuadranteIV[$i]);
 				$strCuad4.="<tr>\n";
 				$strCuad4 .= "<td>$valor </td> \n";
 				$strCuad4 .= "<td id=\"$valor\" class=\"$strClase\" onclick=\"myFunction(".$_SESSION['cuartoCuadrante'][$contadorPosicion].",$valor,4,$contadorPosicion)\"> </td> \n";
@@ -319,6 +360,7 @@ else {
 					$valor=80;
 				$valor++;
 				$contadorPosicion++;
+				//$d++;
 			}
 			else
 			{
@@ -328,10 +370,9 @@ else {
 				$contadorPosicion++;					
 			}
 		}
-		
-		$strCuad4.=" </table>";
-		
-	
+		//}
+		//echo $d;
+		$strCuad4.=" </table>";			
 	}
 }
 

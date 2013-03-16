@@ -180,7 +180,7 @@ $arregloDientes4 = explode(',', $strCuad4, $cuadrante4Len);
 $arregloDientes1 = array_merge($arregloDientes1,$arregloDientes2);
 $arregloDientes1 = array_merge($arregloDientes1,$arregloDientes3);
 $arregloDientes1 = array_merge($arregloDientes1,$arregloDientes4); //Se obtienen todos los dientes en un solo array
-echo count($arregloDientes1);
+//echo count($arregloDientes1);
 
 $strTabla.="</tr>\n";
 

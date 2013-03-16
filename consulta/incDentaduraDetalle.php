@@ -108,7 +108,8 @@ else {
 		$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
 		
 		$querys_ok = true; //Servira de centinela
-		
+		$mysqli->autocommit(FALSE);
+		//$mysqli->query("START TRANSACTION");
 		//Obtenemos la cedula y el idConsultorio del dentista
 		
 		$query = @mysql_query( "SELECT * FROM Dentista WHERE Usuario='".$_SESSION["uid"]."'");
@@ -121,8 +122,9 @@ else {
 		$formated_date = $date_array['mday'] . "/";
 		$formated_date .= $date_array['mon'] . "/";
 		$formated_date .= $date_array['year'];
-		
-		mysql_query('LOCK TABLES ExploracionDental,Dentadura,CuadranteI,CuadranteII,CuadranteIII,CuadranteIV'); //Cerrar las transacciones
+		//mysql_query('SET AUTOCOMMIT=0');
+		//mysql_query('START TRANSACTION');
+		//mysql_query('LOCK TABLES ExploracionDental WRITE,Dentadura WRITE,CuadranteI WRITE,CuadranteII WRITE,CuadranteIII WRITE,CuadranteIV WRITE'); //Cerrar las transacciones
 		
 		$mysqli->query("INSERT INTO ExploracionDental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio)
 				VALUES ('$formated_date','$dentista->Cedula',$dentista->Consultorio_idConsultorio)") ? null : $querys_ok=false;
@@ -134,10 +136,7 @@ else {
 		
 		for ($j=0; $j<15; $j++ )
 			$a[$j] = $_SESSION['primerCuadrante'][$j];
-		
-		//echo "INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
-		//		VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])";
-		
+				
 		$mysqli->query("INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
 				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;
 		
@@ -171,9 +170,7 @@ else {
 		$query = @mysql_query( "SELECT * FROM CuadranteIV ORDER BY idCuadranteIV DESC LIMIT 1");
 		$c4 = @mysql_fetch_object($query);
 		
-		//Finalmente se crea la dentadura
-		
-		
+		//Finalmente se crea la dentadura			
 		$mysqli->query("INSERT INTO Dentadura (ExploracionDental_idExploracionDental, ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio
 				,Ninio_idNinio,Ninio_Padre_idPadre,CuadranteI_idCuadranteI,CuadranteII_idCuadranteII,CuadranteIII_idCuadranteIII,CuadranteIV_idCuadranteIV)
 				VALUES ($expoDental->idExploracionDental,'$dentista->Cedula',$dentista->Consultorio_idConsultorio,$nino->idNinio,$nino->Padre_idPadre
@@ -183,9 +180,11 @@ else {
 		$idDentadura = @mysql_fetch_object($query);
 		$mysqli->query("UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio ");
 		
-		mysql_query('UNLOCK TABLES');
+		//mysql_query('UNLOCK TABLES');
 		//$querys_ok=false;//Borrar
-		$querys_ok ? $mysqli->commit() : $mysqli->rollback();
+		//$querys_ok ? $mysqli->commit() : $mysqli->rollback();
+		$mysqli->rollback();
+		$mysqli->autocommit(TRUE);
 		$mysqli->close();
 		
 		unset($_SESSION['idNino']);
@@ -196,8 +195,7 @@ else {
 		print '<script type="text/javascript">';
 		print 'alert("Cambios guardados")';
 		print '</script>';
-		header('refresh:0;URL=../principales/mainDentista2.php');
-		
+		header('refresh:0;URL=../principales/mainDentista2.php');		
 		
 	} else {
 		
@@ -220,7 +218,7 @@ else {
 		$queryCuadr1 = @mysql_query("SELECT * FROM CuadranteI WHERE idCuadranteI=$idCuadrante1");
 		$arrayCuadranteI = @mysql_fetch_array($queryCuadr1, MYSQL_NUM);
 		$strCuad1="";
-		$valor=10;
+		$valor=11;
 		//Construccion de la tabla del primer cuadrante										
 		$strCuad1.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad1.="<tr>\n";
@@ -229,11 +227,13 @@ else {
 		$strCuad1.="</tr>\n";
 		
 		$_SESSION['primerCuadrante'] = $arrayCuadranteI;
-		$contadorPosicion =0;
+		$contadorPosicion =1;
 		
-		foreach ($arrayCuadranteI as $a) {
-			if($a!=-1  && $a !=$idCuadrante1 ) {
-				$strClase = pintaDientes($a);
+		//foreach ($arrayCuadranteI as $a) {
+		for($i=1; $i<count($arrayCuadranteI); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante1 ) {
+			if($arrayCuadranteI[$i]!=-1){
+				$strClase = pintaDientes($arrayCuadranteI[$i]);
 				//echo $a+" ".$valor." @";
 				//echo $strClase;
 				$strCuad1.="<tr>\n";
@@ -262,7 +262,7 @@ else {
 		$queryCuadr2 = @mysql_query("SELECT * FROM CuadranteII WHERE idCuadranteII=$idCuadrante2");
 		$arrayCuadranteII = @mysql_fetch_array($queryCuadr2, MYSQL_NUM);
 		$strCuad2="";
-		$valor=20;
+		$valor=21;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad2.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad2.="<tr>\n";
@@ -270,11 +270,13 @@ else {
 		$strCuad2.="<th> Estado </th>";
 		$strCuad2.="</tr>\n";
 		$_SESSION['segundoCuadrante'] = $arrayCuadranteII;
-		$contadorPosicion =0;
-		foreach ($arrayCuadranteII as $a) {
-			if($a!=-1  && $a !=$idCuadrante2 ) {
+		$contadorPosicion =1;
+		//foreach ($arrayCuadranteII as $a) {
+		for($i=1; $i<count($arrayCuadranteII); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante2 ) {
+			if($arrayCuadranteII[$i]!=-1){
 				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+				$strClase = pintaDientes($arrayCuadranteII[$i]);
 				$strCuad2.="<tr>\n";
 				$strCuad2 .= "<td>$valor </td> \n";
 				$strCuad2 .= "<td id=\"$valor\" class=\"$strClase\"> </td> \n";
@@ -300,7 +302,7 @@ else {
 		$queryCuadr3 = @mysql_query("SELECT * FROM CuadranteIII WHERE idCuadranteIII=$idCuadrante3");
 		$arrayCuadranteIII = @mysql_fetch_array($queryCuadr3, MYSQL_NUM);
 		$strCuad3="";
-		$valor=30;
+		$valor=31;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad3.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad3.="<tr>\n";
@@ -308,11 +310,13 @@ else {
 		$strCuad3.="<th> Estado </th>";
 		$strCuad3.="</tr>\n";
 		$_SESSION['tercerCuadrante'] = $arrayCuadranteIII;
-		$contadorPosicion =0;
-		foreach ($arrayCuadranteIII as $a) {
-			if($a!=-1  && $a !=$idCuadrante3 ) {
+		$contadorPosicion =1;
+		//foreach ($arrayCuadranteIII as $a) {
+		for($i=1; $i<count($arrayCuadranteIII); $i++) {
+			//if($a!=-1  && $a !=$idCuadrante3 ) {
+			if($arrayCuadranteIII[$i]!=-1){
 				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+				$strClase = pintaDientes($arrayCuadranteIII[$i]);
 				$strCuad3.="<tr>\n";
 				$strCuad3 .= "<td>$valor </td> \n";
 				$strCuad3 .= "<td id=\"$valor\" class=\"$strClase\" > </td> \n";
@@ -338,7 +342,7 @@ else {
 		$queryCuadr4 = @mysql_query("SELECT * FROM CuadranteIV WHERE idCuadranteIV=$idCuadrante4");
 		$arrayCuadranteIV = @mysql_fetch_array($queryCuadr4, MYSQL_NUM);
 		$strCuad4="";
-		$valor=40;
+		$valor=41;
 		//Construccion de la tabla del primer cuadrante
 		$strCuad4.="<table cellspacing=15 id=incisivo width=100%>\n";
 		$strCuad4.="<tr>\n";
@@ -346,11 +350,13 @@ else {
 		$strCuad4.="<th> Estado </th>";
 		$strCuad4.="</tr>\n";
 		$_SESSION['cuartoCuadrante'] = $arrayCuadranteIV;
-		$contadorPosicion=0;
-		foreach ($arrayCuadranteIV as $a) {
-			if($a!=-1  && $a !=$idCuadrante4 ) {
+		$contadorPosicion=1;
+		//foreach ($arrayCuadranteIV as $a) {
+		for($i=1; $i<count($arrayCuadranteIV); $i++) {		
+			//if($a!=-1  && $a !=$idCuadrante4 ) {
+			if($arrayCuadranteIV[$i]!=-1){
 				//echo $a+" ".$valor." @";
-				$strClase = pintaDientes($a);
+				$strClase = pintaDientes($arrayCuadranteIV[$i]);
 				$strCuad4.="<tr>\n";
 				$strCuad4 .= "<td>$valor </td> \n";
 				$strCuad4 .= "<td id=\"$valor\" class=\"$strClase\" > </td> \n";

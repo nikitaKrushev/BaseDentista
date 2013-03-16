@@ -122,7 +122,13 @@ if(isset($_POST['posted'])) {
 							}
 							
 							else {
-								$pass_enc = sha1($pass);
+								//$pass_enc = sha1($pass);
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($pass);
+								$split_at = $password_length / 2;
+								$password_array = str_split($pass, $split_at);
+								$pass_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
 								
 								//Obtener direccion de escuela
 								$meter3 = @mysql_query('SELECT * from Escuela where idEscuela="'.mysql_real_escape_string($escuela).'"');
@@ -131,17 +137,22 @@ if(isset($_POST['posted'])) {
 								
 								$meter=@mysql_query('INSERT INTO Maestro (Nombre, ApellidoPaterno,Password,Usuario, Escuela_idEscuela,Escuela_Direccion_idDireccion,Correo) 
 										values ("'.mysql_real_escape_string($nombre).'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($pass_enc).'","'
-											.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($idEscuela->idEscuela).'","'.mysql_real_escape_string($idEscuela->Direccion_idDireccion).'","'.mysql_real_escape_string($correo).'")');
+											.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($idEscuela->idEscuela).'","'.mysql_real_escape_string($idEscuela->Direccion_idDireccion)
+												.'","'.mysql_real_escape_string($correo).'","'.$sal_dinamica.'")');
 								if($meter){									
 									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);									
 									print '<script type="text/javascript">';
 									print 'alert("Registro exitoso de Maestro. Revisa tu bandeja de correo")';
 									print '</script>';
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
-									if($_SESSION['type'] == 4)
+									if($_SESSION['type'] == 4) {
 										header("refresh:1;url=../principales/directorPrincipal.php");
-									else 
+										exit;
+									}
+									else {
 										header("refresh:1;url=../principales/adminPage.php");
+										exit;
+									}
 								}else{
 									echo 'Hubo un error';
 								}
@@ -246,12 +257,12 @@ else {
         <div id="left-col">
         
             <!-- Logo -->
-            <a href="directorPrincipal.php" id="logo">Foundation</a>
+            <a href="../principales/directorPrincipal.php" id="logo">Foundation</a>
             
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">
                 <ul>    
-                    <li class="act"><a href="directorPrincipal.php">Inicio</a></li>
+                    <li class="act"><a href="../principales/directorPrincipal.php">Inicio</a></li>
                     <li> <a href="construccion.html">Consulta tu escuela	</a> </li>
                     <li> <a href="../registros/regMaestro.php">Registra maestro</a> </li>
                     <li> <a href="construccion.html">Registra grupo</a> </li>                                                        

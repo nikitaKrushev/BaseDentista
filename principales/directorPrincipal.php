@@ -70,13 +70,6 @@ if ($_SESSION['type'] != 4) {
         <!-- Main Column Start -->
         <div id="wrap">
             <div id="main-col"><!-- Nivo Slider -->
-                <div id="slider-container">
-                    <div id="big-slider"><!-- Add Slides Here -->
-                        <a href="#"><img src="../img/pictures/slide-1.jpg" alt="" title="�Unete al programa!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-2.png" alt="" title="�Registrate hoy!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-3.png" alt="" title="�Empezar a cuidar tus dientes es muy f�cil!" /></a>
-                    </div>
-                </div>
                 
                 <!-- Homepage Welcome Text -->
                 <div id="homepage-post">
@@ -99,7 +92,7 @@ if ($_SESSION['type'] != 4) {
             <!-- Main Naigation (active - .act) -->
             <div id="main-nav">
                 <ul>
-                    <li class="act"><a href="directorPrincipal.php">Inicio</a></li>
+                    <li class="act"><a href="../principales/directorPrincipal.php">Inicio</a></li>
                     <li> <a href="construccion.html">Consulta tu escuela	</a> </li>
                     <li> <a href="../registros/regMaestro.php">Registra maestro</a> </li>
                     <li> <a href="construccion.html">Registra grupo</a> </li>                 

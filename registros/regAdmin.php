@@ -86,8 +86,7 @@ if(isset($_POST['posted'])) {
 	
 	if($fail == "") {
 		//Encriptamos contrasenia
-		$pass_enc = sha1($pass);
-
+	
 		$query = @mysql_query("SELECT * FROM Administrador WHERE Usuario='".mysql_real_escape_string($user)."'");
 		if($existe = @mysql_fetch_object($query)){
 			$fail.= 'Este usuario '.$user.' ya existe. Intente otro usuario';
@@ -146,9 +145,19 @@ if(isset($_POST['posted'])) {
 							}
 							
 							else {
+								//$pass_enc = sha1($pass);
+								
+								//Creacion de password
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($pass);
+								$split_at = $password_length / 2;
+								$password_array = str_split($pass, $split_at);
+								$pass_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
+								
 								$meter=@mysql_query('INSERT INTO Administrador (Usuario, Nombre,ApellidoPaterno,ApellidoMaterno, Password,
-										ProfesionalSalud_Usuario, Correo) values ("'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($name).'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($amaterno).
-										'","'.mysql_real_escape_string($pass_enc).'","'.$_SESSION['uid'].'","'.mysql_real_escape_string($correo).'")');
+										ProfesionalSalud_Usuario, Correo, Sasonado) values ("'.mysql_real_escape_string($user).'","'.mysql_real_escape_string($name).'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($amaterno).
+										'","'.mysql_real_escape_string($pass_enc).'","'.$_SESSION['uid'].'","'.mysql_real_escape_string($correo).'","'.$sal_dinamica.' ")');
 								
 								if($meter){
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);

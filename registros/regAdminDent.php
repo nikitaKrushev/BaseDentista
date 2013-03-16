@@ -80,12 +80,12 @@ if(isset($_POST['posted'])) {
 	*/
 	
 	$to = $correo;
-	$nameto = $name." ".$apaterno;
+	$nameto = $nombre." ".$apaterno;
 	$from = "registro@cartillabucaldigital.org";
 	$namefrom = "Registro de cuentas";
 	$subject = "Registro exitoso de cartilla bucal digital";
-	$message =  $name." ".$apaterno.".$apaterno. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
-		\r\n. Tu usuario es: ".$user."\r\n Tu contraseña: ".$pass.
+	$message =  $nombre." ".$apaterno.".$apaterno. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
+		\r\n. Tu usuario es: ".$usuario."\r\n Tu contraseña: ".$password.
 		"\r\n. Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
 		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario			
 	
@@ -164,8 +164,7 @@ if(isset($_POST['posted'])) {
 
 							else { //ELSE A						
 								//echo "Entro a insertar dentista";															
-								$password_enc = sha1($password);
-
+								
 								//Primero obtenemos el identificador del pais
 								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";		
 								$meter1 = @mysql_query($cadena);
@@ -199,19 +198,28 @@ if(isset($_POST['posted'])) {
 								$meter5 = @@mysql_query('SELECT idConsultorio from Consultorio where Nombre="'.mysql_real_escape_string($nombreCons).'" && Direccion_idDireccion = "'.mysql_real_escape_string($idDireccion2->idDireccion).'"');																			
 								
 								$idConsultorio2 = @mysql_fetch_object($meter5);
-
-								//Finalmente meter en el dentista
+								
+								//$password_enc = sha1($password);
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($password);
+								$split_at = $password_length / 2;
+								$password_array = str_split($password, $split_at);
+								$password_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
+							
+								//Finalmente meter en el dentista							
 								$meter=@mysql_query('INSERT INTO Dentista (Cedula, Nombre, ApellidoPaterno, ApellidoMaterno, Password, Usuario, CorreoElectronico, 
-										Consultorio_idConsultorio) values ("'.mysql_real_escape_string($cedula).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
+										Consultorio_idConsultorio,Sasonado) values ("'.mysql_real_escape_string($cedula).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 											'","'.mysql_real_escape_string($amaterno).'","'.$password_enc.'","'.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($correo).'","'
-														.mysql_real_escape_string($idConsultorio2->idConsultorio).'")');		
+														.mysql_real_escape_string($idConsultorio2->idConsultorio).'","'.$sal_dinamica.'")');		
 
 								if($meter){
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									print '<script type="text/javascript">';
 									print 'alert("Registro exitoso de Dentista. Revisa tu bandeja de correo")';
 									print '</script>';
-									header("refresh:1;url=../principales/adminPage.php");									
+									header("refresh:1;url=../principales/adminPage.php");
+									exit;									
 								}
 								else {
 									$fail .= 'Hubo un error';
@@ -328,7 +336,6 @@ else {
 									<input type="text" value="<?php echo $numPostal;?>" name="numPostal" alt="*Numero postal:" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>
 									<select name="ciudad">
 									<?php
-									echo $size;
 										if(isset($size)) {
 										for($i=0; $i<$size; $i++) {
 									?>
@@ -339,7 +346,6 @@ else {
 									<select name="estado">									
 									<?php
 									 
-									echo $size2;
 										if(isset($size2)) {
 										for($i=0; $i<$size2; $i++) {
 									?>

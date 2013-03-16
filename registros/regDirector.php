@@ -79,12 +79,12 @@ if(isset($_POST['posted'])) {
 	$estado =strip_tags($_POST['estado']);
 	
 	$to = $correo;
-	$nameto = $name." ".$apaterno;
+	$nameto = $nombre." ".$apaterno;
 	$from = "registro@cartillabucaldigital.org";
 	$namefrom = "Registro de cuentas";
 	$subject = "Registro exitoso de cartilla bucal digital";
-	$message =  $name." ".$apaterno.".$apaterno. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
-		\r\n. Tu usuario es: ".$user."\r\n Tu contraseña: ".$pass.
+	$message =  $nombre." ".$apaterno.".$apaterno. "."Tu registro ha sido capturado. Ya puedes utilizar la pagina. Bienvenido!
+		\r\n. Tu usuario es: ".$user."\r\n Tu contraseña: ".$password.
 		"\r\n. Recuerda escribir en algún lugar seguro esta información, para que no se pierdan tus datos
 		\r\n. Si tienes dudas o comentarios no dudes en escribir a contacto@cartillabucaldigital.org"; //Pondremos contrasenia y usuario al usuario			
 	
@@ -161,8 +161,7 @@ if(isset($_POST['posted'])) {
 							}
 
 							else { //ELSE A
-								$password_enc = sha1($password);
-
+								
 								//Primero obtenemos el identificador del pais
 								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";
 								$meter1 = @mysql_query($cadena);
@@ -191,10 +190,19 @@ if(isset($_POST['posted'])) {
 								$meter4 = @@mysql_query('INSERT INTO Escuela VALUES  ("'.mysql_real_escape_string($idnEscuela).
 										'","'.mysql_real_escape_string($nombreEsc).'","'.$idDireccion2->idDireccion.'")');
 																							
-								//Finalmente meter en el dentista																							
-								$meter=@mysql_query('INSERT INTO Director (idDirector,Nombre,Password,ApellidoPaterno,Escuela_idEscuela,Escuela_Direccion_idDireccion,Correo) 
+								//Finalmente meter en el dentista		
+								//$password_enc = sha1($password);
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($password);
+								$split_at = $password_length / 2;
+								$password_array = str_split($password, $split_at);
+								$password_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
+								
+								$meter=@mysql_query('INSERT INTO Director (idDirector,Nombre,Password,ApellidoPaterno,Escuela_idEscuela,Escuela_Direccion_idDireccion,Correo,Sasonado) 
 									values ("'.mysql_real_escape_string($usuario).' ","'.mysql_real_escape_string($nombre).'", "'.$password_enc.
-										'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($idnEscuela).'","'.$idDireccion2->idDireccion.'","'.mysql_real_escape_string($correo).'")');
+										'","'.mysql_real_escape_string($apaterno).'","'.mysql_real_escape_string($idnEscuela).'","'.$idDireccion2->idDireccion.
+											'","'.mysql_real_escape_string($correo).'","'.$sal_dinamica.'")');
 									
 								if($meter){
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);

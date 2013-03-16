@@ -17,13 +17,13 @@ if(!isset($_SESSION['uid']))
 	session_start();
 
 require_once('funciones.php');
-conectar($servidor, $user, $pass, $name);
+	conectar($servidor, $user, $pass, $name);
 
 $redireccionar=false;
 
 if(isset($_SESSION['uid']) || isset($_POST['pass'])) {
 	$uid = isset($_POST['user']) ? mysql_real_escape_string($_POST['user']) : $_SESSION['uid'];
-	$pwd = isset($_POST['pass']) ? mysql_real_escape_string($_POST['pass']) : $_SESSION['pwd'];
+	$pwd = isset($_POST['pass']) ? mysql_real_escape_string($_POST['pass']) : $_SESSION['pwd'];	
 	if(!isset($_SESSION['pwd'])){
 		$_SESSION['pwd'] = "*";
 	}
@@ -42,7 +42,128 @@ if(!isset($uid)) {
 //Revisar si son validos los datos
 
 if($pwd != $_SESSION['pwd']) {
-	$encript = sha1($pwd);
+	//echo $uid;
+	//echo $pwd;
+	//Seleccionar un usuario de la base de datos para saber su sazonado
+	$query = "SELECT Sasonado FROM Dentista WHERE Usuario='".$uid."' LIMIT 1";
+	$row = mysql_query($query);
+	$fila = mysql_fetch_assoc($row);
+	
+	if(!empty($fila['Sasonado'])){ //Es un dentista
+		$sal_dinamica = $fila['Sasonado'];
+		//echo $sal_dinamica;
+	}
+	else {
+		$query = "SELECT Sasonado FROM Padre WHERE Usuario='".$uid."' LIMIT 1";
+		$row = mysql_query($query);
+		$fila = mysql_fetch_assoc($row);
+		
+		if(!empty($fila['Sasonado'])){ //Es un padre
+			$sal_dinamica = $fila['Sasonado'];
+			//echo $sal_dinamica;
+		} 
+		else {
+			$query = "SELECT Sasonado FROM Maestro WHERE Usuario='".$uid."' LIMIT 1";
+			$row = mysql_query($query);
+			$fila = mysql_fetch_assoc($row);
+				
+			if(!empty($fila['Sasonado'])){ //Es un maestro
+				$sal_dinamica = $fila['Sasonado'];
+				//echo $sal_dinamica;
+			}
+			else {
+				$query = "SELECT Sasonado FROM Director WHERE idDirector='".$uid."' LIMIT 1";
+				$row = mysql_query($query);
+				$fila = mysql_fetch_assoc($row);
+				
+				if(!empty($fila['Sasonado'])){ //Es un director
+					$sal_dinamica = $fila['Sasonado'];
+					//echo $sal_dinamica;
+				}
+				else {
+					$query = "SELECT Sasonado FROM ProfesionalSalud WHERE Usuario='".$uid."' LIMIT 1";
+					$row = mysql_query($query);
+					$fila = mysql_fetch_assoc($row);						
+					//echo $query;
+					if(!empty($fila['Sasonado'])){ //Es un profesional
+						$sal_dinamica = $fila['Sasonado'];
+						//echo $sal_dinamica;
+					}
+					else {
+						$query = "SELECT Sasonado FROM Administrador WHERE Usuario='".$uid."' LIMIT 1";
+						$row = mysql_query($query);
+						$fila = mysql_fetch_assoc($row);
+						
+						if(!empty($fila['Sasonado'])){ //Es un admin
+							$sal_dinamica = $fila['Sasonado'];
+							//echo $sal_dinamica;
+						}
+					}
+				}
+			}
+		}
+	}
+	if(!isset($sal_dinamica))
+		$sal_dinamica="nohaynada";
+	
+	$sal_estatica="m@nU3lit0Mart1!n3z";
+	$password_length = strlen($pwd);
+	$split_at = $password_length / 2;
+	$password_array = str_split($pwd, $split_at);
+	$cod=$password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica;
+	$cod = trim($cod);
+	$encript = sha1($cod);
+	//echo $cod;
+	/*echo "Dinamica: ".$sal_dinamica." ";
+	echo $password_length." LENGHT " ;
+	echo "sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica)";
+	echo "PASS: ".$pwd." ";
+	echo "SPLIT: ".$split_at." ";
+	echo "Encriptado: ".$encript." ";
+	echo "Primera Parte: ".$password_array[0]." ";
+	echo "Segunda Parte: ".$password_array[1]." ";*/
+	
+	////////////////////////////////////////////
+	/*$pass = "lol123";
+	$sal_estatica="m@nU3lit0Mart1!n3z";
+	$sal_dinamica=1792830770;
+	$password_length = strlen($pass);
+	//echo $password_length;
+	$split_at = $password_length / 2;
+	$password_array = str_split($pass, $split_at);
+	$lod=$password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica;
+	$siete21 = sha1($lod);
+	//echo $lod;
+	$lod = trim($lod);
+	$cod = trim($cod);
+	if( strcmp($lod, $cod)==0)
+		echo "SOMOS IGUALES 2";
+	else {
+		echo "Diferentes";
+	}
+	//echo sha1($lod)." ";
+	//echo sha1($cod);
+	/*$c=sha1("1");
+	$d=sha1("1");
+	
+	echo $c." ";
+	echo $d." ";
+	
+	if( strcmp($c, $d) ==0)
+		echo "SOMOS IGUALES";*/
+	
+	/*echo "Dinamica: ".$sal_dinamica." ";
+	echo $password_length." LENGHT " ;
+	echo "sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica) ";
+	echo "PASS: ".$pass." ";
+	echo "SPLIT: ".$split_at." ";
+	echo "Encriptado: ".$siete21." ";
+	echo "Primera Parte: ".$password_array[0]." ";
+	echo "Segunda Parte: ".$password_array[1]." ";*/
+	
+	
+	//////////////////////////
+	//$encript = sha1($pwd);
 	$redireccionar=true;
 }
 else {
@@ -64,7 +185,7 @@ if (!$row) {
 $fila = mysql_fetch_assoc($row);
 
 //Informacion no valida
-if(!empty($fila['Usuario'])){ //No es un dentista
+if(!empty($fila['Usuario'])){ //Es un dentista
 	$loginEncontrado = true;
 	$_SESSION['type'] = 1; //Dentista
 }

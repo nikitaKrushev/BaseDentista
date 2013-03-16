@@ -51,6 +51,7 @@ if(isset($_POST['posted'])) {
 	$fail .= validaPaterno($apaterno,1);
 	$fail .= validaPaterno($amaterno,2);
 	$fail .= validaPadre(trim($padre));
+	$fail .= revisaFecha($dia,$mes,$anio);
 	//echo $nacimiento;
 	
 	if($fail == "") { //IF A	

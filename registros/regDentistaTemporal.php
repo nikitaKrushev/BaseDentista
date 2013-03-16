@@ -142,8 +142,7 @@ if(isset($_POST['posted'])) {
 
 							else { //ELSE A						
 								//echo "Entro a insertar dentista";															
-								$password_enc = sha1($password);
-
+								
 								//Primero obtenemos el identificador del pais
 								$cadena = "select * from Estado where Nombre='".mysql_real_escape_string($estado)."'";		
 								$meter1 = @mysql_query($cadena);
@@ -179,17 +178,27 @@ if(isset($_POST['posted'])) {
 								$idConsultorio2 = @mysql_fetch_object($meter5);
 
 								//Finalmente meter en el dentista
-								$meter=@mysql_query('INSERT INTO Dentista (Cedula, Nombre, ApellidoPaterno, ApellidoMaterno, Password, Usuario, CorreoElectronico, 
-										Consultorio_idConsultorio) values ("'.mysql_real_escape_string($cedula).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
-											'","'.mysql_real_escape_string($amaterno).'","'.$password_enc.'","'.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($correo).'","'
-														.mysql_real_escape_string($idConsultorio2->idConsultorio).'")');		
+								
+								//$password_enc = sha1($password);
+								$sal_estatica="m@nU3lit0Mart1!n3z";
+								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
+								$password_length = strlen($password);
+								$split_at = $password_length / 2;
+								$password_array = str_split($password, $split_at);
+								$password_enc = sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica);
+								
+								$meter=@mysql_query('INSERT INTO Dentista (Cedula, Nombre, ApellidoPaterno, ApellidoMaterno, Password, Usuario, CorreoElectronico,
+										Consultorio_idConsultorio,Sasonado) values ("'.mysql_real_escape_string($cedula).' ","'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
+										'","'.mysql_real_escape_string($amaterno).'","'.$password_enc.'","'.mysql_real_escape_string($usuario).'","'.mysql_real_escape_string($correo).'","'
+										.mysql_real_escape_string($idConsultorio2->idConsultorio).'","'.$sal_dinamica.'")');
 
 								if($meter){
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									print '<script type="text/javascript">';
 									print 'alert("Registro exitoso de Dentista. Revisa tu bandeja de correo")';
 									print '</script>';
-									header("refresh:1;url=../index.php");									
+									header("refresh:1;url=../index.php");	
+									exit;								
 								}
 								else {
 									$fail .= 'Hubo un error';
