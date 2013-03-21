@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Nombre: validaNombre
+ * Descripcion: Revisa que el nombre no este vacio.
+ * Ademas sin acentos o n. Tambien la longitud del nombre.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $nombre
+ * @return string
+ */
 function validaNombre($nombre) {
 	if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
 	else {
@@ -14,7 +22,15 @@ function validaNombre($nombre) {
 	}
 	return "";
 }
-
+/**
+ * Nombre: validaPaterno
+ * Descripcion: Revisa que el nombre no este vacio.
+ * Ademas sin acentos o n. Tambien la longitud del nombre.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $nombre
+ * @param unknown $tipo
+ * @return string
+ */
 function validaPaterno($nombre,$tipo) {
 	if ($nombre =="") {
 		if($tipo == 1)
@@ -35,6 +51,14 @@ function validaPaterno($nombre,$tipo) {
 	return "";
 }
 
+/**
+ * Nombre: validaEscuela
+ * Descripcion: Revisa que el nombre no este vacio.
+ * Tambien la longitud del nombre.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $escuela
+ * @return string
+ */
 function validaEscuela($escuela) {
 	if ($escuela == "") return "Introduce un identificador de escuela valido.\n";
 	else 
@@ -54,6 +78,10 @@ function dateCheck($date){
 }
 
 /**
+ * Nombre: revisaFecha
+ * Descripcion: Revisa que la fecha sea valida.
+ * Si todo se valida, se regresa una cadena vacia.
+ * De lo contrario una cadena de error.
  * Para versiones de php < 5.3
  * @param unknown $dia
  * @param unknown $mes
@@ -84,7 +112,14 @@ function validaColonia($field,$i) {
 	}
 }
 
-
+/**
+ * Nombre: validaPass
+ * Descripcion: Revisa que el password no este vacio.
+ * Ademas con al menos 5 caracteres. Y un caracter a-z.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $field
+ * @return string
+ */
 function validaPass($field) {
 	if($field == "") return "Introduce una contraseña.\n";
 	else{
@@ -97,6 +132,14 @@ function validaPass($field) {
 	return "";
 }
 
+/**
+ * Nombre: validaClave
+ * Descripcion: Revisa que la clave.
+ * Ademas solamente con digitos.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $clave
+ * @return string
+ */
 function validaClave($clave) {
 	if (! preg_match("/^[0-9]+$/",$clave))
 		return "La clave requiere digitos.\n";
@@ -108,6 +151,14 @@ function validaEqualPass($field,$field2) {
 	return "";
 }
 
+/**
+ * Nombre: validaCorreo
+ * Descripcion: Revisa que el correo no este vacio.
+ * Ademas con los caracteres (@-_.). Tambien la longitud del nombre.
+ * Si todo se valida, se regresa una cadena vacia.
+ * @param unknown $field
+ * @return string
+ */
 function validaCorreo($field) {
 	if ($field == "") return "Introduce un correo valido.\n";
 	else if (!((strpos($field, ".") > 0) &&

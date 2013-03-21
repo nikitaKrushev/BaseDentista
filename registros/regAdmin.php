@@ -6,7 +6,13 @@
  *
  * Descripcion:
  * 	Se registra a los administradores semejante al registro de padres.
- *
+ * 
+ * 	Variables
+ * 		$fail: Para la validacion, originalmente es una cadena vacia
+ * 		$sal_estatica: La parte estatica de la encriptacion.
+ * 		$sal_dinamica: La parte dinamica de la encriptacion, generada con la funcion mt
+ * 		$pass_enc: La contraseña ya encriptada despues del algoritmo.
+ * 		$message: El mensaje que se envia a la bandeja de correo.
  */
 
 session_start();

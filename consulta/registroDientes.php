@@ -1,4 +1,20 @@
 <?php
+/**
+ * Autor: Josué Castañeda
+ * Escrito: 17/Marzo/2013
+ * Ultima actualizacion: 17/Marzo/2013
+ *
+ * Descripcion:
+ * 	Registro de los dientes presentes el boca de los pacientes
+ * 
+ * Variables:
+ * $_GET['arregloCuadrante'] : El arreglo donde el diente esta presente
+ * $_GET['posicion'] : La posicion del diente en el cuadrante comprendida entre 1 y 15
+ * $_GET['identificador']: El identificador del diente en la página html
+ * $c1,$c2,$c3,$c4 : Contienen todos los dientes presentes en cada uno de los cuadrantes
+ * $_SESSION['primerCuadrante'],$_SESSION['segundoCuadrante'].. : Una variable que sirve como copia, para modificar los valores de los dientes presentes
+ */
+
 include '../accesoDentista.php';
 
 
@@ -79,18 +95,14 @@ if(isset($_GET['arregloCuadrante']) && isset($_GET['posicion']) && isset($_GET['
 				$_SESSION['cuartoCuadrante'][$_GET['posicion']] =-1;
 				echo $_SESSION['cuartoCuadrante'][$_GET['posicion']];
 			}
-			
-			//echo $_SESSION['cuartoCuadrante'][$_GET['posicion']];
 			echo $_GET['identificador'];
 			
 		break;
-	}
-	//echo "";	
+	}	
 }
 else {
 	
 	if(isset($_POST['detalles'])) {
-		//echo "LOL";
 		
 		//Primero hay que crear la exploracion dental
 		$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
@@ -122,9 +134,6 @@ else {
 				
 		for ($j=0; $j<15; $j++ )
 			$a[$j] = $_SESSION['primerCuadrante'][$j];
-		
-		//echo "INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
-		//		VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])";
 		
 		$mysqli->query("INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
 				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;

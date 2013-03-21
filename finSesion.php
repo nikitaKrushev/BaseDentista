@@ -4,7 +4,8 @@ unset($_SESSION['uid']);
 unset($_SESSION['pwd']);
 unset($_SESSION['check']);
 unset($_SESSION['type']);
-
+//Add
+//$mysqli->close();
 session_destroy();
 
 header( "refresh:3;url=index.php" ); //Redireccionar a pagina

@@ -202,7 +202,6 @@ if(isset($_POST['posted'])) {
 								}
 								else {
 									$fail .= 'Hubo un error';
-									//echo $fail;
 									print '<script type="text/javascript">';
 									print 'alert("Hubo un error en el registro")';
 									print '</script>';

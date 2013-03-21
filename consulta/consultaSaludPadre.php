@@ -1,14 +1,14 @@
 <?php
 include '../accesoDentista.php';
 
-if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una session vacia o si ya hay una sesion
+if ($_SESSION['type'] != 2 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
 
-		case 2: //Padre
-			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
-			break;
-
+		case 1: //Dentista
+			header("refresh:3, url=../principales/mainDentista2.php");
+		break;
+			
 		case 3://Maestro
 			header("refresh:3;url=../principales/mainMaestro.php");
 			break;
@@ -17,28 +17,29 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1 ) { //Checamos si hay una s
 			header("refresh:3;url=../principales/directorPrincipal.php");
 			break;
 
-		case 5://Admin
+		case 5://Profesional principal
 			header("refresh:3;url=../principales/profesionalPrincipal.php");
 			break;
+			
+		case 6://Admin
+				header("refresh:3;url=../principales/adminPage.php");
+		break;
+		
+		
 	}
 	exit;
 }
-
-if(isset($_POST['posted'])) { 
+	$result = @mysql_query("SELECT idPadre FROM Padre where Usuario='".$_SESSION['uid']."'");
+	$fila = mysql_fetch_row($result);
 	
-	$texto = strip_tags($_POST['nombre']);
-	$choice = $_POST['name'];
-	$ninos = array();
-	
-	if($choice == "Busqueda por nombre") 
-		$query = @mysql_query("SELECT * FROM Ninio WHERE Nombre='".mysql_real_escape_string($texto)."'");	
-	else 
-		$query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($texto)."");
+	$ninos = array(); //Los hijos del padre	
+	$query = @mysql_query("SELECT * FROM Ninio WHERE Padre_idPadre='".$fila[0]."'");	
+	//echo "SELECT * FROM Ninio WHERE Padre_idPadre='".$fila[0]."'";
 		while ($existe= @mysql_fetch_object($query))
 			$ninos[] = $existe;				
 		$size= count($ninos);	
-}
-else  {
+	//echo $_SESSION['uid'];
+
 	if(isset($_POST['detail'])) { //Selecciono el detalle
 				
 		if(isset($_POST['ctrl'])) {
@@ -47,14 +48,20 @@ else  {
 			//Primero vemos si el nino ha tenido una revision o no
 			$query = @mysql_query("SELECT UltimaRevision FROM Ninio WHERE idNinio='".$_SESSION['idNino']."'");
 			$revision= @mysql_fetch_object($query);
-			if($revision->UltimaRevision == 0 )
-				header("Location: registroDientes.php");
+			if($revision->UltimaRevision == 0 ) {
+				//header("Location: registroDientes.php");
+				print '<script type="text/javascript">';
+				print 'alert("Aun no se ha revisado al paciente")';
+				print '</script>';
+				header('refresh:0;URL=../principales/padrePrincipal.php');
+				exit;
+			}
 			else
-				header("Location: detalleSaludBucal.php");
+				header("Location: detalleSaludBucalPadre.php");
 		}		
 		
 	}
-}
+
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -93,21 +100,11 @@ else  {
                         <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
                     </div>
 				</div>   
-                                                                                 
-					<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
-			
-						<form action="consultaSaludBucal.php" method="post">
-						 	<input type="text"  value="Nombre o clave del niño" name="nombre" alt="Nombre:" title="Escribe el nombre del paciente" id="nombre" /><br>  					
-						  	<input type="radio" name="name" CHECKED value="Busqueda por nombre">Busqueda por nombre<br>
-						  	<input type="radio" name="name" value="Busqueda por clave">Busqueda por clave<br>  			  				
-						  	<input type="submit" value="Buscar" />								
-							<input type="hidden" name="posted" value="yes" />
-						</form>
-					</div>
+                                                                                 				
 							
 					<div id="tablaRevisa" class="divisionDetalles">
 					
-					 <form id="revisaSubmit" name="submision" action="consultaSaludBucal.php" method="post">
+					 <form id="revisaSubmit" name="submision" action="consultaSaludPadre.php" method="post">
 				  		<table>
 				  			<tr>
 				  				<th> Identificador </th>
@@ -155,10 +152,8 @@ else  {
             <div id="main-nav">
                 <ul>
               	 <li class="act"><a href="../principales/mainDentista2.php">Inicio</a></li>
-                    <li> <a href="../registros/regDenPaciente.php">Registrar paciente</a> </li>
-                    <li> <a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a> </li>
-                    <li> <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a> </li>
-                    <li> <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a> </li>
+                        <li> <a href="../consulta/consultaSaludPadre.php">Consultar estado de salud de mi hijo(s)</a> </li>
+                	   <li> <a href="../consulta/directorioConsultoriosPadres.php">Consultar directorio de consultorios</a> </li>             
                 </ul>
             </div>
             

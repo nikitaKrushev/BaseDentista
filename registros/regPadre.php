@@ -9,6 +9,13 @@
  * 	correctamente formateada. Despu�s se verifica la unicidad del usuario, en caso de 
  *  repetici�n, el registro no puede ser completado, de otra forma, se da de alta al 
  *  usuario y se envia un correo a la direcci�n que fue proporcionada.
+ *  
+ * Variables:
+ * 		$fail: Para la validacion, originalmente es una cadena vacia
+ * 		$sal_estatica: La parte estatica de la encriptacion.
+ * 		$sal_dinamica: La parte dinamica de la encriptacion, generada con la funcion mt
+ * 		$pass_enc: La contraseña ya encriptada despues del algoritmo.
+ * 		$message: El mensaje que se envia a la bandeja de correo.
  */
 
 if(isset($_POST['posted'])) {
@@ -110,7 +117,6 @@ if(isset($_POST['posted'])) {
 								header("refresh:3;url=regPadre.php");
 							}
 							else {
-								//$pass_enc = sha1($password);
 								$sal_estatica="m@nU3lit0Mart1!n3z";
 								$sal_dinamica=mt_rand(); //genera un entero de forma aleatoria
 								$password_length = strlen($password);
@@ -124,7 +130,6 @@ if(isset($_POST['posted'])) {
 												.mysql_real_escape_string($telefono).'","'.mysql_real_escape_string($correo).'","'.$sal_dinamica.'")');
 								
 								if($meter){									
-									//$sendmail = mail($mail_to,$mail_subject,$mail_body,$mail_header);
 									authSendEmail ($from, $namefrom, $to, $nameto, $subject, $message);
 									print '<script type="text/javascript">';
 									print 'alert("Registro exitoso de usuario. Revisa tu bandeja de correo")';

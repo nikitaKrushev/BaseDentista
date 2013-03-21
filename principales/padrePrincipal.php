@@ -1,11 +1,11 @@
 <?php 
 /**
- * Autor: Josu� Casta�eda
+ * Autor: Josué Castañeda
  * Escrito: 2/FEB/2013
  * Ultima actualizacion: 2/FEB/2013
  *
  * Descripcion:
- * 	P�gina principal de padres
+ * 	Página principal de padres
  *
  */
 
@@ -36,8 +36,6 @@ if ($_SESSION['type'] != 2) {
 		case 6://Admin
 			header("refresh:3;url=../principales/adminPage.php");
 			break;
-
-
 	}
 	exit;
 }
@@ -71,13 +69,7 @@ if ($_SESSION['type'] != 2) {
         <!-- Main Column Start -->
         <div id="wrap">
             <div id="main-col"><!-- Nivo Slider -->
-                <div id="slider-container">
-                    <div id="big-slider"><!-- Add Slides Here -->
-                        <a href="#"><img src="../img/pictures/slide-1.jpg" alt="" title="!Unete al programa!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-2.png" alt="" title="!Registrate hoy!" /></a>
-                        <a href="#"><img src="../img/pictures/slide-3.png" alt="" title="!Empezar a cuidar tus dientes es muy fácil!" /></a>
-                    </div>
-                </div>
+               
                 
                 <!-- Homepage Welcome Text -->
                 <div id="homepage-post">
@@ -101,8 +93,8 @@ if ($_SESSION['type'] != 2) {
             <div id="main-nav">
                 <ul>
                     <li class="act"><a href="index.html">Inicio</a></li>
-                    <li> <a href="../construccion.html">Consultar estado de salud de mi hijo(s)</a> </li>
-                    <li> <a href="../consulta/directorioConsultorios.php">Consultar directorio de consultorios</a> </li>
+                    <li> <a href="../consulta/consultaSaludPadre.php">Consultar estado de salud de mi hijo(s)</a> </li>
+                    <li> <a href="../consulta/directorioConsultoriosPadres.php">Consultar directorio de consultorios</a> </li>
                 	</ul>
             </div>
             
@@ -140,7 +132,7 @@ if ($_SESSION['type'] != 2) {
             <div id="f-main-col">
                 <!-- Contact Info -->
                 <div class="widget w-50 w-text last" id="text-1">
-                    <h5 class="w-title">Contacto:</h5>
+                   
                     <div class="w-content">
                        <img src="../img/pictures/zamudio.png" class="alignright" />
                     </div>

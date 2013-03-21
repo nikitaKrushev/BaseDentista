@@ -63,9 +63,9 @@ if(isset($_GET['arregloCuadrante']) && isset($_GET['posicion']) && isset($_GET['
 else {	
 
 	if(isset($_POST['detalles'])) {
-		
+		//echo "LOLAZO";
 		//Primero hay que crear la exploracion dental
-		$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
+		//$mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
 		
 		$querys_ok = true; //Servira de centinela
 		
@@ -82,10 +82,16 @@ else {
 		$formated_date .= $date_array['mon'] . "/";
 		$formated_date .= $date_array['year'];
 		
-		mysql_query('LOCK TABLES ExploracionDental,Dentadura,CuadranteI,CuadranteII,CuadranteIII,CuadranteIV'); //Cerrar las transacciones
+		//mysql_query('LOCK TABLES ExploracionDental,Dentadura,CuadranteI,CuadranteII,CuadranteIII,CuadranteIV'); //Cerrar las transacciones
 		
-		$mysqli->query("INSERT INTO ExploracionDental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio)
-				VALUES ('$formated_date','$dentista->Cedula',$dentista->Consultorio_idConsultorio)") ? null : $querys_ok=false;
+		//*** Start Transaction ***//
+		@mysql_query("BEGIN");
+		
+		/*$mysqli->query("INSERT INTO ExploracionDental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio)
+				VALUES ('$formated_date','$dentista->Cedula',$dentista->Consultorio_idConsultorio)") ? null : $querys_ok=false;*/
+		$result = @mysql_query("INSERT INTO ExploracionDental (FechaRevision,Dentista_Cedula,Dentista_Consultorio_idConsultorio)
+				VALUES ('$formated_date','$dentista->Cedula',$dentista->Consultorio_idConsultorio)");
+		
 		
 		$query = @mysql_query( "SELECT * FROM ExploracionDental ORDER BY idExploracionDental DESC LIMIT 1"); //Obtenemos el ultimo lugar
 		$expoDental = @mysql_fetch_object($query);
@@ -98,8 +104,11 @@ else {
 		//echo "INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
 		//		VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])";
 		
-		$mysqli->query("INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
-				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;
+		/*$mysqli->query("INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;*/
+		$result2 = @mysql_query("INSERT INTO CuadranteI (`11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])");
+		
 		
 		$query = @mysql_query( "SELECT * FROM CuadranteI ORDER BY idCuadranteI DESC LIMIT 1");
 		$c1 = @mysql_fetch_object($query);
@@ -107,8 +116,10 @@ else {
 		for ($j=0; $j<15; $j++ )
 			$a[$j] = $_SESSION['segundoCuadrante'][$j];
 		
-		$mysqli->query("INSERT INTO CuadranteII (`21`,`22`,`23`,`24`,`25`,`26`,`27`,`28`,`61`,`62`,`63`,`64`,`65`,`Extra`)
-				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;
+		/*$mysqli->query("INSERT INTO CuadranteII (`21`,`22`,`23`,`24`,`25`,`26`,`27`,`28`,`61`,`62`,`63`,`64`,`65`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;*/
+		$result3 =@mysql_query("INSERT INTO CuadranteII (`21`,`22`,`23`,`24`,`25`,`26`,`27`,`28`,`61`,`62`,`63`,`64`,`65`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])");		
 		
 		$query = @mysql_query( "SELECT * FROM CuadranteII ORDER BY idCuadranteII DESC LIMIT 1");
 		$c2 = @mysql_fetch_object($query);
@@ -116,8 +127,10 @@ else {
 		for ($j=0; $j<15; $j++ )
 			$a[$j] = $_SESSION['tercerCuadrante'][$j];
 		
-		$mysqli->query("INSERT INTO CuadranteIII (`31`,`32`,`33`,`34`,`35`,`36`,`37`,`38`,`71`,`72`,`73`,`74`,`75`,`Extra`)
-				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;
+		/*$mysqli->query("INSERT INTO CuadranteIII (`31`,`32`,`33`,`34`,`35`,`36`,`37`,`38`,`71`,`72`,`73`,`74`,`75`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;*/
+		$result4 = @mysql_query("INSERT INTO CuadranteIII (`31`,`32`,`33`,`34`,`35`,`36`,`37`,`38`,`71`,`72`,`73`,`74`,`75`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])");
 		
 		$query = @mysql_query( "SELECT * FROM CuadranteIII ORDER BY idCuadranteIII DESC LIMIT 1");
 		$c3 = @mysql_fetch_object($query);
@@ -125,8 +138,11 @@ else {
 		for ($j=0; $j<15; $j++ )
 			$a[$j] = $_SESSION['cuartoCuadrante'][$j];
 		
-		$mysqli->query("INSERT INTO CuadranteIV (`41`,`42`,`43`,`44`,`45`,`46`,`47`,`48`,`81`,`82`,`83`,`84`,`85`,`Extra`)
-				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;
+		/*$mysqli->query("INSERT INTO CuadranteIV (`41`,`42`,`43`,`44`,`45`,`46`,`47`,`48`,`81`,`82`,`83`,`84`,`85`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])") ? null : $querys_ok=false;*/
+		$result4 = @mysql_query("INSERT INTO CuadranteIV (`41`,`42`,`43`,`44`,`45`,`46`,`47`,`48`,`81`,`82`,`83`,`84`,`85`,`Extra`)
+				VALUES ($a[1],$a[2],$a[3],$a[4],$a[5],$a[6],$a[7],$a[8],$a[9],$a[10],$a[11],$a[12],$a[13],$a[14])");
+		
 		
 		$query = @mysql_query( "SELECT * FROM CuadranteIV ORDER BY idCuadranteIV DESC LIMIT 1");
 		$c4 = @mysql_fetch_object($query);
@@ -134,19 +150,36 @@ else {
 		//Finalmente se crea la dentadura
 		
 		
-		$mysqli->query("INSERT INTO Dentadura (ExploracionDental_idExploracionDental, ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio
+		/*$mysqli->query("INSERT INTO Dentadura (ExploracionDental_idExploracionDental, ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio
 				,Ninio_idNinio,Ninio_Padre_idPadre,CuadranteI_idCuadranteI,CuadranteII_idCuadranteII,CuadranteIII_idCuadranteIII,CuadranteIV_idCuadranteIV)
 				VALUES ($expoDental->idExploracionDental,'$dentista->Cedula',$dentista->Consultorio_idConsultorio,$nino->idNinio,$nino->Padre_idPadre
-				,$c1->idCuadranteI,$c2->idCuadranteII,$c3->idCuadranteIII,$c4->idCuadranteIV)") ? null : $querys_ok=false;
+				,$c1->idCuadranteI,$c2->idCuadranteII,$c3->idCuadranteIII,$c4->idCuadranteIV)") ? null : $querys_ok=false;*/
+		$result5 = @mysql_query("INSERT INTO Dentadura (ExploracionDental_idExploracionDental, ExploracionDental_Dentista_Cedula,ExploracionDental_Dentista_Consultorio_idConsultorio
+				,Ninio_idNinio,Ninio_Padre_idPadre,CuadranteI_idCuadranteI,CuadranteII_idCuadranteII,CuadranteIII_idCuadranteIII,CuadranteIV_idCuadranteIV)
+				VALUES ($expoDental->idExploracionDental,'$dentista->Cedula',$dentista->Consultorio_idConsultorio,$nino->idNinio,$nino->Padre_idPadre
+				,$c1->idCuadranteI,$c2->idCuadranteII,$c3->idCuadranteIII,$c4->idCuadranteIV)");
 		
 		$query = @mysql_query( "SELECT * FROM Dentadura ORDER BY idDentadura DESC LIMIT 1"); //Obtenemos el ultimo lugar
 		$idDentadura = @mysql_fetch_object($query);
-		$mysqli->query("UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio ");
-		
-		mysql_query('UNLOCK TABLES');
+		//$mysqli->query("UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio ");
+		$result6 = @mysql_query("UPDATE Ninio SET UltimaRevision=$idDentadura->idDentadura WHERE idNinio=$nino->idNinio");
+		//echo $result."RE ".$result1."RE1 ".$result2."RE2 ".$result3."RE3 ".$result4."RE4 ".$result5."RE5 ".$result6."RE6 ";
+		if($result && $result2 && $result3 && $result4 && $result5 && $result6) {
+			mysql_query("COMMIT");
+			//echo "SAVE";
+		}
+		else {
+			mysql_query("ROLLBACK");
+			print '<script type="text/javascript">';
+			print 'alert("Hubo un error en la base de datos")';
+			print '</script>';
+			header('refresh:0;URL=../principales/mainDentista2.php');
+			exit;
+		}
+		//mysql_query('UNLOCK TABLES');
 		//$querys_ok=false;//Borrar
-		$querys_ok ? $mysqli->commit() : $mysqli->rollback();
-		$mysqli->close();
+		//$querys_ok ? $mysqli->commit() : $mysqli->rollback();
+		//$mysqli->close();
 		
 		unset($_SESSION['idNino']);
 		unset($_SESSION['primerCuadrante']);

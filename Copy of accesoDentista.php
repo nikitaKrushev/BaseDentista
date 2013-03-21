@@ -8,17 +8,9 @@
  * 	Realiza un filtro dependiendo de la sesión del usuario. Si no esta registrado el usuario, se
  *  escribe un error en pantalla y se pone un enlace a la pagina de acceso al sistema.
  *  
- *  Se realiza una consulta a la base de datos cada vez que se accede a este archivo,la razon es
- *  porque se debe validar cada vez que se quiere acceder a ciertos archivos.
+ *  Se realiza una consulta a la base de datos cada vez que se accede a este archivo, creo que
+ *  debo mejorar eso...
  * 
- * Variables:
- * 		$redireccionar: Sirve para mandar a la pagina de inicio segun sea el tipo de usuario.
- * 		$uid: El identificador del usuario
- * 		$pwd: La contraseña del usuario
- * 		$_SESSION['pwd']: La contraseña guardada en la sesión, esta encriptada
- * 		$sal_dinamica: La parte dinamica de encriptacion, guardada en la base
- * 		$sal_estatica: La parte estatica de encriptacion
- * 		$encript: La contraseña encriptada despues del algoritmo de encriptacion
  */
 
 if(!isset($_SESSION['uid']))
@@ -36,7 +28,7 @@ if(isset($_SESSION['uid']) || isset($_POST['pass'])) {
 		$_SESSION['pwd'] = "*";
 	}
 }
-else { // Si no han sido llamados mediante POST o Ya existia una sesion, negar el paso
+else {
 	$uid ="";
 	$pwd = "";
 	$_SESSION['pwd']="_";
@@ -50,13 +42,16 @@ if(!isset($uid)) {
 //Revisar si son validos los datos
 
 if($pwd != $_SESSION['pwd']) {
+	//echo $uid;
+	//echo $pwd;
 	//Seleccionar un usuario de la base de datos para saber su sazonado
 	$query = "SELECT Sasonado FROM Dentista WHERE Usuario='".$uid."' LIMIT 1";
 	$row = mysql_query($query);
 	$fila = mysql_fetch_assoc($row);
 	
 	if(!empty($fila['Sasonado'])){ //Es un dentista
-		$sal_dinamica = $fila['Sasonado'];		
+		$sal_dinamica = $fila['Sasonado'];
+		//echo $sal_dinamica;
 	}
 	else {
 		$query = "SELECT Sasonado FROM Padre WHERE Usuario='".$uid."' LIMIT 1";
@@ -65,7 +60,7 @@ if($pwd != $_SESSION['pwd']) {
 		
 		if(!empty($fila['Sasonado'])){ //Es un padre
 			$sal_dinamica = $fila['Sasonado'];
-			
+			//echo $sal_dinamica;
 		} 
 		else {
 			$query = "SELECT Sasonado FROM Maestro WHERE Usuario='".$uid."' LIMIT 1";
@@ -73,7 +68,8 @@ if($pwd != $_SESSION['pwd']) {
 			$fila = mysql_fetch_assoc($row);
 				
 			if(!empty($fila['Sasonado'])){ //Es un maestro
-				$sal_dinamica = $fila['Sasonado'];				
+				$sal_dinamica = $fila['Sasonado'];
+				//echo $sal_dinamica;
 			}
 			else {
 				$query = "SELECT Sasonado FROM Director WHERE idDirector='".$uid."' LIMIT 1";
@@ -81,14 +77,17 @@ if($pwd != $_SESSION['pwd']) {
 				$fila = mysql_fetch_assoc($row);
 				
 				if(!empty($fila['Sasonado'])){ //Es un director
-					$sal_dinamica = $fila['Sasonado'];					
+					$sal_dinamica = $fila['Sasonado'];
+					//echo $sal_dinamica;
 				}
 				else {
 					$query = "SELECT Sasonado FROM ProfesionalSalud WHERE Usuario='".$uid."' LIMIT 1";
 					$row = mysql_query($query);
-					$fila = mysql_fetch_assoc($row);											
+					$fila = mysql_fetch_assoc($row);						
+					//echo $query;
 					if(!empty($fila['Sasonado'])){ //Es un profesional
-						$sal_dinamica = $fila['Sasonado'];						
+						$sal_dinamica = $fila['Sasonado'];
+						//echo $sal_dinamica;
 					}
 					else {
 						$query = "SELECT Sasonado FROM Administrador WHERE Usuario='".$uid."' LIMIT 1";
@@ -96,7 +95,8 @@ if($pwd != $_SESSION['pwd']) {
 						$fila = mysql_fetch_assoc($row);
 						
 						if(!empty($fila['Sasonado'])){ //Es un admin
-							$sal_dinamica = $fila['Sasonado'];							
+							$sal_dinamica = $fila['Sasonado'];
+							//echo $sal_dinamica;
 						}
 					}
 				}
@@ -112,7 +112,58 @@ if($pwd != $_SESSION['pwd']) {
 	$password_array = str_split($pwd, $split_at);
 	$cod=$password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica;
 	$cod = trim($cod);
-	$encript = sha1($cod);	
+	$encript = sha1($cod);
+	//echo $cod;
+	/*echo "Dinamica: ".$sal_dinamica." ";
+	echo $password_length." LENGHT " ;
+	echo "sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica)";
+	echo "PASS: ".$pwd." ";
+	echo "SPLIT: ".$split_at." ";
+	echo "Encriptado: ".$encript." ";
+	echo "Primera Parte: ".$password_array[0]." ";
+	echo "Segunda Parte: ".$password_array[1]." ";*/
+	
+	////////////////////////////////////////////
+	/*$pass = "lol123";
+	$sal_estatica="m@nU3lit0Mart1!n3z";
+	$sal_dinamica=1792830770;
+	$password_length = strlen($pass);
+	//echo $password_length;
+	$split_at = $password_length / 2;
+	$password_array = str_split($pass, $split_at);
+	$lod=$password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica;
+	$siete21 = sha1($lod);
+	//echo $lod;
+	$lod = trim($lod);
+	$cod = trim($cod);
+	if( strcmp($lod, $cod)==0)
+		echo "SOMOS IGUALES 2";
+	else {
+		echo "Diferentes";
+	}
+	//echo sha1($lod)." ";
+	//echo sha1($cod);
+	/*$c=sha1("1");
+	$d=sha1("1");
+	
+	echo $c." ";
+	echo $d." ";
+	
+	if( strcmp($c, $d) ==0)
+		echo "SOMOS IGUALES";*/
+	
+	/*echo "Dinamica: ".$sal_dinamica." ";
+	echo $password_length." LENGHT " ;
+	echo "sha1($password_array[0] . $sal_estatica . $password_array[1] . $sal_dinamica) ";
+	echo "PASS: ".$pass." ";
+	echo "SPLIT: ".$split_at." ";
+	echo "Encriptado: ".$siete21." ";
+	echo "Primera Parte: ".$password_array[0]." ";
+	echo "Segunda Parte: ".$password_array[1]." ";*/
+	
+	
+	//////////////////////////
+	//$encript = sha1($pwd);
 	$redireccionar=true;
 }
 else {
@@ -212,7 +263,7 @@ if(!$loginEncontrado) {
 	<p>
 		El usuario o contraseña son incorrectos, o no eres un usuario
 		registrado en esete sito. Intenta acceder de nuevo al sistema, has
-		click <a href="http://cartillabucaldigital.org/index.php"> aquí </a>.
+		click <a href="http://cartillabucaldigital.org/index.php">aquí.
 	</p>
 </body>
 </html>
@@ -226,6 +277,7 @@ else{
 		case 1: //Dentista
 			if($redireccionar ){//|| $_SERVER['HTTP_REFERER']=="http://localhost/src/login.html") {
 				header( "refresh:3;url=principales/mainDentista2.php" ); //Redireccionar a pagina
+				//if(empty($_SESSION["check"])) {
 				echo "Bienvenido ".$_SESSION["uid"].".\n";
 				echo "En 3 segundos te redireccionaremos a la pagina de inicio";
 				$_SESSION['check']="check";
@@ -237,6 +289,7 @@ else{
 		case 2: //Padre
 			if($redireccionar ){// || $_SERVER['HTTP_REFERER']=="http://localhost/src/login.html")		{
 				header( "refresh:3;url=principales/padrePrincipal.php" ); //Redireccionar a pagina
+				//if(empty($_SESSION["check"])) {
 				echo "Bienvenido ".$_SESSION["uid"].".\n";
 				echo "En 3 segundos te redireccionaremos a la pagina de inicio";
 				$_SESSION['check']="check";

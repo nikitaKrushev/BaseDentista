@@ -10,6 +10,14 @@
  *
  */
 
+/**
+ * Variables:
+ * 		$fail: Para la validacion, originalmente es una cadena vacia
+ * 		$sal_estatica: La parte estatica de la encriptacion.
+ * 		$sal_dinamica: La parte dinamica de la encriptacion, generada con la funcion mt
+ * 		$password_enc: La contraseña ya encriptada despues del algoritmo.
+ */
+
 include '../accesoDentista.php';
 include '../validaciones.php';
 include '../enviarMail.php';
@@ -321,9 +329,6 @@ else {
 									<input type="text" value="<?php echo $numPostal;?>" name="numPostal" alt="*Numero postal:" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>
 									<select name="ciudad">
 									<?php
-									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									//<input type="text" value="<?php echo $ciudad;>" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									//<input type="text" value="<?php echo $estado;>" name="estado" alt="*Estado:" title="Pon el estado postal donde se encuentra el consultorio" id="estado"/>
 										if(isset($size)) {
 										for($i=0; $i<$size; $i++) {
 									?>
@@ -333,9 +338,6 @@ else {
 									</select>
 									<select name="estado">									
 									<?php
-									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									//<input type="text" value="<?php echo $estado;>" name="estado" alt="*Estado:" title="Pon el estado postal donde se encuentra el consultorio" id="estado"/>
-									 
 										if(isset($size2)) {
 										for($i=0; $i<$size2; $i++) {
 									?>
@@ -376,7 +378,7 @@ else {
 
 			<!-- News Widget -->
 			<div class="widget w-news">
-				<h4 class="w-title title-light">Cerrar sesion.</h4>
+				<h4 class="w-title title-light">Cerrar sesi&oacute;n.</h4>
 				<div class="w-content">
 					<ul>
 						<li>

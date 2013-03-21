@@ -2,14 +2,14 @@
 include '../accesoDentista.php';
 
 
-if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1  ) { //Checamos si hay una session vacia o si ya hay una sesion
+if ($_SESSION['type'] != 2  ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
 
-		case 2: //Padre
-			header( "refresh:3;url=../principales/padrePrincipal.php" ); //Redireccionar a pagina
+		case 1://Dentista
+			header("refresh:3, url=../principales/mainDentista2.php");
 			break;
-
+			
 		case 3://Maestro
 			header("refresh:3;url=../principales/maestroPrincipal.php");
 			break;
@@ -21,6 +21,11 @@ if ($_SESSION['type'] != 6 && $_SESSION['type'] != 1  ) { //Checamos si hay una 
 		case 5://Admin
 			header("refresh:3;url=../principales/profesionalPrincipal.php");
 			break;
+			
+		case 6://Admin
+			header("refresh:3;url=../principales/adminPage.php");
+		break;
+					
 	}
 	exit;
 }
@@ -278,10 +283,8 @@ $strTabla.=" </table>";
             <div id="main-nav">
                 <ul>
                  <li class="act"><a href="mainDentista2.php">Inicio</a></li>
-                    <li> <a href="../registros/regDenPaciente.php">Registrar paciente</a> </li>
-                    <li> <a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a> </li>                    
-                    <li> <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a> </li>
-                    <li> <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a> </li>
+                    <li> <a href="../consulta/consultaSaludPadre.php">Consultar estado de salud de mi hijo(s)</a> </li>
+                	   <li> <a href="../consulta/directorioConsultoriosPadres.php">Consultar directorio de consultorios</a> </li>   
                 </ul>
             </div>
             
