@@ -8,10 +8,15 @@ html body, html a { color: #999; }
 
 	
 	/* HOMEPAGE TEASERS (WIDGETS) */
-	#homepage-post { border-color: #d1cfb0; background-color: #bab89c; }
+	#homepage-post {
+	border-color: #d1cfb0;
+	background-color: #FFFFFF;
+}
 	#homepage-teasers .w-title { border-color: #adab91; background-color: #bab89c; }
 	#homepage-teasers .w-content { border-color: #d2d0b6; background-color: #f4f3ea; color: #a09e7b; }
-	#homepage-post .p-content { color: #efeedc; }
+	#homepage-post .p-content {
+	color: #000000;
+}
 	#homepage-teasers {	border-color: #bab89c; }
 
 

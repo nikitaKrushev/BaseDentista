@@ -127,7 +127,7 @@ function validaPass($field) {
 			return "El tamaño de la contraseña debe ser por lo menos de 5 caracteres.\n";
 		else
 			if (! preg_match("/[a-z]/",$field))
-			return "La contraseña requiere por lo menos un caracter de [a-z].\n";
+				return "La contraseña requiere por lo menos un caracter de [a-z].\n";
 	}
 	return "";
 }
@@ -143,6 +143,12 @@ function validaPass($field) {
 function validaClave($clave) {
 	if (! preg_match("/^[0-9]+$/",$clave))
 		return "La clave requiere digitos.\n";
+	return "";
+}
+
+function validaTelefono($clave) {
+	if (! preg_match("/^[0-9]+$/",$clave))
+		return "El telefono requiere solo digitos.\n";
 	return "";
 }
 

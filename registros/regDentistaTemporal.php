@@ -30,6 +30,39 @@ while ($existe = @mysql_fetch_object($query))
 	$estados[] = $existe;
 $size2= count($estados);
 
+//Creacion de las variables de sesion para los campos
+if(!isset($_SESSION['campos'])) {
+	$_SESSION['campos']['nombre']='';
+	$_SESSION['campos']['apat']='';
+	$_SESSION['campos']['amat']='';
+	$_SESSION['campos']['ced']='';
+	$_SESSION['campos']['use']='';
+	$_SESSION['campos']['pass']='';
+	$_SESSION['campos']['corr']='';
+	$_SESSION['campos']['corr2']='';
+	$_SESSION['campos']['consNom']='';
+	$_SESSION['campos']['tel']='';
+	$_SESSION['campos']['col']='';
+	$_SESSION['campos']['calle']='';
+	$_SESSION['campos']['numPostal']='';
+}
+if(!isset($_SESSION['error'])) {
+	$_SESSION['error']['nombre']='hidden';
+	$_SESSION['error']['apat']='hidden';
+	$_SESSION['error']['amat']='hidden';
+	$_SESSION['error']['ced']='hidden';
+	$_SESSION['error']['use']='hidden';
+	$_SESSION['error']['pass']='hidden';
+	$_SESSION['error']['corr']='hidden';
+	$_SESSION['error']['corr2']='hidden';
+	$_SESSION['error']['consNom']='hidden';
+	$_SESSION['error']['tel']='hidden';
+	$_SESSION['error']['col']='hidden';
+	$_SESSION['error']['calle']='hidden';
+	$_SESSION['error']['numPostal']='hidden';
+}
+//Ahora los errores
+
 if(isset($_POST['posted'])) {
 	require_once('../funciones.php');
 	conectar($servidor, $user, $pass, $name);	
@@ -222,6 +255,7 @@ if(isset($_POST['posted'])) {
 else {
 	if(isset($fail))
 		echo $fail;
+	/*
 	$nombre = "*Primer Nombre:";
 	$apaterno = "*Apellido Paterno:";
 	$amaterno = "*Apellido Materno";
@@ -235,7 +269,7 @@ else {
 	$telefono = "Telefono de contacto:";	
 	$colonia = "*Colonia:";
 	$calle = "*Calle:";
-	$numPostal = "*Numero postal:";
+	$numPostal = "*Numero postal:";*/
 }
 
 ?>
@@ -246,7 +280,7 @@ else {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- Styles -->
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="../css/style2.css" />
 
 <!-- JavaScript -->
 <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
@@ -256,10 +290,11 @@ else {
 <script type="text/javascript" src="../js/jquery.prettySociable.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
+<script type="text/javascript" src="../js/validacionCampos.js"></script>
 
 </head>
 
-<body id="home">
+<body id="home" onload="setFocus();">
 	<!-- #home || #page-post || #blog || #portfolio -->
 
 	<!-- Page Start -->
@@ -289,28 +324,80 @@ else {
 						?>
 					</div>
 
-					<div id="registra">
-						<ul>
-							<li>							
-								<span style="color:red">Datos personales </span>
-									
+					<div id="registra" align="left" >						
+							<fieldset>																
 								<form action="regDentistaTemporal.php" method="post">
-									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
-									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
-									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
-									<input type="text" value="<?php echo $cedula;?>" name="cedula" alt="*Cédula:" title="Introduce tu cedula profesional" id="cedula" /> 
-									<input type="text" value="<?php echo $usuario;?>" name="usuario" alt="*Usuario:" title="Introduce un usuario" id="usuario" /> 
-									<input type="password" value="<?php echo $password;?>" name="password" alt="Contraseña:" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" /> 
-									<input type="password" value="<?php echo $password2;?>" name="password2" alt="Confirmar Contraseña: " title="Repite la contraseña" id="password2" /> 
-									<input type="text" value="<?php echo $correo;?>" name="correo" alt="*Correo electronico: " title="Introduce tu correo electronico" id="correo" /> 
-									<input type="text" value="<?php echo $correo2;?>" name="correo2" alt="Confirmar Correo electronico: " title="Repite tu correo electronico" id="correo2" /> 
-									<br> </br> <span style="color:red">Consultorio </span>
-									<input type="text" value="<?php echo $nombreCons;?>" name="nombreCons" alt="*Nombre del Consultorio:" title="Pon el nombre del Consultorio" id="nombreCons"/>
-									<input type="text" value="<?php echo $telefono;?>" name="telefono" alt="Telefono de contacto:" title="Pon un numero de contacto" id="telefono"/>
-									<br> </br> <span style="color:red">Direccion del consultorio </span>
-									<input type="text" value="<?php echo $colonia;?>" name="colonia" alt="*Colonia:" title="Pon la colonia donde se encuentra el consultorio" id="colonia"/>
-									<input type="text" value="<?php echo $calle;?>" name="calle" alt="*Calle:" title="Pon la calle donde se encuentra el consultorio" id="calle"/>
-									<input type="text" value="<?php echo $numPostal;?>" name="numPostal" alt="*Numero postal:" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>
+                                	<label for="nombre" > Nombre(s): </label>
+									<input type="text" value="<?php echo $_SESSION['campos']['nombre'];?>" name="nombre" title="Introduce tu primer nombre" id="nombre" onblur="validate(this.value,this.id)" />
+									<span id="nombreFail" class="<?php echo $_SESSION['error']['nombre'];?>" >Nombre solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>
+									<br/>
+									
+									<label for="apaterno"> Apellido Paterno:</label> 
+									<input type="text" value="<?php echo $_SESSION['campos']['apat'];?>" name="apaterno" title="Introduce tu apellido paterno" id="apaterno" onblur="validate(this.value,this.id)" />
+									<span id="apaternoFail" class="<?php echo $_SESSION['error']['apat'];?>" >Apellido paterno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>									
+									<br/>
+									
+									<label for="amaterno"> Apellido Materno:</label>
+									<input type="text" value="<?php echo $_SESSION['campos']['amat'];?>" name="amaterno" title="Introduce tu apellido materno" id="amaterno" onblur="validate(this.value,this.id)" />
+									<span id="amaternoFail" class="<?php echo $_SESSION['error']['amat'];?>" >Apellido materno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>																		
+									<br/>
+									
+									<label for="cedula"> C&eacute;dula:</label>									 
+									<input type="text" value="<?php echo $_SESSION['campos']['ced'];?>" name="cedula" title="Introduce tu cedula profesional" id="cedula" onblur="validate(this.value,this.id)" />
+									<span id="cedulaFail" class="<?php echo $_SESSION['error']['ced'];?>" >Favor de llenar el campo cedula. </span>
+									<br/>
+									
+									<label for="usuario"> Usuario:</label>									
+									<input type="text" value="<?php echo $_SESSION['campos']['use'];?>" name="usuario" title="Introduce un usuario" id="usuario" onblur="validate(this.value,this.id)" />
+									<span id="usuarioFail" class="<?php echo $_SESSION['error']['use'];?>" >Usuario existente. Longitud máxima 20 caracteres </span>									
+									<br/>
+									
+									<label for="password"> Contrase&ntilde;a:</label>									
+									<input type="password" value="<?php echo $_SESSION['campos']['pass'];?>" name="password" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" onblur="validate(this.value,this.id)"/>
+									<span id="passwordFail" class="<?php echo $_SESSION['error']['pass'];?>" >El tamaño de la contraseña debe ser por lo menos de 5 caracteres.Requiere al menos una letra </span>																		
+									<br/>
+									
+									<label for="password2">Repite tu Contrase&ntilde;a:</label>
+									<input type="password" value="<?php echo $_SESSION['campos']['pass'];?>" name="password2" title="Repite la contraseña" id="password2"  />
+									<span id="password2Fail" class="<?php echo $_SESSION['error']['pass'];?>" >Las contrase&ntildte;as no son iguales. </span>
+									<br/>
+									
+									<label for="correo"> Correo electr&oacute;nico:</label> 
+									<input type="text" value="<?php echo $_SESSION['campos']['corr'];?>" name="correo" title="Introduce tu correo electronico" id="correo" onblur="validate(this.value,this.id)" />
+									<span id="correoFail" class="<?php echo $_SESSION['error']['corr'];?>" >La dirección de correo electrónico es inválida. </span>
+									<br/>
+									
+									<label for="correo2"> Repite tu correo electr&oacute;nico:</label> 									
+									<input type="text" value="<?php echo $_SESSION['campos']['corr2'];?>" name="correo2" title="Repite tu correo electronico" id="correo2" />
+									<span id="correo2Fail" class="<?php echo $_SESSION['error']['corr2'];?>" >Los correos no son iguales. </span>
+									<br/> 
+									
+									<label for="nombreCons"> Nombre de tu consultorio:</label> 																		
+									<input type="text" value="<?php echo $_SESSION['campos']['consNom'];?>" name="nombreCons" title="Pon el nombre del Consultorio" id="nombreCons" onblur="validate(this.value,this.id)"/>
+									<span id="nombreConsFail" class="<?php echo $_SESSION['error']['consNom'];?>" >Favor de llenar el nombre del consultorio. Longitud máxima 30 caracteres. </span>
+									<br/>
+									
+									<label for="telefono"> Tel&eacute;fono de tu consultorio:</label> 																											
+									<input type="text" value="<?php echo $_SESSION['campos']['tel'];?>" name="telefono" title="Pon un numero de contacto" id="telefono" onblur="validate(this.value,this.id)"/>
+									<span id="telefonoFail" class="<?php echo $_SESSION['error']['tel'];?>" >El telefono requiere solo dígitos. </span>
+									<br/>
+									
+									<label for="colonia"> Colonia de tu consultorio:</label>
+									<input type="text" value="<?php echo $_SESSION['campos']['col'];?>" name="colonia" title="Pon la colonia donde se encuentra el consultorio" id="colonia" onblur="validate(this.value,this.id)"/>
+									<span id="coloniaFail" class="<?php echo $_SESSION['error']['col'];?>" >Favor de llenar el campo colonia. Longitud máxima 30 caracteres. </span>
+									<br/>
+									
+									<label for="calle"> Calle de tu consultorio:</label>
+									<input type="text" value="<?php echo $_SESSION['campos']['calle'];?>" name="calle" title="Pon la calle donde se encuentra el consultorio" id="calle" onblur="validate(this.value,this.id)"/>
+									<span id="calleFail" class="<?php echo $_SESSION['error']['calle'];?>" >Favor de llenar el campo calle. Longitud máxima 30 caracteres.</span>
+									<br/>
+									
+									<label for="numpostal"> N&uacute;mero postal:</label>
+									<input type="text" value="<?php echo $_SESSION['campos']['numPostal'];?>" name="numPostal" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal" onblur="validate(this.value,this.id)"/>
+									<span id="numpostalFail" class="<?php echo $_SESSION['error']['numPostal'];?>" >El numero postal requiere digitos. </span>
+									<br/>
+									
+									<label for="ciudad"> Ciudad:</label>
 									<select name="ciudad">
 									<?php
 									echo $size;
@@ -321,6 +408,9 @@ else {
 									<?php }} 
 									?>										
 									</select>
+									<br/>
+									
+									<label for="estado"> Estado(Provincia):</label>
 									<select name="estado">									
 									<?php
 									 
@@ -336,8 +426,8 @@ else {
 									<input type="submit" value="Registrar" /> 
 									<input type="hidden" name="posted" value="yes" />
 								</form>
-							</li>
-						</ul>
+						</fieldset>
+						
 					</div>
 				</div>
 				<!-- Homepage Teasers End -->
