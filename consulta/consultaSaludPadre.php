@@ -57,7 +57,7 @@ if ($_SESSION['type'] != 2 ) { //Checamos si hay una session vacia o si ya hay u
 				exit;
 			}
 			else
-				header("Location: detalleSaludBucalPadre.php");
+				header("Location: detalleSaludBucal2Padre.php");
 		}		
 		
 	}

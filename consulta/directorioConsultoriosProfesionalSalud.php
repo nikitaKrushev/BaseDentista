@@ -1,53 +1,83 @@
 <?php
 include '../accesoDentista.php';
 
-if(isset($_POST['posted'])) {
-	$texto = strtoupper(strip_tags($_POST['nombre']));
-	$choice = $_POST['name'];
-	$consultorios = array();
+//if(!isset($_SESSION['recorrido']))
+//	$_SESSION['recorrido'] = 0; // Me permite recorrer de 9 los resultados de la consulta de la base de datos
+
+if(isset($_POST['back'])) {
+	$size= count($_SESSION['consul']);
+	if($_SESSION['recorrido'] < 9) //No debemos decrementar el valor
+		$_SESSION['recorrido']=0;
+	else
+		$_SESSION['recorrido']=$_SESSION['recorrido']-9;
+
+} else {
+
+	if(isset($_POST['forward'])) {
 	
-	if($choice == "Nombre")	{	
-		$query =  @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-					FROM Consultorio,Direccion,Ciudad WHERE Consultorio.Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");		
-	}
-	else {
-		if($choice == "Colonia") {
+		//if($_SESSION['recorrido']+9 > $_SESSION['sizeP']) //No debemos incrementar el valor
+		//	$_SESSION['recorrido']=$_SESSION['recorrido']; //Hacer nada
+		//else
+			$_SESSION['recorrido']=$_SESSION['recorrido']+9;
+			$size= count($_SESSION['consul']);
+			//echo $size2;
+	
+	} else {
+
+		if(isset($_POST['posted'])) {
 			
-			$query = @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-						FROM Consultorio,Direccion,Ciudad WHERE Colonia='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");			
-		}
-		else {
-			if($choice == "Calle") {
-				$query = @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-							FROM Consultorio,Direccion,Ciudad WHERE Calle='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");				
+			$_SESSION['recorrido'] = 0; // Me permite recorrer de 9 los resultados de la consulta de la base de datos
+			$texto = strtoupper(strip_tags($_POST['nombre']));
+			$choice = $_POST['name'];
+			$consultorios = array();
+			
+			if($choice == "Nombre")	{	
+				$query =  @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
+							FROM Consultorio,Direccion,Ciudad WHERE Consultorio.Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");		
 			}
 			else {
-				if($choice == "Postal") {
-					$query =  @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-						FROM Consultorio,Direccion,Ciudad WHERE NumeroPostal='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");				
+				if($choice == "Colonia") {
+					
+					$query = @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
+								FROM Consultorio,Direccion,Ciudad WHERE Colonia='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");			
 				}
 				else {
-					if($choice == "Ciudad") { 
+					if($choice == "Calle") {
 						$query = @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-									FROM Consultorio,Direccion,Ciudad WHERE Ciudad.Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");						
+									FROM Consultorio,Direccion,Ciudad WHERE Calle='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");				
 					}
 					else {
-						if($choice == "Estado") {
-							$query=@mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
-									FROM Consultorio,Direccion,Ciudad WHERE Ciudad_Estado_Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");
-							
+						if($choice == "Postal") {
+							$query =  @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
+								FROM Consultorio,Direccion,Ciudad WHERE NumeroPostal='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");				
 						}
+						else {
+							if($choice == "Ciudad") { 
+								$query = @mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
+											FROM Consultorio,Direccion,Ciudad WHERE Ciudad.Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");						
+							}
+							else {
+								if($choice == "Estado") {
+									$query=@mysql_query("SELECT Consultorio.Nombre AS Consultorio_Nombre,Telefono,Colonia,Calle,NumeroPostal,Ciudad.Nombre AS Ciudad_Nombre,Ciudad.Estado_Nombre AS Ciudad_Estado_Nombre
+											FROM Consultorio,Direccion,Ciudad WHERE Ciudad_Estado_Nombre='$texto' && Direccion_idDireccion = idDireccion && Ciudad_idCiudad = idCiudad ");
+									
+								}
+							}
+						}				
 					}
-				}				
+				}
 			}
+			
+			while ($existe= @mysql_fetch_object($query))
+				$consultorios[] = $existe;
+			$_SESSION['consul']=$consultorios;
+			$size= count($consultorios);	
+			if(!isset($_SESSION['sizeP']))
+				$_SESSION['sizeP'] = $size; // Me permite recorrer de 9 los resultados de la consulta de la base de datos
 		}
 	}
-	
-	while ($existe= @mysql_fetch_object($query))
-		$consultorios[] = $existe;
-	$size= count($consultorios);		
-}
 
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -106,37 +136,47 @@ if(isset($_POST['posted'])) {
 					</div>
 							
 					<div id="tablaRevisa" class="divisionDetalles">
-					
-						
-				  						  			
-				  		
+															  						  							  	
 					</div>
+					<form action="directorioConsultoriosPadres.php" method="post">
+						<input id="btnAtras"  style="position: absolute; left: 100px; bottom: 720px;" type="submit" value="Atras" />
+						<input type="hidden" name="back" value="yes" />						
+					</form> 	
+					
+					<form action="directorioConsultoriosPadres.php" method="post">
+						<input id="btnAdelante" style="position: absolute; right: 600px; bottom: 720px;" type="submit" value="Adelante" />
+						<input type="hidden" name="forward" value="yes" />					
+					</form> 
+					 	
+					<br />
 						<table  width=40%  height=100>
 				  				<tr>
-				  					<th> Nombre </th>
-				  					<th> Tel&eacute;fono </th>
 				  					<th> Colonia </th>
 				  					<th> Calle </th>
+				  					<th> Tel&eacute;fono </th>
+				  					<th> Nombre </th>
 				  					<th> Num&eacute;ro postal </th>
 				  					<th> Ciudad </th>
 				  					<th> Estado </th>				  					
 				  				</tr>	
 				  				<?php
 				  					if(isset($size)) {
-									for($i=0; $i<$size; $i++) {
+									//for($i=0; $i<$size; $i++) {
+									$i=0;
+									while($i<9 && ($i+$_SESSION['recorrido']) < $size){
 								?>
 				  				<tr>
-				  					<td> <?php echo $consultorios[$i]->Consultorio_Nombre; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->Telefono; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->Colonia; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->Calle; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->NumeroPostal; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->Ciudad_Nombre; ?> </td>
-				  					<td> <?php echo $consultorios[$i]->Ciudad_Estado_Nombre; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Colonia; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Calle; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Telefono; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Consultorio_Nombre; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->NumeroPostal; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Ciudad_Nombre; ?> </td>
+				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Ciudad_Estado_Nombre; ?> </td>
 				  				</tr>
-				  			 	<?php } }?>
+				  			 	<?php $i++;} }?>
 				  			</table>
-				  			<br>										                                           
+				  			<br>							                                           
             	</div>         
             </div>
         </div>

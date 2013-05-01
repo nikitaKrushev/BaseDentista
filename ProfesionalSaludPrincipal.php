@@ -50,7 +50,7 @@
  				<div class="full-page-text">
                                   
 					<h3>Informaci&oacute;n para odontologos</h3>
-					<p>Al ingresar al programa podras registrar tu consultorio, as&iacute como realizar revisiones de los pacientes, para registrarte al sistema haz click en el siguiente v&iacute;nculo: <a href="registros/regDentistaTemporal.php" title="P&aacute;gina de registro de odontologos">registrate!</a>.</p>
+					<p>Al ingresar al programa podras registrar tu consultorio, as&iacute como realizar revisiones de los pacientes, para registrarte al sistema haz click en el siguiente v&iacute;nculo: <a href="registros/regDen.php" title="P&aacute;gina de registro de odontologos">registrate!</a>.</p>
 				</div>
                                 
                 <!-- Homepage Teasers End -->
