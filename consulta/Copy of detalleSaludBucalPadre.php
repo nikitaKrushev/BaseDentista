@@ -30,14 +30,11 @@ if ($_SESSION['type'] != 2  ) { //Checamos si hay una session vacia o si ya hay 
 	exit;
 }
 
-$mensaje = 0; //Desplegar un mensaje para el padre	
-$peorCaso = 0; //Sirve para no modificar el mensaje
-
-$texto = array();
-$texto[0] = "Sano: Felicidades no presenta caries dental!";
-$texto[1] = "Enfermo: Requiere de atenci&oacute;n dental";
-$texto[2] = "Enfermo: Requiere de atenci&oacute;n dental inmediata!";
-	
+$strCuad1=""; //Los dientes que estan presentes en el cuadrante 1
+$strCuad2=""; //Los dientes que estan presentes en el cuadrante 2
+$strCuad3=""; //Los dientes que estan presentes en el cuadrante 3
+$strCuad4=""; //Los dientes que estan presentes en el cuadrante 4
+		
 $mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
 /* check connection */
 if (mysqli_connect_errno()) {
@@ -59,70 +56,157 @@ array_pop($dentaduras); // pop the last row off, which is an empty row
 $ultimo = count($dentaduras);
 $ultimo = implode($dentaduras[$ultimo-1]) ;
 
+
+
 //Se obtien los identificadores de los cuadrantes de la ultima dentadura
 $query = "SELECT CuadranteI_idCuadranteI,CuadranteII_idCuadranteII,CuadranteIII_idCuadranteIII,CuadranteIV_idCuadranteIV  FROM `Dentadura` WHERE idDentadura=$ultimo";
 $result = $mysqli->query($query);
 $identificadores = $result->fetch_array(MYSQLI_NUM);
 
-$dientes = array(); //Los dientes del paciente
-$imagenes = array(); //Imagenes de los dientes del paciente
-$conta = 0;
 //Se obtienen los dientes presentes en la ultima dentadura
 $id = $identificadores[0];
-$query = "SELECT `11`,`12`,`13`,`14`,`15`,`16`,`17`,`18` FROM CuadranteI WHERE idCuadranteI = $id";
+$query = "SELECT `11`,`12`,`13`,`14`,`15`,`16`,`17`,`18`,`51`,`52`,`53`,`54`,`55` FROM CuadranteI WHERE idCuadranteI = $id";
 $result = $mysqli->query($query);
 $dientesPresentes =$result->fetch_array(MYSQLI_NUM);
-
+$contador = 11;
+$cambio = false;
 for($i=0; $i<count($dientesPresentes); $i++) {
-	$dientes[$conta] = $dientesPresentes[$i];
-	$conta++;
+	$val =$dientesPresentes[$i]; 
+	if( $val!= -1)
+		$strCuad1.="`$contador`,";
+	$contador++;
+	if($contador >18 && $cambio==false) {
+		$contador=51;
+		$cambio=true;
+	}
 }
+$cuadrante1Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 1
+$strCuad1 = substr_replace($strCuad1 ,"",-1);
 
 $id = $identificadores[1];
-$query = "SELECT `21`,`22`,`23`,`24`,`25`,`26`,`27`,`28` FROM CuadranteII WHERE idCuadranteII = $id";
+$query = "SELECT `21`,`22`,`23`,`24`,`25`,`26`,`27`,`28`,`61`,`62`,`63`,`64`,`65` FROM CuadranteII WHERE idCuadranteII = $id";
 $result = $mysqli->query($query);
 $dientesPresentes =$result->fetch_array(MYSQLI_NUM);
-
+$contador = 21;
+$cambio = false;
 for($i=0; $i<count($dientesPresentes); $i++) {
-	$dientes[$conta] = $dientesPresentes[$i];
-	$conta++;
+	$val =$dientesPresentes[$i];
+	if( $val!= -1)
+		$strCuad2.="`$contador`,";
+	$contador++;
+	if($contador >28 && $cambio==false) {
+		$contador=61;
+		$cambio=true;
+	}
 }
+$cuadrante2Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 2
+$strCuad2 = substr_replace($strCuad2 ,"",-1);
 
 $id = $identificadores[2];
-$query = "SELECT `31`,`32`,`33`,`34`,`35`,`36`,`37`,`38` FROM CuadranteIII WHERE idCuadranteIII = $id";
+$query = "SELECT `31`,`32`,`33`,`34`,`35`,`36`,`37`,`38`,`71`,`72`,`73`,`74`,`75` FROM CuadranteIII WHERE idCuadranteIII = $id";
 $result = $mysqli->query($query);
 $dientesPresentes =$result->fetch_array(MYSQLI_NUM);
-
+$contador = 31;
+$cambio = false;
 for($i=0; $i<count($dientesPresentes); $i++) {
-	$dientes[$conta] = $dientesPresentes[$i];
-	$conta++;
+	$val =$dientesPresentes[$i];
+	if( $val!= -1)
+		$strCuad3.="`$contador`,";
+	$contador++;
+	if($contador >38 && $cambio==false) {
+		$contador=71;
+		$cambio=true;
+	}
 }
+$cuadrante3Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 3
+$strCuad3 = substr_replace($strCuad3 ,"",-1);
 
 $id = $identificadores[3];
-$query = "SELECT `41`,`42`,`43`,`44`,`45`,`46`,`47`,`48` FROM CuadranteIV WHERE idCuadranteIV = $id";
+$query = "SELECT `41`,`42`,`43`,`44`,`45`,`46`,`47`,`48`,`81`,`82`,`83`,`84`,`85` FROM CuadranteIV WHERE idCuadranteIV = $id";
 $result = $mysqli->query($query);
 $dientesPresentes =$result->fetch_array(MYSQLI_NUM);
-
+$contador = 41;
+$cambio = false;
 for($i=0; $i<count($dientesPresentes); $i++) {
-	$dientes[$conta] = $dientesPresentes[$i];
-	$conta++;
-}
-
-for($i=0; $i<count($dientes); $i++) {
-	if($dientes[$i] == 4 || $dientes[$i] == 5 || $dientes[$i] == 6) {
-		$mensaje=2;
-		$peorCaso = 1;
+	$val =$dientesPresentes[$i];
+	if( $val!= -1)
+		$strCuad4.="`$contador`,";
+	$contador++;
+	if($contador >48 && $cambio==false) {
+		$contador=81;
+		$cambio=true;
 	}
-	else {
-		if($dientes[$i] == 1 || $dientes[$i] == 2 || $dientes[$i] == 3 ) {
-			if($peorCaso==0)
-				$mensaje=1;
-		}
+}
+$cuadrante4Len = count($dientesPresentes); //Cuantos dientes hay en el cuadrante 4
+$strCuad4 = substr_replace($strCuad4 ,"",-1);;
+
+
+//Ahora a crear el arreglo 2x2 que contendra cada estado de los dientes en cada revision
+for($i=0; $i<count($dentaduras); $i++) {
+	$val = implode($dentaduras[$i]);
+	$query = "SELECT $strCuad1,$strCuad2,$strCuad3,$strCuad4 FROM CuadranteI,CuadranteII,CuadranteIII,CuadranteIV WHERE CuadranteI.idCuadranteI=$val AND 
+		CuadranteII.idCuadranteII=$val AND CuadranteIII.idCuadranteIII=$val AND CuadranteIV.idCuadranteIV=$val";
+	//echo $query;
+	$result = $mysqli->query($query);
+	$dientesPresentes =$result->fetch_array(MYSQLI_NUM);
+	//echo count($dientesPresentes);
+	for($j=0; $j<count($dientesPresentes); $j++) {
+		$tabla[$j][$i] = $dientesPresentes[$j]; //Se crea la tabla de los dientes presentes
+		//echo $dientesPresentes[$j]." V ";
 	}
 	
 }
 
+/*************************************************************************************
+ * WORKING....
+ ********************************/
 
+
+$strTabla="<table cellspacing=15 class=\"consulta\" id=Consulta width=100%>\n";
+ $strTabla.="<tr>\n";
+$strCuad1 = str_replace("`","",$strCuad1);
+$arregloDientes1 = explode(',', $strCuad1, $cuadrante1Len);
+
+$strTabla.="<th> Dientes </th>";
+for($i=1; $i<count($dentaduras); $i++) {
+	$strTabla.="<th> $i </th>";
+}
+
+$strCuad2 = str_replace("`","",$strCuad2);
+$arregloDientes2 = explode(',', $strCuad2, $cuadrante2Len);
+
+$strCuad3 = str_replace("`","",$strCuad3);
+$arregloDientes3 = explode(',', $strCuad3, $cuadrante3Len);
+
+
+$strCuad4 = str_replace("`","",$strCuad4);
+$arregloDientes4 = explode(',', $strCuad4, $cuadrante4Len);
+//echo count ($arregloDientes1);
+$arregloDientes1 = array_merge($arregloDientes1,$arregloDientes2);
+$arregloDientes1 = array_merge($arregloDientes1,$arregloDientes3);
+$arregloDientes1 = array_merge($arregloDientes1,$arregloDientes4); //Se obtienen todos los dientes en un solo array
+//echo count($arregloDientes1);
+
+$strTabla.="</tr>\n";
+
+for($i=0;$i<count($arregloDientes1);$i++) {
+	$strTabla.="<tr>\n";
+	if($i%2==0)
+		$strTabla.= "<td> $arregloDientes1[$i] </td> \n";
+	else 
+		$strTabla.= "<td class=\"consulta\"> $arregloDientes1[$i] </td> \n";
+	
+	for($j=1;$j<count($dentaduras);$j++) {
+		$val = $tabla[$i][$j];
+		if($i%2==0)
+			$strTabla.= "<td> $val </td> \n";
+		else
+			$strTabla.= "<td class=\"consulta\"> $val </td> \n";
+		//echo $tabla[$j][$i].",";
+		}
+	$strTabla.="</tr>\n";
+}
+$strTabla.=" </table>";
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -153,27 +237,31 @@ for($i=0; $i<count($dientes); $i++) {
         
         <!-- Main Column Start -->
         <div id="wrap">
-            <div id="main-col3"><!-- Nivo Slider -->                                                                         
+            <div id="main-col2"><!-- Nivo Slider -->                                                                         
                 <!-- Homepage Welcome Text -->
               
                                      	                                        
                    		<div id="revisaForm" style="color:#0000FF" class="divisionDetalles">
 							
 								<div class="divisionDetalles">
-									
+									<p>
+									Nombre completo del paciente:
+									</p>								
+									<p><?php 
+										echo $nombreNino." ".$apellidoPNino." ".$apellidoMNino;
+										?> 
+									</p>
 									
 								</div>
 			
 						  		<div class="divisionDetalles">
-						  		<h1>Estado dental </h1>
-						  		<p> Le informamos que el ni&ntilde;o(a): <?php echo $nombreNino." ".$apellidoPNino." ".$apellidoMNino; ?>  </p>	
-						  		<p> Fue revisado por los odontopediatras de Tijuana A.C.</p>
-						  		<p> Se observ&oacute que su hijo se encuentra:</p>						  
-						  		<h2> <?php echo $texto[$mensaje]; ?></h2>
-						  		<p> Para la atenci&oacute;n dental su hijo podr&aacute ser atendido en el centro de salud de la calle ocho.</p>
-						  		<p>	Las cl&iacute;nicas de la Facultad de Odontolog&iacute;a, los centros de salud o con su dentista particular.
-						  		</p>
-						 </div>						  							                     	      
+						  		<p>Estado dental </p>	
+						  		<?php 
+						  		
+						  			echo $strTabla;
+						  			?>
+						 </div>						  							   
+                  	      
 					
 																				                       
               

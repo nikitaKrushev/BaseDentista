@@ -18,21 +18,45 @@
  * 		$message: El mensaje que se envia a la bandeja de correo.
  */
 
-if(isset($_POST['posted'])) {
+require_once('../funciones.php');
+include '../validaciones.php';
+include '../enviarMail.php';
 
-	require_once('../funciones.php');
-	include '../validaciones.php';
-	include '../enviarMail.php';
-	
-	conectar($servidor, $user, $pass, $name);
+conectar($servidor, $user, $pass, $name);
+
+//Creacion de las variables de sesion para los campos
+if(!isset($_SESSION['campos'])) {
+	$_SESSION['campos']['usuario']='';
+	$_SESSION['campos']['nombre']='';
+	$_SESSION['campos']['apat']='';
+	$_SESSION['campos']['amat']='';
+	$_SESSION['campos']['tel']='';
+	$_SESSION['campos']['pass']='';
+	$_SESSION['campos']['corr']='';
+	$_SESSION['campos']['corr2']='';
+}
+
+//Ahora los errores
+if(!isset($_SESSION['error'])) {
+	$_SESSION['error']['usuario']='hidden';
+	$_SESSION['error']['nombre']='hidden';
+	$_SESSION['error']['apat']='hidden';
+	$_SESSION['error']['amat']='hidden';
+	$_SESSION['error']['tel']='hidden';
+	$_SESSION['error']['pass']='hidden';
+	$_SESSION['error']['corr']='hidden';
+	$_SESSION['error']['corr2']='hidden';
+}
+
+if(isset($_POST['posted'])) {
 	
 	//recibe info
 	$usuario = strip_tags($_POST['usuario']);
 	$password = strip_tags($_POST['password']);
 	$password2 = strip_tags($_POST['password2']);
-	$name = strtoupper(strip_tags($_POST['name']));
-	$apellidoPat = strtoupper(strip_tags($_POST['apellidoP']));
-	$apellidoMat = strtoupper(strip_tags($_POST['apellidoM']));
+	$name = strtoupper(strip_tags($_POST['nombre']));
+	$apellidoPat = strtoupper(strip_tags($_POST['apaterno']));
+	$apellidoMat = strtoupper(strip_tags($_POST['amaterno']));
 	$correo = strip_tags($_POST['correo']);
 	$correo2 = strip_tags($_POST['correo2']);
 	$telefono = strip_tags($_POST['telefono']);
@@ -135,6 +159,8 @@ if(isset($_POST['posted'])) {
 									print 'alert("Registro exitoso de usuario. Revisa tu bandeja de correo")';
 									print '</script>';									
 									header("refresh:1;url=../index.php");	
+									unset($_SESSION['campos']);
+									unset($_SESSION['error']);
 									exit;
 									
 								}else{
@@ -162,16 +188,7 @@ if(isset($_POST['posted'])) {
 }
 else {	
 	if(isset($fail)) 
-		echo $fail;				
-	$usuario = "Usuario:";
-	$password = "Contrasenia";
-	$password2 = "Repite contrasenia:";
-	$name = "Nombre:";
-	$apellidoPat = "Apellido paterno:";
-	$apellidoMat = "Apellido materno:";
-	$correo = "Correo electronico:";
-	$correo2 = "Repite correo electronico:";
-	$telefono = "Telefono:";	
+		echo $fail;			
 }
 
 ?>
@@ -183,7 +200,7 @@ else {
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style2.css" />
     
     <!-- JavaScript -->
     <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
@@ -194,7 +211,8 @@ else {
     <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="../js/main.js"></script>
     <script type="text/javascript" src="../js/dialogos.js"></script>
-    
+	<script type="text/javascript" src="../js/validacionCampos.js"></script>
+	    
 </head>
 
 <body id="home"><!-- #home || #page-post || #blog || #portfolio -->
@@ -212,6 +230,7 @@ else {
                     <div class="p-content">
                         <p>Perfil epidemiológico de caries dental</p>
                         <p>Página de registro de Padres</p>
+                        <p>Los campos marcados como * son obligatorios</p>
                         <?php 
                         if(isset($_POST['posted'])) {
                      	
@@ -220,27 +239,62 @@ else {
                         ?>
                     </div>
                     
-                    <div id="registra"	>
-                    <ul>
-                        <li>							
+                    <div id="registra" align="left"	>
+                    	<fieldset>
+                    							
 							<form action="regPadre.php" method="post" >
-								<input type="text"  value="<?php echo $usuario;?>" name="usuario" alt="Usuario:" title="Escribe su usuario" id="usuario" />																				
-								<input type="text" value="<?php echo $name;?>" name="name" alt="Nombre:" title="Escriba su nombre" id="name"  />									
-								<input type="text" value="<?php echo $apellidoPat;?>" name="apellidoP" alt="Apellido Paterno: " title="Escriba su apellido paterno" id="apellidoP" />									
-								<input type="text" value="<?php echo $apellidoMat;?>" name="apellidoM" alt="Apellido Materno:" title="Escriba su apellido materno" id="apellidoM" />
-								<input type="text" value="<?php echo $telefono;?>" name="telefono" alt="Telefono:" title="Escriba su telefono de contacto" id="telefono" />										
-								<input type="password" value="<?php echo $password;?>" name="password" alt="Contraseña: " title="Escriba su contrasenia" id="password" />								
-								<input type="password" value="<?php echo $password2;?>" name="password2" alt="Confirmar Contraseña: " title="Repita contrasenia" id="password2" />						
-								<input type="text" value="<?php echo $correo;?>" name="correo" alt="Correo electronico: " title="Escriba un correo electronico valido"  id="correo"  />						
-								<input type="text" value="<?php echo $correo2;?>" name="correo2" alt="Confirmar Correo electronico: " title="Repita correo electronico" id="correo2"/>								
+								<label for="usuario" > *Usuario: </label>
+								<input type="text" value="<?php echo $_SESSION['campos']['usuario'];?>" name="usuario" title="Escribe tu usuario" id="usuario" onblur="validate(this.value,this.id)" />
+								<span id="usuarioFail" class="<?php echo $_SESSION['error']['usuario'];?>" >Debes llenar el campo. Usuario existente. Longitud máxima 20 caracteres. </span>
+								<br/>
+								
+								<label for="nombre" > *Nombre(s): </label>
+								<input type="text" value="<?php echo $_SESSION['campos']['nombre'];?>" name="nombre" title="Introduce tu primer nombre" id="nombre" onblur="validate(this.value,this.id)" />
+								<span id="nombreFail" class="<?php echo $_SESSION['error']['nombre'];?>" >Debes llenar el campo. Nombre solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>
+								<br/>																		
+								
+								<label for="apaterno"> *Apellido Paterno:</label> 
+								<input type="text" value="<?php echo $_SESSION['campos']['apat'];?>" name="apaterno" title="Introduce tu apellido paterno" id="apaterno" onblur="validate(this.value,this.id)" />
+								<span id="apaternoFail" class="<?php echo $_SESSION['error']['apat'];?>" >Debes llenar el campo. Apellido paterno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>									
+								<br/>
+								
+								<label for="amaterno"> Apellido Materno:</label>
+								<input type="text" value="<?php echo $_SESSION['campos']['amat'];?>" name="amaterno" title="Introduce tu apellido materno" id="amaterno" onblur="validate(this.value,this.id)" />
+								<span id="amaternoFail" class="<?php echo $_SESSION['error']['amat'];?>" >Debes llenar el campo.Apellido materno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>																		
+								<br/>										
+																	
+								<label for="telefono"> Tel&eacute;fono:</label> 																											
+								<input type="text" value="<?php echo $_SESSION['campos']['tel'];?>" name="telefono" title="Pon un numero de contacto" id="telefono" onblur="validate(this.value,this.id)"/>
+								<span id="telefonoFail" class="<?php echo $_SESSION['error']['tel'];?>" >El telefono requiere solo dígitos. </span>
+								<br/>
+									
+								<label for="password"> *Contrase&ntilde;a:</label>									
+								<input type="password" value="<?php echo $_SESSION['campos']['pass'];?>" name="password" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" onblur="validate(this.value,this.id)"/>
+								<span id="passwordFail" class="<?php echo $_SESSION['error']['pass'];?>" >Debes llenar el campo. El tamaño de la contraseña debe ser por lo menos de 5 caracteres.Requiere al menos una letra </span>																		
+								<br/>
+								
+								<label for="password2">Repite tu Contrase&ntilde;a:</label>
+								<input type="password" value="<?php echo $_SESSION['campos']['pass'];?>" name="password2" title="Repite la contraseña" id="password2"  />
+								<span id="password2Fail" class="<?php echo $_SESSION['error']['pass'];?>" >Las contrase&ntildte;as no son iguales. </span>
+								<br/>
+								
+								<label for="correo"> Correo electr&oacute;nico:</label> 
+								<input type="text" value="<?php echo $_SESSION['campos']['corr'];?>" name="correo" title="Introduce tu correo electronico" id="correo" onblur="validate(this.value,this.id)" />
+								<span id="correoFail" class="<?php echo $_SESSION['error']['corr'];?>" >La dirección de correo electrónico es inválida. </span>
+								<br/>
+									
+								<label for="correo2"> Repite tu correo electr&oacute;nico:</label> 									
+								<input type="text" value="<?php echo $_SESSION['campos']['corr2'];?>" name="correo2" title="Repite tu correo electronico" id="correo2" />
+								<span id="correo2Fail" class="<?php echo $_SESSION['error']['corr2'];?>" >Los correos no son iguales. </span>
+								<br/> 																									
+																
 								<input type="submit" value="Registrar" />								
 								<input type="hidden" name="posted" value="yes" />								
 							</form>																																	                        	                 
-                       </li>
-                    </ul>
+                    	</fieldset>
                     </div>
                 </div>                                              
-                <!-- Homepage Teasers End -->
+              <!--  Homepage Teasers End -->
     
             </div>
         </div>

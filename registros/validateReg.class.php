@@ -75,7 +75,7 @@ class Validate {
 	}
 	
 	function validaNombre($nombre) {
-		if ($nombre =="") return "Favor de llenar el campo Nombre.\n";
+		if ($nombre =="") return 0;
 		else {
 			if(preg_match("/[ñÑáéíóú]+$/",$nombre))
 				return 0;
@@ -107,7 +107,7 @@ class Validate {
 	
 	function validaMaterno($nombre) {
 		if ($nombre =="")
-			return 0;
+			return 1;
 		else {
 			if(preg_match("/[ñÑáéíóú]+$/",$nombre))
 				return 0;
@@ -190,13 +190,15 @@ class Validate {
 	}
 	
 	function validaTelefono($clave) {
+		if ($clave == "") return 1;
+		
 		if (! preg_match("/^[0-9]+$/",$clave))
 			return 0;
 		return 1;
 	}
 	
 	function validaCorreo($field) {
-		if ($field == "") return 0;
+		if ($field == "") return 1;
 		else if (!((strpos($field, ".") > 0) &&
 				(strpos($field, "@") > 0))  ||
 				preg_match("/[^a-zA-Z0-9.@_-]/",$field))

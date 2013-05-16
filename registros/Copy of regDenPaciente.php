@@ -59,7 +59,7 @@ if(isset($_POST['posted'])) {
 	$apaterno = strtoupper(strip_tags($_POST['apaterno']));
 	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
 	//$nacimiento = strip_tags($_POST['nacimiento']);
-	$padre = strip_tags($_POST['usuario']);
+	$padre = strip_tags($_POST['padre']);
 	$grupo = strip_tags($_POST['grupo']);
 	$dia = $_POST['dia'];
 	$mes = $_POST['mes'];
@@ -150,7 +150,7 @@ else {
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- Styles -->
-<link rel="stylesheet" type="text/css" href="../css/style2.css" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
 
 <!-- JavaScript -->
 <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
@@ -160,7 +160,6 @@ else {
 <script type="text/javascript" src="../js/jquery.prettySociable.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
-<script type="text/javascript" src="../js/validacionCampos.js"></script>
 
 </head>
 
@@ -194,25 +193,16 @@ else {
 						?>
 					</div>
 
-					<div id="registra" align="left">
-						
-						<fieldset>
+					<div id="registra">
+						<ul>
+							<li>
+								
+								<span style="color:red">Datos personales </span>
+									
 								<form action="regDenPaciente.php" method="post" >
-									<label for="nombre" >* Nombre(s): </label>
-									<input type="text" value="<?php echo $_SESSION['campos']['nombre'];?>" name="nombre" title="Introduce tu primer nombre" id="nombre" onblur="validate(this.value,this.id)" />
-									<span id="nombreFail" class="<?php echo $_SESSION['error']['nombre'];?>" >Nombre solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>
-									<br/>
-									
-									<label for="apaterno">* Apellido Paterno:</label> 
-									<input type="text" value="<?php echo $_SESSION['campos']['apat'];?>" name="apaterno" title="Introduce tu apellido paterno" id="apaterno" onblur="validate(this.value,this.id)" />
-									<span id="apaternoFail" class="<?php echo $_SESSION['error']['apat'];?>" >Apellido paterno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>									
-									<br/>
-									
-									<label for="amaterno"> Apellido Materno:</label>
-									<input type="text" value="<?php echo $_SESSION['campos']['amat'];?>" name="amaterno" title="Introduce tu apellido materno" id="amaterno" onblur="validate(this.value,this.id)" />
-									<span id="amaternoFail" class="<?php echo $_SESSION['error']['amat'];?>" >Apellido materno solo con letras, sin acentos o ñ. Longitud máxima 30 caracteres. </span>																		
-									<br/>
-									 
+									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
+									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
+									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" />
 									<span style="color:red">Fecha de nacimiento </span>
 									<select name="dia" id="dia">
 										<?PHP
@@ -259,23 +249,16 @@ else {
 											echo "<option value='$i'>$i</option>";
 										?>
 									</select>
-									
-									<br ></br>
-									<label for="usuario">* Usuario:</label>									
-									<input type="text" value="<?php echo $_SESSION['campos']['usuario'];?>" name="usuario" title="Introduce un usuario" id="usuario" onblur="validate(this.value,this.id)" />
-									<span id="usuarioFail" class="<?php echo $_SESSION['error']['usuario'];?>" >Usuario existente. Longitud máxima 20 caracteres </span>									
-									<br/>
 									 
-									<label for="grupo"> Grupo:</label>									
-									<input type="text" value="<?php echo $_SESSION['campos']['grupo'];?>" name="grupo" title="Introduce un usuario" id="grupo" onblur="validate(this.value,this.id)" />
-									<span id="usuarioFail" class="<?php echo $_SESSION['error']['grupo'];?>" >Grupo no existe </span>									
-									<br/>
+									<input type="text" value="<?php echo $padre;?>" name="padre" alt="*Usurario del padre:" title="Introduce el usuario del padre" id="padre" />
+									<input type="text" value="<?php echo $grupo;?>" name="grupo" alt="" title="Introduce el grupo del nino" id="padre" />								
 									 
 									<br></br>																																																																										
 									<input type="submit" value="Registrar" /> 
 									<input type="hidden" name="posted" value="yes" />
 								</form>
-						</fieldset>	
+							</li>
+						</ul>
 					</div>
 				</div>
 				<!-- Homepage Teasers End -->

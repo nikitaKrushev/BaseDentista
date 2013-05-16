@@ -95,6 +95,7 @@ function readResponse() {
 //Pone el focus al primer elemento de la forma
 function setFocus() { 
 	document.getElementById("nombre").focus();
+	//document.getElementById("usuario").focus();
 }
 
 
