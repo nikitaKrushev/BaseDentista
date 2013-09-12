@@ -41,7 +41,7 @@
                    Calzada Universidad 14418, Parque Industrial Internacional, C.P. 22390 Tijuana, Baja California, M&eacute;xico <br />
                         Dr. Miguel Alberto Zamudio G&oacute;mez. Coordinador General del Programa de Cartilla de Salud Bucal Digital. zamudioalberto@gmail.com <br />
                         Tel.: 01 (664) 6851531 Comentarios y Sugerencias a: cartillasaludbucal@gmail.com<br />
-                        &Uacute;ltima actualizaci&oacute;n: 18/FEB/2013 <br />
+                        &Uacute;ltima actualizaci&oacute;n: 31/AGOSTO/2013 <br />
                     Derechos reservados Facultad de Odontolog&iacute;a Tijuana/Cartilla de Salud Bucal Digital<br />
                     Edici&oacute;n: Josu&eacute Casta&ntilde;eda Cisneros. castaedaj@uabc.edu.mx <br />
    

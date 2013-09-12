@@ -91,7 +91,7 @@ else  {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
+                        <h1>Perfil epidemiol&oacute;gico de caries dental</h1>                                             
                     </div>
 				</div>   
                                                                                  

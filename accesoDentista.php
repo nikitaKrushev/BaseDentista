@@ -21,6 +21,7 @@
  * 		$encript: La contraseña encriptada despues del algoritmo de encriptacion
  */
 
+
 if(!isset($_SESSION['uid']))
 	session_start();
 
@@ -199,6 +200,7 @@ if(!$loginEncontrado) {
 	unset($_SESSION['pwd']);
 	unset($_SESSION['type']);
 	unset($_SESSION['check']);
+	
 	?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

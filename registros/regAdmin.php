@@ -198,19 +198,20 @@ if(isset($_POST['posted'])) {
 else {
 	if(isset($fail))
 		echo $fail;
-	$user = "Usuario:";
-	$pass = "Contraseña:";
+	$user = "";
+	$name = "";	
+	$pass = "";
+	/*
 	$pass2 = "Repite Contraseña:";
 	$name = "Nombre:";
 	$apaterno = "Apellido Paterno:";
 	$amaterno = "Apellido Materno:";
 	$correo = "Correo Electronico:";
-	$correo2 = "Repite Correo Electronico:";	
+	$correo2 = "Repite Correo Electronico:";	*/
 }
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"> 
+<!DOCTYPE html>
 <head> 
     <title>Principal | Cartilla de Salud Bucal</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -218,14 +219,19 @@ else {
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
     
+    
     <!-- JavaScript -->
-    <script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+    <!--<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>-->
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="../js/superfish.js"></script>
     <script type="text/javascript" src="../js/jquery.nivo.slider.pack.js"></script>
     <script type="text/javascript" src="../js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="../js/jquery.prettySociable.js"></script>
     <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>    
     <script type="text/javascript" src="../js/main.js"></script>
+   
+
     
 </head>
 
@@ -242,30 +248,94 @@ else {
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>
-                        <p>Página de registro de Administradores</p>
+                        <h1>Perfil epidemiológico de caries dental</h1>
+                        <h2>Página de registro de Administradores</h2>
                         <?php 
                         if(isset($_POST['posted'])) {
                      	
                         	echo $fail;
+                        	
                         }
                         ?>
                     </div>
                     
                     <div id="registra"	>
+                    
                     <ul>
                         <li>						                        
-							<form action="regAdmin.php" method="post">
-								<input type="text" value="<?php echo $user;?>" alt="Usuario:" title="Escribe tu usuario" name="usuario" id="usuario" />														
-								<input type="text"  value="<?php echo $name;?>" alt="Nombre:" title="Pon tu nombre" name="name" id="name" />
-								<input type="text"  value="<?php echo $apaterno;?>" alt="Apellido Paterno:" title="Pon el apellido paterno" name="apaterno" id="apaterno" />									
-								<input type="text"  value="<?php echo $amaterno;?>" alt="Apellido Materno:" title="Pon el apellido materno" name="amaterno" id="amaterno" />									
-								<input type="password" value="<?php echo $pass;?>" name="password" alt="Contraseña:" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" /> 
-								<input type="password" value="<?php echo $pass2;?>" name="pass2" alt="Confirmar Contraseña: " title="Repite la contraseña" id="pass2" /> 
-								<input type="text" value="<?php echo $correo;?>" name="correo" alt="Correo electronico: " title="Introduce tu correo electronico" id="correo" /> 
-								<input type="text" value="<?php echo $correo2;?>" name="correo2" alt="Confirmar Correo electronico: " title="Repite tu correo electronico" id="correo2" /> 																				
-								<input type="submit" value="Registrar" />
+							<form class="form-horizontal" action="regAdmin.php" method="post">
+								<fieldset>
+
+									<legend>Todos los datos son requeridos</legend>
+																	
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Usuario:</label>
+								  		<div class="controls">
+										<input  class="pull-left input-xlarge" data-trigger="hover" required type="text" autofocus value="<?php echo $user;?>" title="Escribe tu usuario" name="usuario" id="usuario" />
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Nombre:</label>
+								  		<div class="controls">
+										<input required class="input-xlarge pull-left" data-trigger="hover" type="text" value="<?php echo $name;?>" title="Pon tu nombre" name="name" id="name" />										
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Apellido Paterno:</label>
+								  		<div class="controls">
+											<input required class="pull-left input-xlarge" data-trigger="hover" type="text" value="<?php echo $apaterno;?>" title="Pon el apellido paterno" name="apaterno" id="apaterno" />									
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">Apellido Materno:</label>
+								  		<div class="controls">
+											<input class="input-xlarge pull-left" required data-trigger="hover" type="text"  value="<?php echo $amaterno;?>" title="Pon el apellido materno" name="amaterno" id="amaterno" />																									
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Contraseña:</label>
+								  		<div class="controls">
+											<input required class="pull-left input-xlarge" data-trigger="hover" type="password" value="<?php echo $pass;?>" name="password" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" /> 																																
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Repetir Contraseña:</label>
+								  		<div class="controls">
+											<input required class="input-xlarge pull-left" data-trigger="hover" type="password" value="<?php echo $pass2;?>" name="pass2" title="Repite la contraseña" id="pass2" />  																																
+										</div>									
+									</div>									
+										
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Correo Electronico:</label>
+								  		<div class="controls">
+											<input required class="input-xlarge pull-left" data-trigger="hover" type="email" value="<?php echo $correo;?>" name="correo" title="Introduce tu correo electronico" id="correo" /> 						  																																
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*) Confirma Correo Electronico:</label>
+								  		<div class="controls">
+											<input required class="input-xlarge pull-left" data-trigger="hover" type="email" value="<?php echo $correo2;?>" name="correo2" title="Repite tu correo electronico" id="correo2" /> 																											 						  																																
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<div class="controls">
+								<input class="input-xlarge pull-left" type="submit" value="Registrar" />
+								 																											 						  																																
+										</div>									
+									</div>
+									
+																							
 								<input type="hidden" name="posted" value="yes" />								
+								
+								
+								</fieldset>
 							</form>
 							
                        </li>
@@ -343,4 +413,48 @@ else {
     <!-- Page End -->
 
 </body>
+<script type="text/javascript">
+$(function () {
+	$('#name').popover({
+		title: 'Test',
+		content: 'El nombre solo contiene letras',
+		placement: 'right'
+	});
+	$('#usuario').popover({
+		title: 'Test',
+		content: '',
+		placement: 'right'
+	});
+	$('#apaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+	$('#amaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+		$('#password').popover({
+		title: 'Test',
+		content: 'Las contrasenias deben concordar',
+		placement: 'right'
+	});
+	$('#pass2').popover({
+		title: 'Test',
+		content: 'Las contrasenias deben concordar',
+		placement: 'right'
+	});
+	$('#correo').popover({
+		title: 'Test',
+		content: 'Los correos deben ser los mismos',
+		placement: 'right'
+	});
+	$('#correo2').popover({
+		title: 'Test',
+		content: 'Los correos deben ser los mismos',
+		placement: 'right'
+	});
+});
+</script>
 </html>

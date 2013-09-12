@@ -13,6 +13,19 @@
 include '../accesoDentista.php';
 include '../validaciones.php';
 
+//Aqui el nombre de los escuela
+$query3 = @mysql_query("SELECT idEscuela,NombreEscuela FROM Escuela");
+
+while ($existe3 = @mysql_fetch_object($query3))
+	$escuelas[] = $existe3;
+$size3= count($escuelas);
+/*$i=0;
+for($i; $i<count($escuelas); $i++) {
+	echo $escuelas[$i]->NombreEscuela;
+	
+}*/
+
+
 if ($_SESSION['type'] != 6 ) { //Checamos si hay una session vacia o si ya hay una sesion
 	echo("Contenido Restringido");
 	switch($_SESSION['type']) {
@@ -51,8 +64,17 @@ if(isset($_POST['posted'])) {
 	$amaterno = strtoupper(strip_tags($_POST['amaterno']));
 	//$nacimiento = strip_tags($_POST['nacimiento']);
 	$padre = strip_tags($_POST['padre']);
+	/*$grupo = strip_tags($_POST['grupo']);*/
+	$escuela = strip_tags($_POST['idEscuela']);
 	$grupo = strip_tags($_POST['grupo']);
 	
+	//echo $padre." ".$escuela." ".$grupo;
+	//exit;
+	
+	if(empty($padre)){
+		$padre = 0; //Valor por default
+	}
+
 	$dia = $_POST['dia'];
 	$mes = $_POST['mes'];
 	$anio =$_POST['year'];
@@ -74,13 +96,12 @@ if(isset($_POST['posted'])) {
 			
 			//Correcto formato de fecha
 			$nacimiento = $anio."-".$mes."-".$dia;
-			if($grupo == "")  {
+			if($grupo != 0)  {
 				//Obtener el identificador del padre
 				$meter2 = @mysql_query('SELECT * from Padre where Usuario="'.mysql_real_escape_string($padre).'"');
 				
 				
-				$idPadre2 = @mysql_fetch_object($meter2);							
-				
+				$idPadre2 = @mysql_fetch_object($meter2);															
 				$meter=@mysql_query('INSERT INTO Ninio (Nombre,ApellidoPaterno,ApellidoMaterno,FechaNaciemiento,Padre_idPadre,UltimaRevision) values 
 						("'.mysql_real_escape_string($nombre).'", "'.mysql_real_escape_string($apaterno).
 							'","'.mysql_real_escape_string($amaterno).'","'.mysql_real_escape_string($nacimiento).'","'.mysql_real_escape_string($idPadre2->idPadre).'",0'.')');
@@ -118,12 +139,12 @@ if(isset($_POST['posted'])) {
 }	//ELSE C
 
 else {	
-	$nombre = "*Primer Nombre:";
+	/*$nombre = "*Primer Nombre:";
 	$apaterno = "*Apellido Paterno:";
 	$amaterno = "*Apellido Materno";
 	$nacimiento = "*Fecha de nacimiento, formato dd/m/a";
 	$padre = "Padre del nino:";
-	$grupo = "";
+	$grupo = "";*/
 }
 
 
@@ -137,14 +158,53 @@ else {
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 
+
 <!-- JavaScript -->
-<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../js/superfish.js"></script>
 <script type="text/javascript" src="../js/jquery.nivo.slider.pack.js"></script>
 <script type="text/javascript" src="../js/jquery.prettyPhoto.js"></script>
 <script type="text/javascript" src="../js/jquery.prettySociable.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
+
+<script type="text/javascript">
+		
+	function cargaEstados(valor) {
+			
+		if(valor==0) { //Selecciono la primera opcion
+			var selectEstado = document.getElementById("grupo");
+			selectEstado.length=0;
+			var nuevaOpcion = document.createElement("option");
+			nuevaOpcion.value=0;
+			nuevaOpcion.innerHTML="Selecciona escuela...";
+			selectEstado.appendChild(nuevaOpcion);	selectActual.disabled=true;
+		}
+		else {
+
+
+			var selectDestino=document.getElementById("grupo");
+				
+		 	var xmlrequest=new XMLHttpRequest();		 			 
+		 	xmlrequest.open("GET",'getGrupos.php?valor='+valor,true);
+		 	xmlrequest.onreadystatechange=function() 
+				{ 
+			 	if((xmlrequest.readyState==1)) { //El cliente espera la respuesta del servidor
+						var nuevaOpcion=document.createElement("option"); nuevaOpcion.value=0; nuevaOpcion.innerHTML="Cargando...";
+						selectDestino.appendChild(nuevaOpcion); 	
+					}
+					
+					if (xmlrequest.readyState==4)					
+						selectDestino.innerHTML=xmlrequest.responseText;										
+				}
+			 
+		 xmlrequest.send(null);
+		}
+	}	
+
+</script>
+
 
 </head>
 
@@ -166,9 +226,8 @@ else {
 							Digital</a>
 					</h1>
 					<div class="p-content">
-						<p>Perfil epidemiológico de caries dental</p>
-						<p>Página de registro de Dentista</p>
-						<p>Los campos marcados como * son obligatorios</p>
+						<h1>Perfil epidemiológico de caries dental</h1>
+						<h2>Página de registro de Dentista</h2>
 						
 						<?php 
 						if(isset($_POST['posted'])) {
@@ -181,25 +240,59 @@ else {
 					<div id="registra">
 						<ul>
 							<li>								
-								<span style="color:red">Datos personales </span>
 									
-								<form action="regNinio.php" method="post" >
-									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
-									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
-									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
-									<span style="color:red">Fecha de nacimiento </span>
-									<select name="dia" id="dia">
-										<?PHP
-										//<input type="text" value="<?php echo $nacimiento;>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />									 
-										for($i=1; $i<=31; $i++)
-		  								if($year == $i)
-											echo "<option value='$i' selected>$i</option>";
-										else
-											echo "<option value='$i'>$i</option>";
-										?>
-									</select>
+								<form class="form-horizontal" action="regNinio.php" method="post" >
+								
+									<fieldset>
+
+									<legend>Todos los datos son requeridos</legend>
+
+									<div class="control-group">
+										<label class="control-label" for="nombre">Nombre(s):</label>
+								  		<div class="controls">
+										<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $nombre;?>" name="nombre" title="Introduce tu primer nombre" id="nombre" /> 									 
+										</div>									
+									</div>
 									
-									<select name="mes" id="mes">
+									<div class="control-group">
+										<label class="control-label" for="apaterno">Apellido Paterno:</label>
+								  		<div class="controls">
+										<input class="pull-left input-xlarge"data-trigger="hover" required type="text" value="<?php echo $apaterno;?>" name="apaterno" title="Introduce tu apellido paterno" id="apaterno" /> 									 
+										</div>									
+									</div>									
+									
+									<div class="control-group">
+										<label class="control-label" for="amaterno">Apellido Materno:</label>
+								  		<div class="controls">
+										<input class="pull-left input-xlarge"data-trigger="hover" required type="text" value="<?php echo $amaterno;?>" name="amaterno" title="Introduce tu apellido materno" id="amaterno" /> 									 									 
+										</div>									
+									</div>
+																																																						
+									</fieldset>									
+									
+									<legend>Fecha de nacimiento</legend>
+									
+									<div class="control-group">
+										<label class="control-label" for="amaterno">Día:</label>
+								  		<div class="controls">
+										
+										 <select class="pull-left" name="dia" id="dia">
+											<?PHP
+											//<input type="text" value="<?php echo $nacimiento;>" name="nacimiento" alt="*Fecha de nacimiento del Niño Año-Mes-Dia:" title="Introduce la fecha de nacimiento del Niño,Año-Mes-Dia" id="nacimiento" />									 
+											for($i=1; $i<=31; $i++)
+		  										if($year == $i)
+													echo "<option value='$i' selected>$i</option>";
+												else
+													echo "<option value='$i'>$i</option>";
+											?>
+										</select>									 									 
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="amaterno">Mes:</label>
+								  		<div class="controls">
+											<select class="pull-left" name="mes" id="mes">
 										<?PHP for($i=1; $i<=12; $i++) {
 											switch ($i) {											
 												case 1: $nombreMes = "Enero"; break;
@@ -222,24 +315,76 @@ else {
 											echo "<option value='$i'>$nombreMes</option>";
 										}
 										?>
-									</select>
+									</select>	 									 									 
+										</div>									
+									</div>									
+									
+									<div class="control-group">
+										<label class="control-label" for="amaterno">Año:</label>
+								  		<div class="controls">
+										 	<select class="pull-left" name="year" id="year">
+												<?PHP for($i=1994; $i<=date("Y")-2; $i++)
+		  											if($year == $i)
+														echo "<option value='$i' selected>$i</option>";
+													else
+														echo "<option value='$i'>$i</option>";
+												?>
+											</select>									 									 
+										</div>									
+									</div> 																											
+									
+									<legend>Información del Padre</legend>
+									
+									<div class="control-group">
+										<label class="control-label" for="padre">Usuario del padre:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge"data-trigger="hover"  type="text" value="<?php echo $padre;?>" name="padre" title="Introduce el usuario del padre" id="padre" /> 									 									 
+										</div>									
+									</div>
+									
+										<legend>Escuela</legend>
+									
+									<div class="control-group">
+										<label class="control-label" for="nomEsc">Nombre de la escuela:</label>
+								  		<div class="controls">
+										<select class="pull-left" name="idEscuela" id="idEscuela" onchange="cargaEstados(this.value)">
+										<!--  Valor por default -->
+												<option value="0" >Selecciona una escuela </option>
+									<?php
+										if(isset($size3)) {
+										for($i=0; $i<$size3; $i++) {
+									?>
+										<option value="<?php echo $escuelas[$i]->idEscuela;?>" ><?php echo $escuelas[$i]->NombreEscuela;?> </option>
+									<?php }} 
+									?>										
+									</select>									 									 					 									 								 								  
+										</div>									
+									</div>
+									
+									<div class="control-group pul">
+										<label class="control-label" for="usuario">Grupo:</label>
+								  		<div class="controls">
+											<select class="pull-left" name="grupo"  id="grupo">
+												<option value="0" >Selecciona una escuela primero </option>
+																			
+											</select>							
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<div class="controls">
+											<input class="pull-left" type="submit" value="Registrar" />  									 									 
+										</div>									
+									</div>
 									
 									
-									<select name="year" id="year">
-										<?PHP for($i=1994; $i<=date("Y")-2; $i++)
-		  								if($year == $i)
-											echo "<option value='$i' selected>$i</option>";
-										else
-											echo "<option value='$i'>$i</option>";
-										?>
-									</select>
-									<input type="text" value="<?php echo $padre;?>" name="padre" alt="*Usurario del padre:" title="Introduce el usuario del padre" id="padre" />
-									<input type="text" value="<?php echo $grupo;?>" name="grupo" alt="" title="Introduce el grupo del nino" id="padre" />								
+									<!--<input type="text" value="<?php echo $grupo;?>" name="grupo" alt="" title="Introduce el grupo del nino" id="padre" />-->								
 									 
-									<br></br>																																																																										
-									<input type="submit" value="Registrar" /> 
+									
 									<input type="hidden" name="posted" value="yes" />
 								</form>
+	   								
+								
 							</li>
 						</ul>
 					</div>
@@ -315,4 +460,29 @@ else {
 	<!-- Page End -->
 
 </body>
+<script type="text/javascript">
+$(function () {
+	$('#nombre').popover({
+		title: 'Test',
+		content: 'El nombre solo contiene letras',
+		placement: 'right'
+	});
+	
+	$('#apaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+	$('#amaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+	$('#padre').popover({
+		title: 'Test',
+		content: 'Registra el identificador del padre',
+		placement: 'right'
+	});		
+});
+</script>
 </html>

@@ -139,12 +139,12 @@ if(isset($_POST['back'])) {
 															  						  							  	
 					</div>
 					<form action="directorioConsultoriosPadres.php" method="post">
-						<input id="btnAtras"  style="position: absolute; left: 100px; bottom: 720px;" type="submit" value="Atras" />
+						<input id="btnAtras"  style="position: absolute; left: 140px; bottom: 560px;" type="submit" value="Atras" />
 						<input type="hidden" name="back" value="yes" />						
 					</form> 	
 					
 					<form action="directorioConsultoriosPadres.php" method="post">
-						<input id="btnAdelante" style="position: absolute; right: 600px; bottom: 720px;" type="submit" value="Adelante" />
+						<input id="btnAdelante" style="position: absolute; right: 580px; bottom: 560px;" type="submit" value="Adelante" />
 						<input type="hidden" name="forward" value="yes" />					
 					</form> 
 					 	
@@ -157,7 +157,7 @@ if(isset($_POST['back'])) {
 				  					<th> Nombre </th>
 				  					<th> Num&eacute;ro postal </th>
 				  					<th> Ciudad </th>
-				  					<th> Estado </th>				  					
+				  					<!--<th> Estado </th> -->				  					
 				  				</tr>	
 				  				<?php
 				  					if(isset($size)) {
@@ -172,7 +172,7 @@ if(isset($_POST['back'])) {
 				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Consultorio_Nombre; ?> </td>
 				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->NumeroPostal; ?> </td>
 				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Ciudad_Nombre; ?> </td>
-				  					<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Ciudad_Estado_Nombre; ?> </td>
+				  					<!--<td> <?php echo $_SESSION['consul'][$i+$_SESSION['recorrido']]->Ciudad_Estado_Nombre; ?> </td> -->
 				  				</tr>
 				  			 	<?php $i++;} }?>
 				  			</table>

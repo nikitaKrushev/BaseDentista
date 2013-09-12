@@ -267,7 +267,7 @@ else {
                 <div id="homepage-post">
                 <h1 class="p-title" ><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiol&oacute;gico de caries dental</p>                                             
+                        <h1>Perfil epidemiol&oacute;gico de caries dental</h1>                                             
                     </div>
                     
                     <div id="revisa" class="divisionDetalles">
@@ -641,7 +641,7 @@ else {
                 <ul>
                  <li class="act"><a href="mainDentista2.php">Inicio</a></li>
                     <li> <a href="../registros/regNinio.php">Registrar paciente</a> </li>
-                    <li> <a href="construccion.html">Consulta historia dental</a> </li>                    
+                    <li> <a href="../consulta/consultaSaludBucal.php">Consulta historia dental</a> </li>                    
                     <li> <a href="../consulta/revisionTrimestral.php">Revisi&oacute;n trimestral</a> </li>
                     <li> <a href="../consulta/incrementarDentadura.php">A&ntilde;adir dientes a paciente</a> </li>
                 </ul>

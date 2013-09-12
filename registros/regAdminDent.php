@@ -244,7 +244,7 @@ if(isset($_POST['posted'])) {
 else {
 	if(isset($fail))
 		echo $fail;
-	$nombre = "*Primer Nombre:";
+	/*$nombre = "*Primer Nombre:";
 	$apaterno = "*Apellido Paterno:";
 	$amaterno = "*Apellido Materno";
 	$cedula = "*Cedula Profesional:";
@@ -257,13 +257,12 @@ else {
 	$telefono = "Telefono de contacto:";	
 	$colonia = "*Colonia:";
 	$calle = "*Calle:";
-	$numPostal = "*Numero postal:";	
+	$numPostal = "*Numero postal:";	*/
 }
 
 
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
 <title>Principal | Cartilla de Salud Bucal</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -271,13 +270,15 @@ else {
 <!-- Styles -->
 <link rel="stylesheet" type="text/css" href="../css/style.css" />
 
+
 <!-- JavaScript -->
-<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="../js/superfish.js"></script>
 <script type="text/javascript" src="../js/jquery.nivo.slider.pack.js"></script>
 <script type="text/javascript" src="../js/jquery.prettyPhoto.js"></script>
 <script type="text/javascript" src="../js/jquery.prettySociable.js"></script>
 <script type="text/javascript" src="../js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript" src="../js/main.js"></script>
 
 </head>
@@ -300,9 +301,9 @@ else {
 							Digital</a>
 					</h1>
 					<div class="p-content">
-						<p>Perfil epidemiológico de caries dental</p>
-						<p>Página de registro de Dentista</p>
-						<p>Los campos marcados como * son obligatorios</p>
+						<h1>Perfil epidemiológico de caries dental</h1>
+						<h2>Página de registro de Dentista</h2>
+						<h3>Los campos marcados como * son obligatorios</h3>
 						
 						<?php 
 						if(isset($_POST['posted'])) {
@@ -315,26 +316,121 @@ else {
 					<div id="registra">
 						<ul>
 							<li>						
-								<span style="color:red">Datos personales </span>
 									
-								<form action="regAdminDent.php" method="post">
-									<input type="text" value="<?php echo $nombre;?>" name="nombre" alt="*Nombre(s): " title="Introduce tu primer nombre" id="nombre" /> 
-									<input type="text" value="<?php echo $apaterno;?>" name="apaterno" alt="*Apellido paterno:" title="Introduce tu apellido paterno" id="apaterno" /> 
-									<input type="text" value="<?php echo $amaterno;?>" name="amaterno" alt="*Apellido materno:" title="Introduce tu apellido materno" id="amaterno" /> 
-									<input type="text" value="<?php echo $cedula;?>" name="cedula" alt="*Cédula:" title="Introduce tu cedula profesional" id="cedula" /> 
-									<input type="text" value="<?php echo $usuario;?>" name="usuario" alt="*Usuario:" title="Introduce un usuario" id="usuario" /> 
-									<input type="password" value="<?php echo $password;?>" name="password" alt="Contraseña:" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" /> 
-									<input type="password" value="<?php echo $password2;?>" name="password2" alt="Confirmar Contraseña: " title="Repite la contraseña" id="password2" /> 
-									<input type="text" value="<?php echo $correo;?>" name="correo" alt="*Correo electronico: " title="Introduce tu correo electronico" id="correo" /> 
-									<input type="text" value="<?php echo $correo2;?>" name="correo2" alt="Confirmar Correo electronico: " title="Repite tu correo electronico" id="correo2" /> 
-									<br> </br> <span style="color:red">Consultorio </span>
-									<input type="text" value="<?php echo $nombreCons;?>" name="nombreCons" alt="*Nombre del Consultorio:" title="Pon el nombre del Consultorio" id="nombreCons"/>
-									<input type="text" value="<?php echo $telefono;?>" name="telefono" alt="Telefono de contacto:" title="Pon un numero de contacto" id="telefono"/>
-									<br> </br> <span style="color:red">Direccion del consultorio </span>
-									<input type="text" value="<?php echo $colonia;?>" name="colonia" alt="*Colonia:" title="Pon la colonia donde se encuentra el consultorio" id="colonia"/>
-									<input type="text" value="<?php echo $calle;?>" name="calle" alt="*Calle:" title="Pon la calle donde se encuentra el consultorio" id="calle"/>
-									<input type="text" value="<?php echo $numPostal;?>" name="numPostal" alt="*Numero postal:" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>
-									<select name="ciudad">
+								<form class="form-horizontal" action="regAdminDent.php" method="post">
+								
+								<fieldset>
+
+									<legend>Datos personales</legend>
+									
+								</fieldset>
+								
+									<div class="control-group">
+										<label class="control-label" for="nombre">(*) Nombre:</label>
+								  		<div class="controls">
+											<input type="text" autofocus class="pull-left input-xlarge" data-trigger="hover" required value="<?php echo $nombre;?>" name="nombre" title="Introduce tu primer nombre" id="nombre" /> 								
+										</div>									
+									</div>
+
+									<div class="control-group">
+										<label class="control-label" for="apaterno">(*) Apellido Paterno:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $apaterno;?>" name="apaterno" title="Introduce tu apellido paterno" id="apaterno" /> 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="apaterno">(*) Apellido Materno:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $amaterno;?>" name="amaterno" title="Introduce tu apellido materno" id="amaterno" /> 
+									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="cedula">(*)Cédula:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $cedula;?>" name="cedula" title="Introduce tu cedula profesional" id="cedula" /> 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="usuario">(*)Usuario:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $usuario;?>" name="usuario" title="Introduce un usuario" id="usuario" />		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="password">(*)Contraseña:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="password" value="<?php echo $password;?>" name="password" title="Introduce tu contraseña, de al menos 5 caracteres" id="password" /> 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="password2">(*)Confirmar Contraseña:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="password" value="<?php echo $password2;?>" name="password2" title="Repite la contraseña" id="password2" /> 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="correo">(*)Correo electrónico:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required  type="email" value="<?php echo $correo;?>" name="correo" title="Introduce tu correo electronico" id="correo" /> 									 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="correo2">(*)Confirmar Correo electrónico:</label>
+								  		<div class="controls">
+											 <input class="pull-left input-xlarge" data-trigger="hover" required type="email" value="<?php echo $correo2;?>" name="correo2" title="Repite tu correo electronico" id="correo2" />								 									 		 									 									 								 								
+										</div>									
+									</div>	
+																																				 
+																		
+									<legend>Datos del consultorio</legend>
+									 
+									<div class="control-group">
+										<label class="control-label" for="nombreCons">(*)Nombre del Consultorio:</label>
+								  		<div class="controls">
+											 <input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $nombreCons;?>" name="nombreCons" title="Pon el nombre del Consultorio" id="nombreCons"/>								 									 		 									 									 								 								
+										</div>									
+									</div>									
+									
+									<div class="control-group">
+										<label class="control-label" for="telefono">Telefono de contacto:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="tel" value="<?php echo $telefono;?>" name="telefono" title="Pon un numero de contacto" id="telefono"/>								 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="colonia">(*)Colonia:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $colonia;?>" name="colonia" title="Pon la colonia donde se encuentra el consultorio" id="colonia"/>								 									 		 									 									 								 								
+										</div>									
+									</div>
+								
+									<div class="control-group">
+										<label class="control-label" for="calle">(*)Calle:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $calle;?>" name="calle" title="Pon la calle donde se encuentra el consultorio" id="calle"/>																	 									 		 									 									 								 								
+										</div>									
+									</div>						
+									
+									<div class="control-group">
+										<label class="control-label" for="numPostal">(*)Numero postal:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" data-trigger="hover" required type="text" value="<?php echo $numPostal;?>" name="numPostal" title="Pon el numero postal donde se encuentra el consultorio" id="numPostal"/>																										 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="numPostal">(*)Ciudad:</label>
+								  		<div class="controls">
+												<select class="pull-left" name="ciudad">
 									<?php
 										if(isset($size)) {
 										for($i=0; $i<$size; $i++) {
@@ -342,8 +438,14 @@ else {
 										<option value="<?php echo $escuelas[$i]->Nombre;?>" ><?php echo $escuelas[$i]->Nombre;?> </option>
 									<?php }} 
 									?>										
-									</select>
-									<select name="estado">									
+									</select>																										 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+									<div class="control-group">
+										<label class="control-label" for="numPostal">(*)Numero postal:</label>
+								  		<div class="controls">
+											<select class="pull-left" name="estado">									
 									<?php
 									 
 										if(isset($size2)) {
@@ -353,8 +455,19 @@ else {
 									<?php }} 
 									?>										
 									</select>									
-									<br></br>																																																																										
-									<input type="submit" value="Registrar" /> 
+																																			 									 		 									 									 								 								
+										</div>									
+									</div>										
+									
+									<div class="control-group">
+										
+								  		<div class="controls">
+											<input class="pull-left" type="submit" value="Registrar" />																	 									 		 									 									 								 								
+										</div>									
+									</div>
+									
+																																																																																		
+									 
 									<input type="hidden" name="posted" value="yes" />
 								</form>
 							</li>
@@ -432,4 +545,68 @@ else {
 	<!-- Page End -->
 
 </body>
+<script type="text/javascript">
+$(function () {
+	$('#nombre').popover({
+		title: 'Test',
+		content: 'El nombre solo contiene letras',
+		placement: 'right'
+	});
+	$('#usuario').popover({
+		title: 'Test',
+		content: '',
+		placement: 'right'
+	});
+	$('#apaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+	$('#amaterno').popover({
+		title: 'Test',
+		content: 'Los apellidos llevan solo letras',
+		placement: 'right'
+	});
+	$('#cedula').popover({
+		title: 'Test',
+		content: 'Formato alfanumérico',
+		placement: 'right'
+	});
+		$('#password').popover({
+		title: 'Test',
+		content: 'Las contraseñas deben concordar',
+		placement: 'right'
+	});
+	$('#pass2').popover({
+		title: 'Test',
+		content: 'Las contraseñas deben concordar',
+		placement: 'right'
+	});
+	$('#correo').popover({
+		title: 'Test',
+		content: 'Los correos deben ser los mismos',
+		placement: 'right'
+	});
+	$('#correo2').popover({
+		title: 'Test',
+		content: 'Los correos deben ser los mismos',
+		placement: 'right'
+	});
+	$('#nombreCons').popover({
+		title: 'Test',
+		content: 'El nombre del consultorio no contiene acentos',
+		placement: 'right'
+	});
+	$('#telefono').popover({
+		title: 'Test',
+		content: 'Solo se aceptan números',
+		placement: 'right'
+	});
+	$('#numPostal').popover({
+		title: 'Test',
+		content: 'Solo se aceptan números',
+		placement: 'right'
+	});
+});
+</script>
 </html>

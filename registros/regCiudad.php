@@ -95,7 +95,7 @@ if(isset($_POST['posted'])) {
 
 else {
 	
-	$nombre = "Nombre";
+	$nombre = "";
 	$estado = "Estado";
 	$pais = "Pais";
 	
@@ -186,8 +186,8 @@ function validaNombre($nombre){
 							Digital</a>
 					</h1>
 					<div class="p-content">
-						<p>Perfil epidemiológico de caries dental</p>
-						<p>Página de registro de Ciudad</p>
+						<h1>Perfil epidemiológico de caries dental</h1>
+						<h2>Página de registro de Ciudad</h2>
 						<?php 
 						if(isset($_POST['posted'])) {
 
@@ -220,27 +220,41 @@ function validaNombre($nombre){
 							}
 							
 						</script>
-								<form action="#" method="post" onsubmit="return validate(this)">
-									<input type="text" value="<?php echo $nombre;?>" alt="Nombre:" title="Escribe un nombre" name="nombre" id="nombre" />
-									<select name="pais" onchange="cargaEstados(this.value)">
-									<!--  Valor por default -->
-										<option value="0" >Selecciona un pa&iacute;s </option>
-									<?php
-									//<input type="text" value="<?php echo $ciudad;?" name="ciudad" alt="*Ciudad:" title="Pon la ciudad donde se encuentra el consultorio" id="ciudad"/>
-									 
+								<form class="form-horizontal" action="#" method="post" onsubmit="return validate(this)">
+								<fieldset>
+
+									<legend>Todos los datos son requeridos</legend>
 								
-									//echo $size;
-										if(isset($size)) {
-									//Valor por default
+									<div class="control-group pul">
+										<label class="control-label" for="usuario">(*) Nombre de la ciudad:</label>
+								  		<div class="controls">
+											<input class="pull-left input-xlarge" type="text" value="<?php echo $nombre;?>" required title="Escribe un nombre" name="nombre" id="nombre" />								
+										</div>									
+									</div>
+									
+									<div class="control-group pul">
+										<label class="control-label" for="usuario">(*) Nombre del País:</label>
+								  		<div class="controls">
+											<select class="pull-left" name="pais" onchange="cargaEstados(this.value)">
+											<!--  Valor por default -->
+												<option value="0" >Selecciona un pa&iacute;s </option>
+												<?php
+									 								
+												if(isset($size)) {
 										
-										for($i=0; $i<$size; $i++) {
-									?>
-										<option value="<?php echo $paises[$i]->Nombre; ?>" ><?php echo $paises[$i]->Nombre; ?> </option>
-									<?php }} 
-									?>										
-									</select>
-									 
-									<select name="estado"  id="estado">
+													for($i=0; $i<$size; $i++) {
+												?>
+												<option value="<?php echo $paises[$i]->Nombre; ?>" ><?php echo $paises[$i]->Nombre; ?> </option>
+												<?php }} 
+												?>										
+											</select>								
+										</div>									
+									</div>
+									
+									<div class="control-group pul">
+										<label class="control-label" for="usuario">(*) Nombre del estado/provincia:</label>
+								  		<div class="controls">
+												<select class="pull-left" name="estado"  id="estado">
 										<option value="0" >Selecciona un pa&iacute;s primero </option>
 									
 									<?php
@@ -254,7 +268,14 @@ function validaNombre($nombre){
 										<option value="<?php echo $estados[$i]->Nombre; ?>" ><?php echo $estados[$i]->Nombre; ?> </option>
 									<?php }}*/ 
 									?>										
-									</select>
+									</select>							
+										</div>									
+									</div>									
+									
+								</fieldset>	
+									
+									 
+									
 									
 									<input type="submit" value="Registrar" />
 									<input type="hidden" name="posted" value="yes" />

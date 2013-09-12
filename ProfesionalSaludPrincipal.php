@@ -6,7 +6,9 @@
     
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    
+    <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css" />
+	
+	    
     <!-- JavaScript -->
     <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
     <script type="text/javascript" src="js/superfish.js"></script>
@@ -14,6 +16,7 @@
     <script type="text/javascript" src="js/jquery.prettyPhoto.js"></script>
     <script type="text/javascript" src="js/jquery.prettySociable.js"></script>
     <script type="text/javascript" src="js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>    
     <script type="text/javascript" src="js/main.js"></script>
     
 </head>
@@ -42,7 +45,7 @@
                 <div id="homepage-post">
                 <h1 class="p-title"><a href="#">Bienvenido al sitio de la Cartilla de Salud Bucal Digital</a></h1>
                     <div class="p-content">
-                        <p>Perfil epidemiológico de caries dental</p>
+                        <h1>Perfil epidemiológico de caries dental</h1>
                     </div>
                 </div>
                 

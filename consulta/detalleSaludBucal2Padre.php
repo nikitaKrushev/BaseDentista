@@ -37,13 +37,16 @@ $texto = array();
 $texto[0] = "Sano: Felicidades no presenta caries dental!";
 $texto[1] = "Enfermo: Requiere de atenci&oacute;n dental";
 $texto[2] = "Enfermo: Requiere de atenci&oacute;n dental inmediata!";
-	
+
 $mysqli = new mysqli("localhost", "monty", "holygrail", "newbasedientes");
+
 /* check connection */
 if (mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	exit();
 }
+
+
 $query = @mysql_query("SELECT * FROM Ninio WHERE idNinio=".mysql_real_escape_string($_SESSION['idNino'])."");
 $existe= @mysql_fetch_object($query);
 $nombreNino = $existe->Nombre;
